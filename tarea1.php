@@ -3,15 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Actividad 1: Operaciones con matrices</title>
+  <style>
+    table {
+      text-align: center;
+      border-spacing: 0.5em;
+    }
+  </style>
 </head>
 <body>
   <?php
-    // Variables
-    $ra = 5; $ca = 5;
-    $rb = 5; $cb = 5;
-
-    function matriz_crear($filas, $columnas, $max = 50, $min = 0) {
+    function matriz_crear($filas, $columnas, $max = 10, $min = 0) {
       for($i = 0; $i < $filas; $i++)
         for($j = 0; $j < $columnas; $j++)
           $matriz[$i][$j] = rand($min, $max);
@@ -19,89 +21,105 @@
       return $matriz;
     }
 
-    $matriz_a = matriz_crear($ra, $ca);
-    $matriz_b = matriz_crear($rb, $cb);
-
-    function matriz_str($matriz) {
-      $filas = count($matriz);
-      $columnas = count($matriz[0]);
-
-      for($i = 0; $i < $filas; $i++) {
-        for($j = 0; $j < $columnas; $j++)
-          $resultado .= sprintf('%2d ', $matriz[$i][$j]);
-        
-        $resultado .= "\n";
-      }
-
-      return $resultado;
+    function matriz_dim($m) {
+      return [count($m), count($m[0])];
     }
-
-    function imprimir_matriz($i, $matriz) {
-      $filas = count($matriz);
-      $columnas = count($matriz[0]);
-      $str = matriz_str($matriz);
-
-      echo "
-        <p>
-          <strong>Matriz $i</strong> - $filas x $columnas
-        </p>
-        <pre>$str</pre>";
-    }
-
-    imprimir_matriz(1, $matriz_a);
-    imprimir_matriz(2, $matriz_b);
 
     function matriz_suma($a, $b) {
-      if (count($a) !== count($b) || count($a[0]) == count($b[0])) {
+      [$ra, $ca] = matriz_dim($a);
+      [$rb, $cb] = matriz_dim($b);
 
-      }
+      if ($ra !== $rb || $ca !== $cb)
+        throw new Exception("No se pueden sumar las matrices");
 
-      $filas = count($a);
-      $columnas = count($a[0]);
-
-      for($i = 0; $i < $filas; $i++)
-        for($j = 0; $j < $columnas; $j++)
+      for($i = 0; $i < $ra; $i++)
+        for($j = 0; $j < $ca; $j++)
           $resultado[$i][$j] = $a[$i][$j] + $b[$i][$j];
 
       return $resultado;
     }
 
-    // function resta($a, $b) {
-    //   $c = array();
+    function matriz_diferencia($a, $b) {
+      [$ra, $ca] = matriz_dim($a);
+      [$rb, $cb] = matriz_dim($b);
 
-    //   for($i = 0; $i < count($a); $i++) {
-    //     for($j = 0; $j < count($a[0]); $j++) {
-    //       $c[$i][$j] = $a[$i][$j] - $b[$i][$j];
-    //     }
-    //   }
+      if ($ra !== $rb || $ca !== $cb)
+        throw new Exception("No se pueden restar las matrices");
 
-    //   return($c);
-    // }
+      for($i = 0; $i < $ra; $i++)
+        for($j = 0; $j < $ca; $j++)
+          $resultado[$i][$j] = $a[$i][$j] - $b[$i][$j];
 
-    // function multi($a, $b) {
-    //   if(count($a[0]) != count($b)) {
-    //     return 'Matrices incompatibles, no se puede realizar la operación';
-    //   }
-      
-    //   $c = array();
+      return $resultado;
+    }
 
-    //   for($i = 0; $i < count($a); $i++) {
-    //     for($j = 0; $j < count($b[0]); $j++) {
-    //       $c[$i][$j] = 0;
-    //       for($k = 0; $k < count($b); $k++) {
-    //         $c[$i][$j] += $a[$i][$k] * $b[$k][$j];
-    //       }
-    //     }
-    //   }
+    function matriz_producto($a, $b) {
+      [$ra, $ca] = matriz_dim($a);
+      [$rb, $cb] = matriz_dim($b);
 
-    //   return($c);
-    // }
+      if ($ca !== $rb)
+        throw new Exception("No se pueden multiplicar las matrices");
 
-    // $matrizA = Array([1,2,6], [4,7,6], [3,2,3]);
-    // $matrizB = Array([10,11], [20,21]);
-    // //imprimirMatriz($matrizA);
-    // //imprimirMatriz($matrizB);
-    // imprimirMatriz(crearMatriz(2,2));
+      for ($i = 0; $i < $ra; $i++) {
+        for ($j = 0; $j < $cb; $j++) {
+          $suma = 0;
+          for ($k = 0; $k < $ca; $k++)
+            $suma += $a[$i][$k] * $b[$k][$j];
+
+          $resultado[$i][$j] = $suma;
+        }
+      }
+
+      return $resultado;
+    }
+
+    function imprimir_matriz($nombre, $matriz) {
+      [$r, $c] = matriz_dim($matriz);
+
+      echo "
+        <p>
+          <strong>$nombre</strong> - $r x $c
+        </p>";
+
+      echo "<table>";
+      for ($i = 0; $i < $r; $i++) {
+        echo "<tr>";
+        for ($j = 0; $j < $c; $j++) {
+          echo "<td>{$matriz[$i][$j]}</td>";
+        }
+        echo "</tr>";
+      }
+      echo "</table>";
+    }
+
+    $ra = 3; $ca = 3;
+    $rb = 3; $cb = 3;
+
+    $ma = matriz_crear($ra, $ca);
+    $mb = matriz_crear($rb, $cb);
+
+    imprimir_matriz("Matriz 1", $ma);
+    imprimir_matriz("Matriz 2", $mb);
+
+    echo '<hr>';
+
+    try {
+      $suma = matriz_suma($ma, $mb);
+      $diferencia = matriz_diferencia($ma, $mb);
+
+      imprimir_matriz("Suma", $suma);
+      imprimir_matriz("Diferencia", $diferencia);
+    } catch (Exception $e) {
+      echo "Las matrices no se pueden sumar o restar. <br>";
+    }
+
+    try {
+      $producto = matriz_producto($ma, $mb);
+
+      imprimir_matriz("Producto", $producto);
+    } catch (Exception $e) {
+      echo "Las matrices no se pueden multiplicar. <br>";
+    }
   ?>
 </body>
 </html>
