@@ -5,9 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Actividad 1: Operaciones con matrices</title>
   <style>
+    * {
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+
     table {
       text-align: center;
-      border-spacing: 0.5em;
+      border-spacing: 1em 0.25em;
+
+      border: 1px black;
+      border-left-style: solid;
+      border-right-style: solid;
+      border-radius: 0.5em;
+
+      padding: 0 0.25em;
     }
   </style>
 </head>
