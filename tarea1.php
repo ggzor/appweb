@@ -122,7 +122,7 @@
       imprimir_matriz("Suma", $suma);
       imprimir_matriz("Diferencia", $diferencia);
     } catch (Exception $e) {
-      echo "Las matrices no se pueden sumar o restar. <br>";
+      echo "<strong>Las matrices no se pueden sumar o restar.</strong> <br>";
     }
 
     try {
@@ -130,7 +130,7 @@
 
       imprimir_matriz("Producto", $producto);
     } catch (Exception $e) {
-      echo "Las matrices no se pueden multiplicar. <br>";
+      echo "<strong>Las matrices no se pueden multiplicar.</strong> <br>";
     }
   ?>
 </body>
