@@ -1,0 +1,19 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+html {
+  font-family: sans-serif;
+}
+
+:root {
+  --accent-foreground: white;
+  --accent-color: #ce0082;
+  --accent-color-light: #ffb3e3;
+  --accent-color-dark: #990061;
+  --gray: #c4c4c4;
+  --light-gray: #ebebeb;
+}

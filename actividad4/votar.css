@@ -1,0 +1,179 @@
+@import "./compartido.css";
+
+body {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+body > * {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+h1 {
+  margin: 48px 24px;
+  color: var(--accent-color);
+}
+
+a {
+  align-self: flex-start;
+  justify-self: flex-end;
+  margin: calc(48px + 0.5em) 24px;
+  color: var(--accent-color);
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+a:hover {
+  color: var(--accent-color-dark);
+}
+
+form::before {
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 10px;
+  background-color: var(--accent-color-dark);
+  transform: translate(-2em, -2em);
+}
+
+form {
+  justify-self: center;
+  align-self: flex-end;
+  background-color: var(--accent-color-light);
+  padding: 2em;
+  box-shadow: 0px 28px 28px rgba(0, 0, 0, 0.25),
+    0px 10px 10px rgba(0, 0, 0, 0.22);
+  display: flex;
+  flex-direction: column;
+}
+
+form > input[type="submit"] {
+  align-self: center;
+  margin-top: max(40px, 5vh);
+}
+
+form > .partidos {
+  margin-top: max(20px, 3vh);
+}
+
+label[for="persona"] {
+  display: none;
+}
+
+.select {
+  align-self: center;
+  margin-top: max(40px, 2vh);
+
+  display: grid;
+  grid-template-areas: select;
+}
+
+.select::after {
+  justify-self: flex-end;
+  align-self: center;
+
+  position: absolute;
+  content: " ";
+  width: 0.8em;
+  height: 0.5em;
+  background-color: var(--accent-color);
+  clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+  pointer-events: none;
+  transform: translateX(-0.3em);
+}
+
+select {
+  grid-area: select;
+  appearance: none;
+  background-color: var(--accent-foreground);
+  border: none;
+  padding: 0.5em 3em 0.5em 0.5em;
+  border-radius: 10px;
+}
+
+select:hover,
+select:active {
+  background-color: var(--light-gray);
+}
+
+.partidos {
+  --hgap: 30px;
+  --vgap: 30px;
+  --option: 30px;
+
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns:
+    var(--option) max(100px, 10vw) var(--hgap) var(--option)
+    max(100px, 10vw);
+  grid-template-rows: 10vh var(--vgap) 10vh;
+}
+
+.partidos > *:nth-child(2n + 1) {
+  display: none;
+}
+
+.partidos > *:nth-child(2) {
+  grid-column: 2;
+}
+
+.partidos > *:nth-child(4) {
+  grid-column: 5;
+}
+
+.partidos > *:nth-child(6) {
+  grid-row: 3;
+  grid-column: 2;
+}
+
+.partidos > *:nth-child(8) {
+  grid-row: 3;
+  grid-column: 5;
+}
+
+.partidos > *:nth-child(2n) {
+  background-color: var(--accent-foreground);
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px 10px 10px 0px;
+}
+
+.partidos > *:nth-child(2n)::before {
+  position: absolute;
+  content: "";
+  width: var(--option);
+  height: 100%;
+  background-color: var(--light-gray);
+  transform: translateX(-100%);
+  border-radius: 10px 0px 0px 10px;
+}
+
+input[type="radio"]:checked + *:nth-child(2n)::before {
+  background-color: var(--accent-color);
+}
+
+input[type="submit"] {
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  background-color: var(--accent-color);
+  color: var(--accent-foreground);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
+  background-color: var(--accent-color-dark);
+}
+
+input[type="submit"]:active {
+  transform: scale(0.99);
+}

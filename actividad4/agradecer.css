@@ -1,0 +1,52 @@
+@import "./compartido.css";
+
+body {
+  margin: 0;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 100vh;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+body > * {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+body::before {
+  content: " ";
+  position: absolute;
+  width: 100vw;
+  height: 150px;
+  background-color: var(--accent-color);
+  box-shadow: 0 150px 0 100px white;
+}
+
+body::after {
+  z-index: -1;
+  content: " ";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-color: var(--gray);
+  transform: rotate(45deg);
+}
+
+h1 {
+  color: var(--accent-foreground);
+  font-weight: 400;
+}
+
+a {
+  transform: translateY(150px);
+  color: var(--accent-color);
+  font-size: 1.2em;
+  text-transform: uppercase;
+}
+
+a:visited {
+  color: var(--accent-color);
+}
