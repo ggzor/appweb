@@ -48,17 +48,35 @@
         <br />
         <section class="partidos">
             <input type="radio" name="partido" id="PAN" value="PAN" checked />
-            <label for="PAN">PAN</label>
+            <label for="PAN">
+                PAN
+                <img height="50" src="./imagenes/pan.png">
+            </label>
             <input type="radio" name="partido" id="PRI" value="PRI" />
-            <label for="PRI">PRI</label>
+            <label for="PRI">
+                PRI
+                <img height="50" src="./imagenes/pri.png">
+            </label>
             <input type="radio" name="partido" id="PRD" value="PRD" />
-            <label for="PRD">PRD</label>
+            <label for="PRD">
+                PRD
+                <img height="50" src="./imagenes/prd.png">
+            </label>
             <input type="radio" name="partido" id="MORENA" value="MORENA" />
-            <label for="MORENA">MORENA</label>
+            <label for="MORENA">
+                MORENA
+                <img height="50" src="./imagenes/morena.png">
+            </label>
         </section>
         <br />
         <input type="submit" value="Votar" />
     </form>
+
+    <script>
+    setTimeout(() => {
+        /* location.reload() */
+    }, 2000);
+    </script>
 </body>
 
 </html>

@@ -69,6 +69,7 @@ label[for="persona"] {
 .select {
   align-self: center;
   margin-top: max(40px, 2vh);
+  margin-bottom: max(40px, 2vh);
 
   display: grid;
   grid-template-areas: select;
@@ -105,14 +106,15 @@ select:active {
 .partidos {
   --hgap: 30px;
   --vgap: 30px;
-  --option: 30px;
+  --option: 50px;
+  --partido: clamp(100px, 25vw, 250px);
 
   display: grid;
   grid-auto-flow: row;
   grid-template-columns:
-    var(--option) max(100px, 10vw) var(--hgap) var(--option)
-    max(100px, 10vw);
-  grid-template-rows: 10vh var(--vgap) 10vh;
+    var(--option) var(--partido) var(--hgap) var(--option)
+    var(--partido);
+  grid-template-rows: 12vh var(--vgap) 12vh;
 }
 
 .partidos > *:nth-child(2n + 1) {
@@ -135,9 +137,15 @@ select:active {
 .partidos > *:nth-child(8) {
   grid-row: 3;
   grid-column: 5;
+  font-size: 0.7em;
 }
 
 .partidos > *:nth-child(2n) {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
   background-color: var(--accent-foreground);
   padding: 0;
   width: 100%;
@@ -155,8 +163,35 @@ select:active {
   border-radius: 10px 0px 0px 10px;
 }
 
+.partidos > *:nth-child(2n)::after {
+  background-color: var(--light-gray);
+
+  position: absolute;
+  content: "";
+  width: calc(var(--option) / 2);
+  height: calc(var(--option));
+  transform: translateX(calc(-0.75 * var(--option)));
+  pointer-events: none;
+  clip-path: polygon(
+    22% 46.75%,
+    36% 53.5%,
+    78.5% 32.5%,
+    92.5% 39.5%,
+    36% 67.5%,
+    8% 53.5%
+  );
+}
+
 input[type="radio"]:checked + *:nth-child(2n)::before {
   background-color: var(--accent-color);
+}
+
+input[type="radio"]:checked + *:nth-child(2n)::after {
+  background-color: var(--accent-foreground);
+}
+
+input[type="radio"]:hover:not(:checked) + *:nth-child(2n)::after {
+  background-color: var(--accent-color-light);
 }
 
 input[type="submit"] {
