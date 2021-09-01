@@ -5,26 +5,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Votar</title>
-    <style type="text/css" media="screen">
-        .partidos {
-            display: grid;
-            width: min-content;
-            grid-auto-flow: column;
-            grid-template-rows: 1fr auto;
-            align-items: center;
-            justify-items: center;
-        }
-
-        .partidos>* {
-            padding: 10px;
-        }
-    </style>
-    <link rel="stylesheet" href="./votar.css" />
+    <link rel="stylesheet" href="./votar-base.css">
+    <link rel="stylesheet" href="./votar.css">
 </head>
 
 <body>
     <h1>Votar</h1>
-    <a href="conteo.html">Ver conteo</a>
+    <a href="graficaVotos.php">Ver conteo</a>
     <br />
     <br />
     <form action="agradecer.php" method="POST">
@@ -71,12 +58,6 @@
         <br />
         <input type="submit" value="Votar" />
     </form>
-
-    <script>
-    setTimeout(() => {
-        /* location.reload() */
-    }, 2000);
-    </script>
 </body>
 
 </html>
