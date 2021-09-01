@@ -20,7 +20,7 @@ CREATE TABLE voto (
 );
 
 INSERT INTO votante (nombre, numero_ine, genero) VALUES
-  ('Ana Alvarado Huitzil', '00001', 'M'), 
+  ('Ana Alvarado Huitzil', '00001', 'M'),
   ('Lulú Hernandez Merino', '00003', 'M'),
   ('Diego Polo Merino', '00015', 'H'),
   ('Quetzalli Juárez', '00022', 'M'),

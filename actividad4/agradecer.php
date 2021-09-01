@@ -14,6 +14,7 @@
     $partido = $_POST['partido'];
 
     $conn = new mysqli("localhost", "root", null, "votaciones");
+    $conn->query("SET NAMES utf8");
 
     $stmt = $conn->prepare("SELECT nombre FROM votante WHERE id_votante = ?");
     $stmt->bind_param("i", $id_votante);

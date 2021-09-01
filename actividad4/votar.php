@@ -32,11 +32,11 @@
             <label for="persona">Votante:</label>
             <select name="id_votante">
                 <?php
-                $link = mysqli_connect("localhost", "root");
-                mysqli_select_db($link, "votaciones");
-                $votante = mysqli_query($link, "SELECT * FROM votante");
+                $conn = new mysqli("localhost", "root", null, "votaciones");
+                $conn->query("SET NAMES utf8");
+                $votantes = $conn->query("SELECT * FROM votante");
 
-                while ($row = mysqli_fetch_assoc($votante)) {
+                while ($row = $votantes->fetch_assoc()) {
                     echo "
                 <option name='id_votante' value='$row[id_votante]'>
                     $row[nombre]

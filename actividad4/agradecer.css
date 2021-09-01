@@ -38,6 +38,7 @@ body::after {
 h1 {
   color: var(--accent-foreground);
   font-weight: 400;
+  text-align: center;
 }
 
 a {
