@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ventas</title>
+    <link rel="stylesheet" href="index.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <header>
+      <image src="assets/pato.png"/>
+      <a href="index.html">Ventas</a>
+      <a href="registro.html">Registro</a>
+      <a href="grafica.html">Gráfica</a>
+    </header>
+    <main>
+      <form action="index.html" method="POST">
+        <label for="vehiculo">Vehículo</label>
+        <select name="vehiculo" id="vehiculo" data-value="1"
+                onchange="this.dataset.value = this.value">
+          <option value="1">Audi R8</option>
+          <option value="2">Mercedez Benz Cabrio</option>
+        </select><br>
+
+        <label for="vendedor">Vendedor</label>
+        <select name="vendedor" id="vendedor">
+          <option value="1">Ricardo Milos</option>
+        </select><br>
+
+        <label for="cliente">Cliente</label>
+        <input type="text" name="cliente" id="cliente" value="" required/><br>
+
+        <input type="submit" value="Vender">
+
+        <article>
+          <image src="autos/1.jpg" />
+          <p>$3,470,000</p>
+        </article>
+        <article>
+          <image src="autos/2.jpg" />
+          <p>$1,679,000</p>
+        </article>
+      </form>
+      <article></article>
+    </main>
+  </body>
+</html>
