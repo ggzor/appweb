@@ -15,10 +15,15 @@
       <a href="grafica.html">Gráfica</a>
     </header>
     <main>
-      <article hidden>
-        ¡Venta exitosa!  Se ha realizado la venta de un <strong>Audi R8</strong>.
-        <a href="facturas/factura1.pdf">Ver factura</a>
-        <input type="checkbox" name="cerrar" id="cerrar"><label for="cerrar">
+      <input type="checkbox" name="cerrar" id="cerrar" hidden>
+      <article class="notificacion">
+        <p>
+          ¡Venta exitosa!  Se ha realizado la venta de un <strong>Audi R8</strong>.<br>
+          <a href="facturas/factura1.pdf">Ver factura</a>
+        </p>
+        <div class="cerrar">
+          <label for="cerrar">×
+        </div>
       </article>
 
       <form action="index.html" method="POST">
@@ -64,7 +69,6 @@
         }
         </style>
       </form>
-      <article></article>
     </main>
   </body>
 </html>

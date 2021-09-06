@@ -3,6 +3,33 @@ main {
   place-items: center;
 }
 
+main > .notificacion {
+  display: flex;
+
+  position: absolute;
+  top: 1.5em;
+
+  background-color: var(--color-grey);
+  padding: 0.5em;
+}
+
+main > .notificacion a {
+  color: black;
+}
+
+main > .notificacion p {
+  margin: 0;
+}
+
+.notificacion > .cerrar {
+  margin-left: 2em;
+  transform: translateY(-0.4em);
+}
+
+input[type="checkbox"]:checked ~ .notificacion {
+  display: none;
+}
+
 form {
   display: grid;
   grid-auto-flow: column;
