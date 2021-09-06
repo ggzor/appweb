@@ -1,0 +1,51 @@
+main {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.grafica {
+  margin-top: 5em;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+  grid-auto-flow: column;
+
+  justify-self: center;
+  align-self: center;
+
+  font-size: 0.8em;
+  text-align: center;
+
+  height: 50vh;
+
+  column-gap: 1em;
+}
+
+.grafica > .bar {
+  width: 2em;
+  height: calc((var(--data-count) / var(--data-max)) * 100%);
+  background-color: black;
+
+  align-self: flex-end;
+  justify-self: center;
+
+  display: flex;
+  justify-content: center;
+}
+
+.grafica[data-zeroes] > .bar {
+  height: 2px;
+}
+
+.grafica > .bar::before {
+  counter-reset: count var(--data-count);
+  content: counter(count);
+
+  position: absolute;
+  width: 10px;
+  height: 10px;
+
+  transform: translateY(-200%);
+  font-weight: 900;
+}

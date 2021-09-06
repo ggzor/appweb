@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gráfica</title>
   <link rel="stylesheet" href="compartido.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="grafica.css" type="text/css" media="all" />
 </head>
 <body>
   <header>
@@ -13,5 +14,28 @@
     <a href="registro.html">Registro</a>
     <a href="grafica.html" data-active>Gráfica</a>
   </header>
+  <main>
+    <h2>Conteo de ventas por vendedor</h2>
+
+    <article class="grafica" style="--data-max: 10">
+      <div class='bar' style="--data-count: 4"></div>
+      <p>Vendedor 1</p>
+
+      <div class='bar' style="--data-count: 10"></div>
+      <p>Vendedor 2</p>
+
+      <div class='bar' style="--data-count: 2"></div>
+      <p>Vendedor 3</p>
+
+      <div class='bar' style="--data-count: 3"></div>
+      <p>Vendedor 4</p>
+
+      <div class='bar' style="--data-count: 5"></div>
+      <p>Vendedor 5</p>
+
+      <div class='bar' style="--data-count: 1"></div>
+      <p>Vendedor 6</p>
+    </article>
+  </main>
 </body>
 </html>
