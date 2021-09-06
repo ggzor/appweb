@@ -9,7 +9,7 @@
   <body>
     <header>
       <image src="assets/pato.png"/>
-      <a href="index.html">Ventas</a>
+      <a href="index.html" data-active>Ventas</a>
       <a href="registro.html">Registro</a>
       <a href="grafica.html">Gráfica</a>
     </header>
@@ -22,30 +22,46 @@
 
       <form action="index.html" method="POST">
         <label for="vehiculo">Vehículo</label>
-        <select name="vehiculo" id="vehiculo" data-value="1"
-                onchange="this.dataset.value = this.value">
-          <option value="1">Audi R8</option>
-          <option value="2">Mercedez Benz Cabrio</option>
-        </select><br>
+        <div class="select" data-value="1">
+          <select name="vehiculo" id="vehiculo"
+                  onchange="this.parentElement.dataset.value = this.value">
+            <option value="1">Audi R8</option>
+            <option value="2">Mercedez Benz Cabrio</option>
+          </select><br>
+        </div>
 
         <label for="vendedor">Vendedor</label>
-        <select name="vendedor" id="vendedor">
-          <option value="1">Ricardo Milos</option>
-        </select><br>
+        <div class="select">
+          <select name="vendedor" id="vendedor">
+            <option value="1">Ricardo Milos</option>
+          </select><br>
+        </div>
 
         <label for="cliente">Cliente</label>
         <input type="text" name="cliente" id="cliente" value="" required/><br>
 
         <input type="submit" value="Vender">
 
-        <article>
-          <image src="autos/1.jpg" />
+
+        <article class="auto" id="auto1">
+          <image src="autos/auto1.jpg" />
           <p>$3,470,000</p>
         </article>
-        <article>
-          <image src="autos/2.jpg" />
+        <style type="text/css">
+        .select[data-value='1'] ~ #auto1 {
+          display: block;
+        }
+        </style>
+
+        <article class="auto" id="auto2">
+          <image src="autos/auto2.jpg" />
           <p>$1,679,000</p>
         </article>
+        <style type="text/css">
+        .select[data-value='2'] ~ #auto2 {
+          display: block;
+        }
+        </style>
       </form>
       <article></article>
     </main>

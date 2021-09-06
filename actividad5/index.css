@@ -5,6 +5,15 @@
   position: relative;
 }
 
+@font-face {
+  font-family: Montserrat;
+  src: url("./assets/Montserrat/Montserrat-Regular.ttf");
+}
+
+:root {
+  --color-grey: #efefef;
+}
+
 body {
   width: 100%;
   height: 100vh;
@@ -12,9 +21,150 @@ body {
 
   display: grid;
   grid-template-rows: auto 1fr;
+
+  font-family: Montserrat, sans-serif;
 }
 
 header {
-  height: 48px;
+  height: 32px;
   border-bottom: 1px solid black;
+
+  display: flex;
+}
+
+header > * {
+  height: 100%;
+}
+
+header > a {
+  display: flex;
+  align-items: center;
+  padding: 0px 1.5em;
+  text-decoration: none;
+  color: black;
+}
+
+header > a[data-active] {
+  background-color: black;
+  color: white;
+}
+
+header > a:not([data-active]):hover {
+  background-color: var(--color-grey);
+}
+
+header > img {
+  padding: 0.2em;
+}
+
+main {
+  display: grid;
+  place-items: center;
+}
+
+form {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(10, auto);
+  column-gap: 3em;
+  width: min(600px, 80vw);
+}
+
+form > article {
+  grid-row: 2/11;
+  grid-column: 2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form label,
+form input[type="submit"] {
+  margin-top: 1.5em;
+}
+
+form input:not([type="submit"]),
+form select {
+  margin-top: 0.5em;
+}
+
+form label {
+  justify-self: flex-start;
+}
+
+input[type="submit"] {
+  justify-self: flex-start;
+  border: 0;
+  padding: 8px 24px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+}
+
+input[type="submit"]:hover {
+  background-color: rgba(0, 0, 0, 80%);
+}
+
+input[type="text"] {
+  font-family: inherit;
+  padding: 0.5em 0.6em;
+  border: 1px solid black;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  background-color: var(--color-grey);
+}
+
+.select {
+  display: grid;
+}
+
+select {
+  appearance: none;
+  border: 1px solid black;
+  padding: 0.5em 3em 0.5em 0.4em;
+  font-family: Montserrat, sans-serif;
+}
+
+.select::after {
+  justify-self: flex-end;
+  align-self: center;
+
+  position: absolute;
+  content: " ";
+  width: 0.5em;
+  height: 0.5em;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  pointer-events: none;
+  transform: rotate(45deg) translateX(-0.5em) translateY(100%);
+}
+
+select:hover,
+select:active {
+  background-color: var(--color-grey);
+}
+
+.select[data-value] ~ .auto {
+  display: none;
+}
+
+.auto {
+  display: grid;
+  justify-items: center;
+}
+
+.auto > p {
+  text-align: center;
+}
+
+.auto > img {
+  width: 100%;
+  height: min(150px, 20vw);
+  object-fit: cover;
+  overflow: hidden;
 }
