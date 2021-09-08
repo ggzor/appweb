@@ -24,7 +24,7 @@ main {
 
 .grafica > .bar {
   width: 2em;
-  height: calc((var(--data-count) / var(--data-max)) * 100%);
+  height: max(2px, calc((var(--data-count) / var(--data-max)) * 100%));
   background-color: black;
 
   align-self: flex-end;
