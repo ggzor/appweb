@@ -1,0 +1,83 @@
+@import url("./compartido.css");
+
+.logo {
+  color: var(--color-accent);
+  margin-top: 10vh;
+}
+
+.logo > p {
+  font-size: 64px;
+}
+
+.logo svg {
+  width: 75px;
+  height: 75px;
+}
+
+.logo path {
+  fill: var(--color-accent);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 36px;
+  opacity: 60%;
+}
+
+.card {
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.05), 
+              0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0359427), 
+              0px 22.3363px 17.869px rgba(0, 0, 0, 0.0298054), 
+              0px 12.5216px 10.0172px rgba(0, 0, 0, 0.025),
+              0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0201946),
+              0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0140573);
+  border-radius: 15px;
+  padding: 3em;
+  margin-top: 2em;
+  color: rgba(0, 0, 0, 60%);
+
+  display: grid;
+}
+
+.card > input[type] {
+  width: min(500px, 60vw);
+}
+
+.card > input[type]:not(:first-child) {
+  margin-top: 2em;
+}
+
+.card > a {
+  justify-self: flex-end;
+  font-size: 14px;
+  margin-top: 1em;
+}
+
+.card > a:hover {
+  text-decoration: underline;
+}
+
+.card > .bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-top: 4em;
+  font-size: 18px;
+}
+
+.card a {
+  color: rgba(0, 0, 0, 60%);
+  text-decoration: none;
+}
+
+.card .bottom a {
+  text-decoration: underline;
+  margin-right: 1em;
+}
