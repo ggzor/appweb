@@ -5,6 +5,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usuario = $_POST['usuario'];
   $pass = $_POST['pass'];
 
+  setcookie('usuario', $usuario);
+
   if ($usuario === 'admin') {
     header('Location: questions.php');
   } else {

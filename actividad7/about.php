@@ -1,5 +1,10 @@
 <?php
 require 'componentes.php';
+
+$usuario = $_COOKIE['usuario'];
+
+$is_admin = $usuario === 'admin';
+
 ?>
 
 <!DOCTYPE html>
@@ -19,15 +24,24 @@ require 'componentes.php';
     <?php
     echo logo();
 
+    $items = $is_admin
+      ? [$m_questions, $m_about]
+      : [$m_history, $m_create, $m_about];
+
     echo menu([
-      'items' => [$m_history, $m_create, $m_about],
-      'selected' => 2
+      'items' => $items,
+      'selected' => $is_admin ? 1 : 2
     ]);
     ?>
   </section>
 
   <section>
     <section class="links">
+      <?php
+      if ($is_admin) {
+        echo '<p class="admin-indicator">Administrador</p>';
+      }
+      ?>
       <a href="index.php">Cerrar sesión</a>
     </section>
     <main>
