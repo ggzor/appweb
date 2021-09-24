@@ -77,6 +77,7 @@ input[type=text]:focus, input[type=password]:focus {
   display: flex;
   flex-direction: row;
   align-items: center;
+  text-decoration: none;
 }
 
 .icon-logo {
