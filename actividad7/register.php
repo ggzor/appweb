@@ -29,7 +29,7 @@
     <input type="text" placeholder="Pregunta de recuperación" name="pregunta" id="pregunta" required /><br />
     <input type="text" placeholder="Respuesta a la pregunta" name="respuesta" id="respuesta" required /><br />
     <section class="bottom">
-      <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+      <p>¿Ya tienes cuenta? <a href="login.php">Inicia sesión</a></p>
       <input type="submit" value="Registrarse" />
     </section>
   </form>

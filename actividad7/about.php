@@ -14,11 +14,11 @@
   <section>
     <article class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 46 50">
-        <path d="M22 48l-2 2H8c-4 0-7-4-7-8V8c0-4 3-8 7-8h24c5 0 8 4 8 
-        8v21a2 2 0 01-4 0V8c0-2-1-4-4-4H8C6 4 5 6 5 8v34c0 2 
-        1 4 3 4h12l2 2zm23-16h-3L32 46h-1l-7-6a2 2 0 00-2 3l6 
-        6a5 5 0 007-1l10-13v-3zM31 12H10a2 2 0 100 4h21a2 2 0 
-        000-4zm1 9l-1-1H10a2 2 0 100 3h21l1-2zm-22 6a2 2 0 100 
+        <path d="M22 48l-2 2H8c-4 0-7-4-7-8V8c0-4 3-8 7-8h24c5 0 8 4 8
+        8v21a2 2 0 01-4 0V8c0-2-1-4-4-4H8C6 4 5 6 5 8v34c0 2
+        1 4 3 4h12l2 2zm23-16h-3L32 46h-1l-7-6a2 2 0 00-2 3l6
+        6a5 5 0 007-1l10-13v-3zM31 12H10a2 2 0 100 4h21a2 2 0
+        000-4zm1 9l-1-1H10a2 2 0 100 3h21l1-2zm-22 6a2 2 0 100
         4h13a2 2 0 100-4H10z" />
       </svg>
       <p>
@@ -28,7 +28,7 @@
 
     <section class="menu">
       <p>Menú</p>
-      <a class="seleccionado" href="history.html">
+      <a href="history.php">
         <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#a)">
             <path
@@ -43,7 +43,7 @@
         </svg>
         Historial
       </a>
-      <a href="create.html">
+      <a href="create.php">
         <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#a)">
             <path
@@ -59,7 +59,7 @@
         </svg>
         Crear examen
       </a>
-      <a href="about.html">
+      <a class="seleccionado" href="about.php">
         <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 25.219a1.563 1.563 0 1 0 0-3.125 1.563 1.563 0 0 0 0 3.125Z" />
           <path
@@ -74,7 +74,7 @@
 
   <section>
     <section class="links">
-      <a href="index.html">Cerrar sesión</a>
+      <a href="index.php">Cerrar sesión</a>
     </section>
     <main>
 

@@ -14,11 +14,11 @@
   <section>
     <article class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 46 50">
-        <path d="M22 48l-2 2H8c-4 0-7-4-7-8V8c0-4 3-8 7-8h24c5 0 8 4 8 
-        8v21a2 2 0 01-4 0V8c0-2-1-4-4-4H8C6 4 5 6 5 8v34c0 2 
-        1 4 3 4h12l2 2zm23-16h-3L32 46h-1l-7-6a2 2 0 00-2 3l6 
-        6a5 5 0 007-1l10-13v-3zM31 12H10a2 2 0 100 4h21a2 2 0 
-        000-4zm1 9l-1-1H10a2 2 0 100 3h21l1-2zm-22 6a2 2 0 100 
+        <path d="M22 48l-2 2H8c-4 0-7-4-7-8V8c0-4 3-8 7-8h24c5 0 8 4 8
+        8v21a2 2 0 01-4 0V8c0-2-1-4-4-4H8C6 4 5 6 5 8v34c0 2
+        1 4 3 4h12l2 2zm23-16h-3L32 46h-1l-7-6a2 2 0 00-2 3l6
+        6a5 5 0 007-1l10-13v-3zM31 12H10a2 2 0 100 4h21a2 2 0
+        000-4zm1 9l-1-1H10a2 2 0 100 3h21l1-2zm-22 6a2 2 0 100
         4h13a2 2 0 100-4H10z" />
       </svg>
       <p>
@@ -28,7 +28,7 @@
 
     <section class="menu">
       <p>Menú</p>
-      <a class="seleccionado" href="questions.html">
+      <a class="seleccionado" href="questions.php">
         <svg height="32" viewBox="0 0 480.001 480" width="32" xmlns="http://www.w3.org/2000/svg">
           <path
             d="m195.09 188.8 16.8 10.071a7.998 7.998 0 0 0 10.852-2.809 8 8 0 0 0-2.613-10.902l-14.848-8.918A77.82 77.82 0 0 0 216 136c0-35.29-21.527-64-48-64s-48 28.71-48 64 21.527 64 48 64a40.006 40.006 0 0 0 27.09-11.2zM136 136c0-26.016 14.656-48 32-48s32 21.984 32 48a62.413 62.413 0 0 1-8.43 32l-11.449-6.863a7.998 7.998 0 0 0-10.851 2.808 7.996 7.996 0 0 0 2.613 10.903l8.613 5.168A22.58 22.58 0 0 1 168 184c-17.344 0-32-21.984-32-48zM319.535 269.313a7.997 7.997 0 0 0-15.07 0l-40 112a8.002 8.002 0 0 0 4.848 10.222 7.997 7.997 0 0 0 10.222-4.847L291.93 352h40.144l12.39 34.688A7.997 7.997 0 0 0 352 392a7.989 7.989 0 0 0 6.54-3.39 7.992 7.992 0 0 0 .995-7.297zM297.641 336 312 295.785 326.402 336zm0 0" />
@@ -37,7 +37,7 @@
         </svg>
         Mis reactivos
       </a>
-      <a href="about.html">
+      <a href="about.php">
         <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
           <path d="M16 25.219a1.563 1.563 0 1 0 0-3.125 1.563 1.563 0 0 0 0 3.125Z" />
           <path
@@ -53,7 +53,7 @@
   <section>
     <section class="links">
       <p class="admin-indicator">Administrador</p>
-      <a href="index.html">Cerrar sesión</a>
+      <a href="index.php">Cerrar sesión</a>
     </section>
 
     <main>
