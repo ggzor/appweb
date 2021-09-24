@@ -1,5 +1,19 @@
 <?php
 require 'componentes.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $usuario = $_POST['usuario'];
+  $pass = $_POST['pass'];
+
+  if ($usuario === 'admin') {
+    header('Location: questions.php');
+  } else {
+    header('Location: history.php');
+  }
+
+  exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
