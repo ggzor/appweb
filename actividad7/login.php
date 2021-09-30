@@ -1,19 +1,35 @@
 <?php
+require 'database.php';
+
+session_start();
+solo_permitir([USUARIO_INTERNAUTA]);
+
 require 'componentes.php';
+
+$error = null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usuario = $_POST['usuario'];
   $pass = $_POST['pass'];
 
-  setcookie('usuario', $usuario);
+  $conn = new mysqli("localhost", "root", null, "examenes");
+  $resultados = $conn->query("SELECT * FROM usuarios WHERE nombre = '$usuario'");
 
-  if ($usuario === 'admin') {
-    header('Location: questions.php');
+  if ($row = $resultados->fetch_assoc()) {
+    if ($row['pass'] === $pass) {
+      $tipo = intval($row['tipo']);
+
+      $_SESSION['usuario'] = $usuario;
+      $_SESSION['tipo'] = $tipo;
+
+      $pagina = obtener_pagina_para($tipo);
+      header("Location: $pagina");
+    } else {
+      $error = 'La contraseña no es correcta';
+    }
   } else {
-    header('Location: history.php');
+    $error = 'No existe el usuario';
   }
-
-  exit();
 }
 
 ?>

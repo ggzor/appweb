@@ -1,6 +1,10 @@
 <?php
-require 'componentes.php';
+require 'database.php';
 
+session_start();
+solo_permitir([USUARIO_INTERNAUTA]);
+
+require 'componentes.php';
 $reactivos = 100;
 ?>
 

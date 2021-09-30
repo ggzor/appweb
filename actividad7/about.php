@@ -1,9 +1,16 @@
 <?php
+
+require 'database.php';
+
+session_start();
+solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
+
 require 'componentes.php';
 
-$usuario = $_COOKIE['usuario'];
+$usuario = $_SESSION['usuario'];
+$tipo = $_SESSION['tipo'];
 
-$is_admin = $usuario === 'admin';
+$is_admin = $tipo === USUARIO_ADMIN;
 
 ?>
 

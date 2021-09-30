@@ -1,4 +1,9 @@
 <?php
+require 'database.php';
+
+session_start();
+solo_permitir([USUARIO_NORMAL]);
+
 require 'componentes.php';
 ?>
 
