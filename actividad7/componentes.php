@@ -1,5 +1,20 @@
 <?php
 
+function links($is_admin = false)
+{
+  echo '
+<section class="links">';
+
+  if ($is_admin) {
+    echo '<p class="admin-indicator">Administrador</p>';
+  }
+
+  echo '
+  <a href="logout.php">Cerrar sesión</a>
+</section>
+';
+}
+
 function logo()
 {
   return <<<EOF

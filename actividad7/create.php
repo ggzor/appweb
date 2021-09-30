@@ -19,7 +19,7 @@ require 'componentes.php';
     <?php
     echo logo();
 
-    echo menu([
+    menu([
       'items' => [$m_history, $m_create, $m_about],
       'selected' => 1
     ]);
@@ -27,11 +27,9 @@ require 'componentes.php';
   </section>
 
   <section>
-    <section class="links">
-      <a href="index.php">Cerrar sesión</a>
-    </section>
-    <main>
+    <?php links($is_admin = false) ?>
 
+    <main>
     </main>
   </section>
 </body>

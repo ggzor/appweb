@@ -28,7 +28,7 @@ $is_admin = $usuario === 'admin';
       ? [$m_questions, $m_about]
       : [$m_history, $m_create, $m_about];
 
-    echo menu([
+    menu([
       'items' => $items,
       'selected' => $is_admin ? 1 : 2
     ]);
@@ -36,16 +36,9 @@ $is_admin = $usuario === 'admin';
   </section>
 
   <section>
-    <section class="links">
-      <?php
-      if ($is_admin) {
-        echo '<p class="admin-indicator">Administrador</p>';
-      }
-      ?>
-      <a href="index.php">Cerrar sesión</a>
-    </section>
-    <main>
+    <?php links($is_admin) ?>
 
+    <main>
     </main>
   </section>
 </body>
