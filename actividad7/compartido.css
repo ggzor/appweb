@@ -31,6 +31,9 @@
   --color-accent: #648de5;
   --color-accent-dark: #507FE2;
   --color-accent-light: #E9EFFB;
+
+  --color-error: #E56464;
+  --color-error-light: #FBE9E9;
 }
 
 body {

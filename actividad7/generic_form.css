@@ -77,6 +77,22 @@ h2 {
   text-decoration: none;
 }
 
+.card > .error {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-radius: 5px;
+
+  background-color: var(--color-error-light);
+  color: var(--color-error);
+  font-size: 20px;
+}
+
+.card > .error > b {
+  font-weight: 700;
+  margin-right: 0.3em;
+}
+
 .card .bottom a {
   text-decoration: underline;
   margin-right: 1em;

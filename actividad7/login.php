@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php echo logo() ?>
   <h2>Iniciar sesión</h2>
   <form class="card" action="login.php" method="POST">
+    <?php
+    if ($error) {
+      echo "<p class='error'><b> Error: </b> $error</p>";
+    }
+    ?>
     <input type="text" placeholder="Usuario" name="usuario" id="usuario" required autofocus /><br />
     <input type="password" placeholder="Contraseña" name="pass" id="pass" required /><br />
     <a href="olvidado.php">Olvidé mi contraseña</a>
