@@ -31,22 +31,22 @@ h2 {
 }
 
 .card {
-  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.05), 
-              0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0359427), 
-              0px 22.3363px 17.869px rgba(0, 0, 0, 0.0298054), 
-              0px 12.5216px 10.0172px rgba(0, 0, 0, 0.025),
-              0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0201946),
-              0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0140573);
+  box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.05),
+    0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0359427),
+    0px 22.3363px 17.869px rgba(0, 0, 0, 0.0298054),
+    0px 12.5216px 10.0172px rgba(0, 0, 0, 0.025),
+    0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0201946),
+    0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0140573);
   border-radius: 15px;
   padding: 3em;
   margin-top: 2em;
   color: rgba(0, 0, 0, 60%);
 
   display: grid;
+  width: min(600px, 60vw);
 }
 
 .card > input[type] {
-  width: min(500px, 60vw);
 }
 
 .card > input[type]:not(:first-child) {
@@ -68,7 +68,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
 
-  margin-top: 4em;
+  margin-top: 3rem;
   font-size: 18px;
 }
 
@@ -89,6 +89,7 @@ h2 {
 }
 
 .card > .error > b {
+  align-self: flex-start;
   font-weight: 700;
   margin-right: 0.3em;
 }
@@ -97,3 +98,9 @@ h2 {
   text-decoration: underline;
   margin-right: 1em;
 }
+
+.card > .suggest {
+  margin-top: 3rem;
+  margin-bottom: 0;
+}
+

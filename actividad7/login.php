@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $pagina = obtener_pagina_para($tipo);
       header("Location: $pagina");
+      exit();
     } else {
       $error = 'La contraseña no es correcta';
     }
