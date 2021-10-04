@@ -4,7 +4,6 @@
   font-weight: 100;
 }
 
-
 @font-face {
   font-family: Roboto;
   src: url("./Roboto/Roboto-Light.ttf");
@@ -23,24 +22,31 @@
   font-weight: 700;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 :root {
   --color-accent: #648de5;
-  --color-accent-dark: #507FE2;
-  --color-accent-light: #E9EFFB;
+  --color-accent-dark: #507fe2;
+  --color-accent-light: #e9effb;
 
-  --color-error: #E56464;
-  --color-error-light: #FBE9E9;
+  --color-error: #e56464;
+  --color-error-light: #fbe9e9;
+
+  --color-success: #1daf79;
+  --color-success-light: #e9fbf5;
 }
 
 body {
   font-family: Roboto, sans-serif;
 }
 
-button, input[type=submit], a.btn {
+button,
+input[type="submit"],
+a.btn {
   font-family: Roboto, sans-serif;
   font-size: 18px;
   font-weight: bold;
@@ -54,11 +60,14 @@ button, input[type=submit], a.btn {
   cursor: pointer;
 }
 
-button:hover, input[type=submit]:hover, a.btn:hover {
+button:hover,
+input[type="submit"]:hover,
+a.btn:hover {
   background-color: var(--color-accent-dark);
 }
 
-input[type=text], input[type=password] {
+input[type="text"],
+input[type="password"] {
   color: rgba(0, 0, 0, 70%);
   font-size: 24px;
   font-family: inherit;
@@ -67,11 +76,13 @@ input[type=text], input[type=password] {
   border-bottom: 2px solid rgba(0, 0, 0, 40%);
 }
 
-input[type=text]::placeholder, input[type=password]::placeholder  {
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
   font-weight: 300;
 }
 
-input[type=text]:focus, input[type=password]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
   border-bottom-color: var(--color-accent-dark);
   outline: 0;
 }
@@ -100,4 +111,4 @@ input[type=text]:focus, input[type=password]:focus {
 
 .logo > p > b {
   font-weight: 700;
-} 
+}

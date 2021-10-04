@@ -43,10 +43,7 @@ h2 {
   color: rgba(0, 0, 0, 60%);
 
   display: grid;
-  width: min(600px, 60vw);
-}
-
-.card > input[type] {
+  width: max(400px, min(600px, 60vw));
 }
 
 .card > input[type]:not(:first-child) {
@@ -77,21 +74,28 @@ h2 {
   text-decoration: none;
 }
 
-.card > .error {
-  display: flex;
-  align-items: center;
+.card > .message {
   padding: 20px;
   border-radius: 5px;
 
-  background-color: var(--color-error-light);
-  color: var(--color-error);
+  background-color: var(--color-message-light);
+  color: var(--color-message-base);
   font-size: 20px;
 }
 
-.card > .error > b {
+.card > .message > b {
   align-self: flex-start;
   font-weight: 700;
-  margin-right: 0.3em;
+}
+
+.card > .message.error {
+  --color-message-base: var(--color-error);
+  --color-message-light: var(--color-error-light);
+}
+
+.card > .message.success {
+  --color-message-base: var(--color-success);
+  --color-message-light: var(--color-success-light);
 }
 
 .card .bottom a {
@@ -103,4 +107,3 @@ h2 {
   margin-top: 3rem;
   margin-bottom: 0;
 }
-

@@ -7,13 +7,14 @@ solo_permitir([USUARIO_INTERNAUTA]);
 require 'componentes.php';
 
 $error = null;
+$registered = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $usuario = $_POST['usuario'];
   $pass = $_POST['pass'];
 
   $conn = new mysqli("localhost", "root", null, "examenes");
-  $resultados = $conn->query("SELECT * FROM usuarios WHERE nombre = '$usuario'");
+  $resultados = $conn->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
 
   if ($row = $resultados->fetch_assoc()) {
     if ($row['pass'] === $pass) {
@@ -30,6 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   } else {
     $error = 'No existe el usuario';
+  }
+
+  $resultados->close();
+  $conn->close();
+} else {
+  if (array_key_exists('registered', $_GET) && $_GET['registered'] == 1) {
+    $registered = true;
   }
 }
 
@@ -51,7 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form class="card" action="login.php" method="POST">
     <?php
     if ($error) {
-      echo "<p class='error'><b> Error: </b> $error</p>";
+      echo "<p class='message error'><b> Error: </b> $error</p>";
+    } elseif ($registered) {
+      echo "<p class='message success'><b>¡Registrado exitósamente!</b> Ya puedes iniciar sesión</p>";
     }
     ?>
     <input type="text" placeholder="Usuario" name="usuario" id="usuario" required autofocus /><br />
