@@ -1,16 +1,9 @@
 <?php
 
-require 'database.php';
+require_once 'database.php';
 
 session_start();
 solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
-
-require 'componentes.php';
-
-$usuario = $_SESSION['usuario'];
-$tipo = $_SESSION['tipo'];
-
-$is_admin = $tipo === USUARIO_ADMIN;
 
 ?>
 
@@ -29,6 +22,10 @@ $is_admin = $tipo === USUARIO_ADMIN;
 <body>
   <section>
     <?php
+    require_once 'componentes.php';
+
+    $is_admin = obtener_tipo_usuario() === USUARIO_ADMIN;
+
     echo logo();
 
     $items = $is_admin
@@ -43,7 +40,7 @@ $is_admin = $tipo === USUARIO_ADMIN;
   </section>
 
   <section>
-    <?php links($is_admin) ?>
+    <?php links() ?>
 
     <main>
     </main>

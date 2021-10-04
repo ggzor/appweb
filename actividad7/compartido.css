@@ -38,6 +38,9 @@
 
   --color-success: #1daf79;
   --color-success-light: #e9fbf5;
+
+  --color-grey: #666666;
+  --color-grey-light: #f2f2f2;
 }
 
 body {

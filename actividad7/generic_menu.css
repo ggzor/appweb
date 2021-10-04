@@ -24,7 +24,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
 }
 
 .menu > p {
@@ -75,15 +74,25 @@ body {
   margin-top: 1.5em;
 }
 
-.links > p.admin-indicator {
-  color: var(--color-accent);
-  font-weight: 700;
+.links > p.indicator {
+  color: var(--color-indicator-base);
+  background-color: var(--color-indicator-light);
+
   font-size: 20px;
-  background-color: var(--color-accent-light);
   padding: 8px 12px;
   border-radius: 15px;
 
   margin-right: 1.5em;
+}
+
+.links > p.indicator.admin {
+  --color-indicator-base: var(--color-accent);
+  --color-indicator-light: var(--color-accent-light);
+}
+
+.links > p.indicator.user {
+  --color-indicator-base: var(--color-grey);
+  --color-indicator-light: var(--color-grey-light);
 }
 
 .links > a {
@@ -91,4 +100,3 @@ body {
   color: rgba(0, 0, 0, 60%);
   text-decoration: none;
 }
-

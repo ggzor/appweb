@@ -1,10 +1,10 @@
 <?php
-require 'database.php';
+require_once 'database.php';
 
 session_start();
 solo_permitir([USUARIO_INTERNAUTA]);
 
-require 'componentes.php';
+require_once 'componentes.php';
 
 $error = null;
 

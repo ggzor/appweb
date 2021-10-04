@@ -1,10 +1,10 @@
 <?php
-require 'database.php';
+require_once 'database.php';
 
 session_start();
 solo_permitir([USUARIO_INTERNAUTA]);
 
-require 'componentes.php';
+require_once 'componentes.php';
 
 $error = null;
 $registered = false;
@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $tipo = intval($row['tipo']);
 
       $_SESSION['usuario'] = $usuario;
+      $_SESSION['nombre'] = $row['nombre'];
       $_SESSION['tipo'] = $tipo;
 
       $pagina = obtener_pagina_para($tipo);

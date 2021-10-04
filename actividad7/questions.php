@@ -1,10 +1,15 @@
 <?php
-require 'database.php';
+require_once 'database.php';
 
 session_start();
 solo_permitir([USUARIO_ADMIN]);
 
-require 'componentes.php';
+require_once 'componentes.php';
+
+$usuario = $_SESSION['usuario'];
+$nombre = $_SESSION['nombre'];
+$tipo = $_SESSION['tipo'];
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +37,7 @@ require 'componentes.php';
   </section>
 
   <section>
-    <?php links($is_admin = true) ?>
+    <?php links() ?>
     <main>
     </main>
   </section>
