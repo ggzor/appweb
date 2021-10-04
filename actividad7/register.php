@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form class="card" action="register.php" method="POST">
     <?php
     if ($error) {
-      echo "<p class='error'><b> Error: </b> $error</p>";
+      echo "<p class='message error'><b> Error: </b> $error</p>";
     }
     ?>
     <input type="text" placeholder="Nombre" name="nombre" id="nombre" required autofocus value="<?php echo $nombre ?>" /><br />
