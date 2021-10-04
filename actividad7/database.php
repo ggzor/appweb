@@ -27,11 +27,11 @@ function obtener_pagina_para($tipo)
   }
 }
 
-function solo_permitir($usuarios)
+function solo_permitir($usuarios_permitidos)
 {
   $tipo = obtener_tipo_usuario();
 
-  if (!in_array($tipo, $usuarios)) {
+  if (!in_array($tipo, $usuarios_permitidos)) {
     $pagina = obtener_pagina_para($tipo);
     header("Location: $pagina");
     exit();

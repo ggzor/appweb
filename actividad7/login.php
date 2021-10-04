@@ -1,10 +1,8 @@
 <?php
-require_once 'database.php';
-
 session_start();
-solo_permitir([USUARIO_INTERNAUTA]);
 
-require_once 'componentes.php';
+require_once 'database.php';
+solo_permitir([USUARIO_INTERNAUTA]);
 
 $error = null;
 $registered = false;
@@ -31,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $error = 'La contraseña no es correcta';
     }
   } else {
-    $error = 'No existe el usuario';
+    $error = "No existe el usuario '$usuario'";
   }
 
   $resultados->close();
@@ -55,7 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <?php echo logo() ?>
+  <?php
+  require_once 'componentes.php';
+  echo logo();
+  ?>
   <h2>Iniciar sesión</h2>
   <form class="card" action="login.php" method="POST">
     <?php
