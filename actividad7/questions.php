@@ -1,15 +1,8 @@
 <?php
-require_once 'database.php';
-
 session_start();
+
+require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
-
-require_once 'componentes.php';
-
-$usuario = $_SESSION['usuario'];
-$nombre = $_SESSION['nombre'];
-$tipo = $_SESSION['tipo'];
-
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +20,9 @@ $tipo = $_SESSION['tipo'];
 <body>
   <section>
     <?php
-    echo logo();
+    require_once 'componentes.php';
 
+    echo logo();
     menu([
       'items' => [$m_questions, $m_about],
       'selected' => 0
@@ -38,6 +32,7 @@ $tipo = $_SESSION['tipo'];
 
   <section>
     <?php links() ?>
+
     <main>
     </main>
   </section>

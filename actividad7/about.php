@@ -1,10 +1,8 @@
 <?php
+session_start();
 
 require_once 'database.php';
-
-session_start();
 solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
-
 ?>
 
 <!DOCTYPE html>
@@ -26,12 +24,11 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
 
     $is_admin = obtener_tipo_usuario() === USUARIO_ADMIN;
 
-    echo logo();
-
     $items = $is_admin
       ? [$m_questions, $m_about]
       : [$m_history, $m_create, $m_about];
 
+    echo logo();
     menu([
       'items' => $items,
       'selected' => $is_admin ? 1 : 2
