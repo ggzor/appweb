@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($row['pass'] === $pass) {
       $tipo = intval($row['tipo']);
 
+      $_SESSION['id_usuario'] = intval($row['id_usuario']);
       $_SESSION['usuario'] = $usuario;
       $_SESSION['nombre'] = $row['nombre'];
       $_SESSION['tipo'] = $tipo;

@@ -38,6 +38,7 @@ CREATE TABLE reactivo
   id_tema INT NOT NULL,
   nivel ENUM('BASICO', 'INTERMEDIO', 'AVANZADO') NOT NULL,
   enunciado TEXT NOT NULL,
+  multiple BOOLEAN NOT NULL DEFAULT false,
 
   FOREIGN KEY (id_creador) REFERENCES usuarios(id_usuario),
   FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
@@ -101,7 +102,8 @@ INSERT INTO reactivo VALUES
   (1, true,
       1, 2, -- creador, tema
       'BASICO', 
-      'Son algunos de los marcadores gráficos que se utilizan para organizar el contenido de un reglamento.');
+      'Son algunos de los marcadores gráficos que se utilizan para organizar el contenido de un reglamento.',
+      false); -- no multiple
 
 INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES 
   (1, 1, true,  'Incisos, viñetas, números romanos y negritas.'),
@@ -114,7 +116,8 @@ INSERT INTO reactivo VALUES
   (2, true,
       2, 1, -- creador, tema
       'AVANZADO', 
-      '¿Las manecillas del reloj están en ángulo recto cuando marcan las tres?');
+      '¿Las manecillas del reloj están en ángulo recto cuando marcan las tres?',
+      false); -- no multiple
 
 INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido)
 VALUES 
@@ -126,7 +129,8 @@ INSERT INTO reactivo VALUES
   (3, true,
       2, 1, -- creador, tema
       'INTERMEDIO', 
-      'Figuras geometrícas con al menos 4 lados');
+      'Figuras geometrícas con al menos 4 lados',
+      true); -- multiple
 
 INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido)
 VALUES 
@@ -160,37 +164,71 @@ VALUES
   (3, 8,  3),
   (3, 10, 3);
 
--- INSERT INTO reactivo VALUES
---   (4, true, 1, 2, 'Básico', 'Son los subgéneros del cuento y la novela.'),
---   (5, true, 1, 2, 'Básico', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.'),
---   (6, true, 1, 2, 'Básico', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.'),
---   (7, true, 2, 1, 'Básico', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 ='),
---   (8, true, 2, 1, 'Básico', 'Es el 25 % de 133.'),
---   (9, true, 2, 1, 'Básico', 'Son figuras geométricas que están formadas por cuatro lados.');
+CREATE VIEW reactivos_por_examen AS
+SELECT id_examen,
+       reactivo.id_reactivo as id_reactivo, 
+       nivel, tema.nombre as nombre_tema,
+       enunciado,
+       multiple
+FROM ref_reactivo 
+JOIN reactivo 
+ON ref_reactivo.id_reactivo = reactivo.id_reactivo
+JOIN tema
+ON reactivo.id_tema = tema.id_tema
+ORDER BY id_examen, reactivo.id_reactivo;
+
+CREATE VIEW elegidas_por_reactivo AS
+SELECT ref_reactivo.id_examen as id_examen,
+       reactivo.id_reactivo as id_reactivo,
+       opcion.id_opcion as id_opcion,
+       correcta,
+       contenido,
+       opcion_elegida.id_opcion_elegida as id_opcion_elegida
+FROM ref_reactivo
+JOIN reactivo
+ON ref_reactivo.id_reactivo = reactivo.id_reactivo
+JOIN opcion
+ON reactivo.id_reactivo = opcion.id_reactivo
+LEFT JOIN opcion_elegida
+ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo 
+   AND opcion.id_opcion = opcion_elegida.id_opcion
+ORDER BY ref_reactivo.id_examen, reactivo.id_reactivo, opcion.id_opcion;
+
+INSERT INTO reactivo VALUES
+  (4, true, 1, 2, 'Básico', 'Son los subgéneros del cuento y la novela.', true),
+  (5, true, 1, 2, 'Básico', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
+  (6, true, 1, 2, 'Básico', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
+  (7, true, 2, 1, 'Básico', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
+  (8, true, 2, 1, 'Básico', 'Es el 25 % de 133.', false),
+  (9, true, 2, 1, 'Básico', 'Son figuras geométricas que están formadas por cuatro lados.', false);
   
--- INSERT INTO opcion 
--- (id_reactivo, correcta, contenido)
--- (4, true, 'Policiaco, romántico,  y aventuras.'),
--- (4, true, 'Terror y  ciencia ficción'),
--- (4, false, 'Himno, epístola, égloga y canción.'),
--- (4, false, 'Diálogo, ensayo, biografía y cartas.'),
--- (5, false, 'Canciones.'),
--- (5, false, 'Fábulas.'),
--- (5, true, 'Refranes.'),
--- (5, false, 'Pregones.'),
--- (6, false, 'Personaje.'),
--- (6, false, 'Locutor.'),
--- (6, false, 'Expositor.'),
--- (6, true, 'Narrador.'),
--- (7, false, '-5'),
--- (7, true, '5'),
--- (7, false, '-11'),
--- (7, false, '11'),
--- (8, false, '99.75'),
--- (8, false, '32.35'),
--- (8, true, '33.25'),
--- (8, false, '97.59'),
--- (9, false, 'círculos'),
--- (9, false, 'triángulos'),
--- (9, false, 'polígonos'),
--- (9, true, 'cuadriláteros');
+INSERT INTO opcion 
+(id_reactivo, correcta, contenido)
+VALUES
+(4, true, 'Policiaco, romántico,  y aventuras.'),
+(4, true, 'Terror y  ciencia ficción'),
+(4, false, 'Himno, epístola, égloga y canción.'),
+(4, false, 'Diálogo, ensayo, biografía y cartas.'),
+(5, false, 'Canciones.'),
+(5, false, 'Fábulas.'),
+(5, true, 'Refranes.'),
+(5, false, 'Pregones.'),
+(6, false, 'Personaje.'),
+(6, false, 'Locutor.'),
+(6, false, 'Expositor.'),
+(6, true, 'Narrador.'),
+(7, false, '-5'),
+(7, true, '5'),
+(7, false, '-11'),
+(7, false, '11'),
+(8, false, '99.75'),
+(8, false, '32.35'),
+(8, true, '33.25'),
+(8, false, '97.59'),
+(9, false, 'círculos'),
+(9, false, 'triángulos'),
+(9, false, 'polígonos'),
+(9, true, 'cuadriláteros');
+
+-- INSERT INTO ref_reactivo (id_examen, id_reactivo)
+-- VALUES (1, 4), (1, 5);
