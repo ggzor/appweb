@@ -44,7 +44,7 @@ CREATE TABLE reactivo
   FOREIGN KEY (id_tema) REFERENCES tema(id_tema)
 );
 
-CREATE TABLE ref_reactivo 
+CREATE TABLE ref_reactivo
 (
   id_ref_reactivo INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   id_examen INT NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE opcion
   contenido TEXT NOT NULL,
 
   PRIMARY KEY (id_opcion, id_reactivo),
-  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo) 
+  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo)
 );
 
 CREATE TABLE opcion_elegida
@@ -91,9 +91,9 @@ VALUES
   (4, 'Sol', 'sunSky', 'Contraseña1234_',
       '¿Color favorito?', 'Azul', 1);
 
-INSERT INTO tema 
+INSERT INTO tema
   (id_tema, nombre)
-VALUES 
+VALUES
   (1, 'Matemáticas'),
   (2, 'Español');
 
@@ -101,11 +101,11 @@ VALUES
 INSERT INTO reactivo VALUES
   (1, true,
       1, 2, -- creador, tema
-      'BASICO', 
+      'BASICO',
       'Son algunos de los marcadores gráficos que se utilizan para organizar el contenido de un reglamento.',
       false); -- no multiple
 
-INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES 
+INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES
   (1, 1, true,  'Incisos, viñetas, números romanos y negritas.'),
   (2, 1, false, 'Puntos, comas, signos de interrogación y signos de admiración.'),
   (3, 1, false, 'Guion largo, guion corto y paréntesis.'),
@@ -115,12 +115,12 @@ INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES
 INSERT INTO reactivo VALUES
   (2, true,
       2, 1, -- creador, tema
-      'AVANZADO', 
+      'AVANZADO',
       '¿Las manecillas del reloj están en ángulo recto cuando marcan las tres?',
       false); -- no multiple
 
 INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido)
-VALUES 
+VALUES
   (5, 2, true, 'Verdadero'),
   (6, 2, false,'Falso.');
 
@@ -128,12 +128,12 @@ VALUES
 INSERT INTO reactivo VALUES
   (3, true,
       2, 1, -- creador, tema
-      'INTERMEDIO', 
+      'INTERMEDIO',
       'Figuras geometrícas con al menos 4 lados',
       true); -- multiple
 
 INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido)
-VALUES 
+VALUES
   (7,  3, false, 'Triangulo'),
   (8,  3, true,  'Cuadrado'),
   (9,  3, false, 'Circulo'),
@@ -148,12 +148,12 @@ VALUES
 INSERT INTO ref_reactivo
   (id_ref_reactivo, id_examen, id_reactivo)
 VALUES
-  (1, 1, 1), 
-  (2, 1, 2),  
-  (3, 1, 3), 
+  (1, 1, 1),
+  (2, 1, 2),
+  (3, 1, 3),
 
-  (4, 2, 2), 
-  (5, 2, 3); 
+  (4, 2, 2),
+  (5, 2, 3);
 
 INSERT INTO opcion_elegida
   (id_ref_reactivo, id_opcion, id_reactivo)
@@ -166,12 +166,12 @@ VALUES
 
 CREATE VIEW reactivos_por_examen AS
 SELECT id_examen,
-       reactivo.id_reactivo as id_reactivo, 
+       reactivo.id_reactivo as id_reactivo,
        nivel, tema.nombre as nombre_tema,
        enunciado,
        multiple
-FROM ref_reactivo 
-JOIN reactivo 
+FROM ref_reactivo
+JOIN reactivo
 ON ref_reactivo.id_reactivo = reactivo.id_reactivo
 JOIN tema
 ON reactivo.id_tema = tema.id_tema
@@ -190,19 +190,19 @@ ON ref_reactivo.id_reactivo = reactivo.id_reactivo
 JOIN opcion
 ON reactivo.id_reactivo = opcion.id_reactivo
 LEFT JOIN opcion_elegida
-ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo 
+ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo
    AND opcion.id_opcion = opcion_elegida.id_opcion
 ORDER BY ref_reactivo.id_examen, reactivo.id_reactivo, opcion.id_opcion;
 
 INSERT INTO reactivo VALUES
-  (4, true, 1, 2, 'Básico', 'Son los subgéneros del cuento y la novela.', true),
-  (5, true, 1, 2, 'Básico', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
-  (6, true, 1, 2, 'Básico', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
-  (7, true, 2, 1, 'Básico', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
-  (8, true, 2, 1, 'Básico', 'Es el 25 % de 133.', false),
-  (9, true, 2, 1, 'Básico', 'Son figuras geométricas que están formadas por cuatro lados.', false);
-  
-INSERT INTO opcion 
+  (4, true, 1, 2, 'BASICO', 'Son los subgéneros del cuento y la novela.', true),
+  (5, true, 1, 2, 'BASICO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
+  (6, true, 1, 2, 'BASICO', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
+  (7, true, 2, 1, 'BASICO', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
+  (8, true, 2, 1, 'BASICO', 'Es el 25 % de 133.', false),
+  (9, true, 2, 1, 'BASICO', 'Son figuras geométricas que están formadas por cuatro lados.', false);
+
+INSERT INTO opcion
 (id_reactivo, correcta, contenido)
 VALUES
 (4, true, 'Policiaco, romántico,  y aventuras.'),
