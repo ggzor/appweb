@@ -38,6 +38,7 @@ body {
   flex-direction: row;
   align-items: center;
 
+  width: 90%;
   font-size: 1.2em;
   color: rgba(0, 0, 0, 60%);
   padding: 8px 32px 8px 16px;

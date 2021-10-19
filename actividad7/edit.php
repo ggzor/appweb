@@ -15,6 +15,7 @@ solo_permitir([USUARIO_ADMIN]);
   <title>Principal</title>
   <link rel="stylesheet" href="compartido.css">
   <link rel="stylesheet" href="generic_menu.css">
+  <link rel="stylesheet" href="edit.css">
 </head>
 
 <body>
@@ -34,14 +35,15 @@ solo_permitir([USUARIO_ADMIN]);
     <?php links() ?>
 
     <main>
-      <section>
+      <section class="edit-section">
         <h2>General</h2>
         <article>
           <p><strong>Español</strong></p>
           <p class="nivel">Básico</p>
         </article>
       </section>
-      <section>
+
+      <section class="edit-section">
         <h2>Enunciado</h2>
         <article>
           <p class="enunciado">
@@ -49,25 +51,31 @@ solo_permitir([USUARIO_ADMIN]);
           </p>
         </article>
       </section>
-      <section>
+
+      <section class="edit-section">
         <h2>Opciones</h2>
         <article>
           <input type="radio" name="opciones" id="opcion1">
           <label for="opcion1">Incisos, viñetas, números romanos y negritas.</label>
         </article>
-        <article>
-          <button class="secondary small upper">+ Agregar opción</button>
+        <article class="horizontal">
+          <button class="subnormal secondary tiny upper">+ Agregar opción</button>
           <div class="bar"></div>
-          <input type="checkbox" name="multiple" id="multiple">
-          <label for="multiple">Permitir más de una correcta</label>
+          <input type="checkbox" class="subnormal" name="multiple" id="multiple">
+          <label class="upper subnormal faded" for="multiple">Permitir más de una correcta</label>
         </article>
       </section>
-      <section>
-        <a href="questions.php" class="button small secondary">Cancelar</a>
+
+      <section class="edit-section">
+        <a href="questions.php" class="btn small secondary">Cancelar</a>
         <input class="small" type="submit" value="Guardar cambios">
       </section>
     </main>
   </section>
+
+  <script>
+    /* setTimeout(() => window.location.reload(), 1000) */
+  </script>
 </body>
 
 </html>

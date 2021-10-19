@@ -1,0 +1,51 @@
+.edit-section > h2 {
+  font-size: 0.66em;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+
+  color: var(--color-black-light);
+}
+
+.edit-section:not(:first-of-type) {
+  margin-top: 24px;
+}
+
+.edit-section > article {
+  margin-top: 8px;
+}
+
+.edit-section p {
+  margin: 0;
+}
+
+.edit-section input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.enunciado {
+  line-height: 1.4;
+}
+
+.faded {
+  color: var(--color-black-light);
+}
+
+.subnormal {
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.horizontal {
+  display: flex;
+  align-items: baseline;
+}
+
+.bar {
+  width: 2px;
+  height: 16px;
+  transform: translateY(1px);
+  margin: 0px 8px;
+  background-color: var(--color-black-light2);
+}
