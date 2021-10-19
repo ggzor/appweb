@@ -4,6 +4,10 @@ const USUARIO_INTERNAUTA = -1;
 const USUARIO_ADMIN = 0;
 const USUARIO_NORMAL = 1;
 
+const NIVEL_BASICO = 'BASICO';
+const NIVEL_INTERMEDIO = 'INTERMEDIO';
+const NIVEL_AVANZADO = 'AVANZADO';
+
 function obtener_tipo_usuario()
 {
   if (array_key_exists('usuario', $_SESSION)) {

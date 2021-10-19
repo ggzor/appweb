@@ -15,6 +15,7 @@ solo_permitir([USUARIO_ADMIN]);
   <title>Principal</title>
   <link rel="stylesheet" href="compartido.css">
   <link rel="stylesheet" href="generic_menu.css">
+  <link rel="stylesheet" href="questions.css">
 </head>
 
 <body>
@@ -34,8 +35,32 @@ solo_permitir([USUARIO_ADMIN]);
     <?php links() ?>
 
     <main>
+      <table class="tabla-reactivos">
+        <tr>
+          <th>Id</th>
+          <th>Tema</th>
+          <th>Nivel</th>
+          <th>Enunciado</th>
+          <th>Publicado</th>
+        </tr>
+        <tr>
+          <td class="id">Maria Anders</td>
+          <td class="tema">Germany</td>
+          <td class="nivel"><?php echo icono_para_nivel(NIVEL_BASICO) ?></td>
+          <td class="enunciado">Francisco Chang</td>
+          <td class="publicado">Mexico</td>
+        </tr>
+        <tr>
+          <td class="id">Maria Anders</td>
+          <td class="tema">Germany</td>
+          <td class="nivel">Centro comercial Moctezuma</td>
+          <td class="enunciado">Francisco Chang</td>
+          <td class="publicado">Mexico</td>
+        </tr>
+      </table>
     </main>
   </section>
+
 </body>
 
 </html>

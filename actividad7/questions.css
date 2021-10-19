@@ -1,0 +1,21 @@
+.tabla-reactivos {
+    border-collapse: collapse;
+    width: 90%;
+}
+
+.tabla-reactivos th  {
+    color: #494949;
+    text-transform: uppercase;
+    background-color: #EDEDED;
+}
+
+.tabla-reactivos td {
+    color: #000000;
+    border-bottom: 1px solid rgb(31, 27, 27);
+
+}
+
+.tabla-reactivos td.tema {
+    font-weight: bold;
+}
+
