@@ -50,13 +50,13 @@ body {
 }
 
 .menu > a.seleccionado {
-  color: #fff;
-  background-color: var(--color-accent);
+  color: var(--color-accent);
+  background-color: var(--color-accent-light);
   border-radius: 0px 50px 50px 0px;
 }
 
 .menu > a.seleccionado > svg {
-  fill: #fff;
+  fill: var(--color-accent);
 }
 
 .links {
