@@ -171,26 +171,29 @@ $m_edit = function ($selected) {
 EOF;
 };
 
-function icono_para_nivel($nivel)
+function icono_para_nivel($nivel, $base_size = 10)
 {
+  $double = $base_size * 2.5;
+  $triple = $base_size * 3;
+
   switch ($nivel) {
     case NIVEL_BASICO:
       return <<<EOF
-      <svg width="10" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$base_size" height="$base_size" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M.5.5h9v9h-9z"/>
       </svg>
 EOF;
       break;
     case NIVEL_INTERMEDIO:
       return <<<EOF
-      <svg width="25" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$double" height="$base_size" viewBox="0 0 25 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M0 0h10v10H0zM15 0h10v10H15z"/>
       </svg>
 EOF;
       break;
     case NIVEL_AVANZADO:
       return <<<EOF
-      <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$triple" height="$triple" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M20 0h10v10H20zM0 20h10v10H0zM10 10h10v10H10z"/>
       </svg>
 EOF;

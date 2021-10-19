@@ -8,6 +8,20 @@ const NIVEL_BASICO = 'BASICO';
 const NIVEL_INTERMEDIO = 'INTERMEDIO';
 const NIVEL_AVANZADO = 'AVANZADO';
 
+function obtener_cadena_nivel($nivel)
+{
+  switch ($nivel) {
+    case NIVEL_BASICO:
+      return 'Básico';
+    case NIVEL_INTERMEDIO:
+      return 'Intermedio';
+    case NIVEL_AVANZADO:
+      return 'Avanzado';
+    default:
+      return 'Desconocido';
+  }
+}
+
 function obtener_tipo_usuario()
 {
   if (array_key_exists('usuario', $_SESSION)) {
