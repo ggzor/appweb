@@ -127,3 +127,28 @@ function obtener_opciones_por_reactivo($conn, $id_reactivo)
 
   return $opciones;
 }
+
+function actualizar_reactivo($conn, $id_reactivo, $id_tema, $nivel, $enunciado, $multiple)
+{
+  $stmt = null;
+
+  try {
+    $stmt = $conn->prepare("
+UPDATE reactivo
+SET
+  id_tema = ?,
+  nivel = ?,
+  enunciado = ?,
+  multiple = ?,
+  fecha = NOW()
+WHERE id_reactivo = ?;
+");
+    $stmt->bind_param("issii", $id_tema, $nivel, $enunciado, $multiple, $id_reactivo);
+    return $stmt->execute();
+  } catch (\Throwable $th) {
+    throw $th;
+  } finally {
+    if ($stmt)
+      $stmt->close();
+  }
+}

@@ -228,3 +228,27 @@ ul.opciones .opcion-reactivo .buttons {
   align-items: stretch;
   justify-items: stretch;
 }
+
+.message {
+  padding: 8px;
+  border-radius: 5px;
+
+  background-color: var(--color-message-light);
+  color: var(--color-message-base);
+  font-size: 1em;
+}
+
+.message > b {
+  align-self: flex-start;
+  font-weight: 700;
+}
+
+.message.error {
+  --color-message-base: var(--color-error);
+  --color-message-light: var(--color-error-light);
+}
+
+.message.success {
+  --color-message-base: var(--color-success);
+  --color-message-light: var(--color-success-light);
+}
