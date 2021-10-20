@@ -130,9 +130,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $info_reactivo = obtener_informacion_reactivo($conn, $id_reactivo);
   $opciones = obtener_opciones_por_reactivo($conn, $id_reactivo);
 
+  $multiple = boolval($info_reactivo['multiple']);
+  if ($multiple) {
+    foreach ($opciones as &$opcion) {
+      $opcion['correcta'] = boolval($opcion['correcta']);
+    }
+  }
+
   $tema = $info_reactivo['id_tema'];
   $nivel = $info_reactivo['nivel'];
-  $multiple = boolval($info_reactivo['multiple']);
   $enunciado = $info_reactivo['enunciado'];
   $contador = 1;
   $editable = false;
@@ -265,8 +271,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <ul class="opciones">
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
-                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-model="unica" x-show="!multiple" :disabled="!editable">
-                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-model="opcion.correcta" x-show="multiple" :disabled="!editable">
+                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica">
+                <input type="checkbox" value="true" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta">
                 <div class="input-sizer" :data-value="opcion.contenido">
                   <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
                   </textarea>
