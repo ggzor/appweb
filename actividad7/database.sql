@@ -54,7 +54,7 @@ CREATE TABLE ref_reactivo
   UNIQUE KEY (id_examen, id_reactivo),
 
   FOREIGN KEY (id_examen) REFERENCES examen(id_examen),
-  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo)
+  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo) ON DELETE CASCADE
 );
 
 CREATE TABLE opcion
@@ -65,7 +65,7 @@ CREATE TABLE opcion
   contenido TEXT NOT NULL,
 
   PRIMARY KEY (id_opcion, id_reactivo),
-  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo)
+  FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo) ON DELETE CASCADE
 );
 
 CREATE TABLE opcion_elegida
@@ -78,6 +78,7 @@ CREATE TABLE opcion_elegida
   UNIQUE KEY (id_ref_reactivo, id_opcion),
   FOREIGN KEY (id_ref_reactivo) REFERENCES ref_reactivo(id_ref_reactivo),
   CONSTRAINT fk_opcion FOREIGN KEY (id_opcion, id_reactivo) REFERENCES opcion(id_opcion, id_reactivo)
+    ON DELETE CASCADE
 );
 
 INSERT INTO usuarios
@@ -117,7 +118,7 @@ INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES
 INSERT INTO reactivo VALUES
   (2, true,
       2, 1, -- creador, tema
-      '2020-01-01 10:10:10', 
+      '2020-01-01 10:10:10',
       'AVANZADO',
       '¿Las manecillas del reloj están en ángulo recto cuando marcan las tres?',
       false); -- no multiple

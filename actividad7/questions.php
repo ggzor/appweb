@@ -3,6 +3,21 @@ session_start();
 
 require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
+
+require_once 'dal.php';
+$conn = crear_conexion();
+
+if (array_key_exists('delete', $_GET)) {
+  $id_delete = intval($_GET['delete']);
+  var_dump("Delete: $id_delete");
+
+  $result = borrar_reactivo($conn, $id_delete);
+  var_dump($result);
+
+  header("Location: questions.php?delete_ok=1");
+  exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,18 +49,15 @@ solo_permitir([USUARIO_ADMIN]);
   <section>
     <?php
     links();
+    $todos_temas = obtener_temas($conn);
 
-    $todos_temas = [1 => "Todos los temas", 2 => "Matemáticas", 3 => "Español"];
-    $todos_niveles = [1 => "Todos los niveles", 2 => "Básico", 3 => "Intermedio", 4 => "Avanzado"];
+    /* $todos_temas = [1 => "Todos los temas", 2 => "Matemáticas", 3 => "Español"]; */
+    /* $todos_niveles = [1 => "Todos los niveles", 2 => "Básico", 3 => "Intermedio", 4 => "Avanzado"]; */
     ?>
 
     <main>
-
-      <section class="filtros">
-
+      <section class="filtros" style="display: none;">
         <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar...">
-
-
         <select class="bold" name="filtro_tema" id="filtro_tema">
           <?php
           foreach ($todos_temas as $id_tema => $nombre_tema) {
@@ -54,7 +66,6 @@ solo_permitir([USUARIO_ADMIN]);
           }
           ?>
         </select>
-
         <select class="bold" name="filtro_nivel" id="filtro_nivel">
           <?php
           foreach ($todos_niveles as $id_nivel => $nombre_nivel) {
@@ -64,6 +75,15 @@ solo_permitir([USUARIO_ADMIN]);
           ?>
         </select>
       </section>
+
+      <?php
+      if (array_key_exists('delete_ok', $_GET)) {
+        echo "<p class='message success'> Reactivo eliminado correctamente </p>";
+      }
+      ?>
+
+      <a class="btn btn-nuevo small" href="edit.php?new=1">+ Crear nuevo</a>
+
       <section class="tabla-reactivos">
         <p class="titulo">Id</p>
         <p class="titulo">Fecha <?php echo up_arrow() ?></p>
@@ -73,41 +93,55 @@ solo_permitir([USUARIO_ADMIN]);
         <p class="titulo">Publicado</p>
         <p class="titulo"></p>
 
-        <p class="id">1</p>
-        <p class="fecha">Hoy</p>
-        <p class="tema">Matemáticas</p>
-        <p class="nivel"><?php echo icono_para_nivel(NIVEL_BASICO) ?></p>
-        <p class="enunciado">Francisco Chang</p>
-        <p class="publicado"><?php echo icono_checkmark() ?></p>
-        <div class="acciones">
-          <?php echo icono_edit() ?>
-          <?php echo icono_delete() ?>
-        </div>
+
+        <?php
+        $reactivos = obtener_reactivos($conn, $_SESSION['id_usuario']);
+
+        function obtener_fecha_legible(DateTime $fecha)
+        {
+          $ahora = new DateTime();
+          $diff = $ahora->diff($fecha, true);
+
+          $result = $fecha->format('Y-m-d');
+
+          return $result;
+        }
+
+        $edit_icon = icono_edit();
+        $delete_icon = icono_delete();
+
+        foreach ($reactivos as $reactivo) {
+          $id = $reactivo['id_reactivo'];
+          $fecha = obtener_fecha_legible(DateTime::createFromFormat("Y-m-d H:i:s", $reactivo['fecha']));
+          $tema = $todos_temas[$reactivo['id_tema']];
+          $icono = icono_para_nivel($reactivo['nivel']);
+          $enunciado = $reactivo['enunciado'];
+          $publicado = $reactivo['publicado'] ? icono_checkmark() : '';
 
 
-        <p class="id">2</p>
-        <p class="fecha">02 Agosto</p>
-        <p class="tema">Germany</p>
-        <p class="nivel"><?php echo icono_para_nivel(NIVEL_AVANZADO) ?></p>
-        <p class="enunciado">Lorem ipsum dolor sit acdsdf dss dfsfsh fdskhs fdsjkhmet consectetur adipisicing elit.
-          Ea repellat facere voluptatum harum modi officia. </p>
-        <p class="publicado"><?php echo icono_checkmark() ?></p>
-        <div class="acciones">
-          <?php echo icono_edit() ?>
-          <?php echo icono_delete() ?>
-        </div>
+          echo <<<EOF
+            <p class="id">$id</p>
+            <p class="fecha">$fecha</p>
+            <p class="tema">$tema</p>
+            <p class="nivel">$icono</p>
+            <p class="enunciado">$enunciado</p>
+            <p class="publicado">$publicado</p>
+            <div class="acciones">
+              <a class="btn secondary tiny" href="edit.php?id_reactivo=$id">$edit_icon</a>
+              <a class="btn secondary tiny" href="questions.php?delete=$id"
+                 onclick="return confirm('¿Seguro que quieres eliminar este reactivo?')">
+                 $delete_icon
+              </a>
+            </div>
+          EOF;
+        }
 
-        <p class="id">3</p>
-        <p class="fecha">08 de Otubre</p>
-        <p class="tema">Germany</p>
-        <p class="nivel"><?php echo icono_para_nivel(NIVEL_INTERMEDIO) ?></p>
-        <p class="enunciado">Francisco Chang</p>
-        <p class="publicado"><?php echo icono_checkmark() ?></p>
-        <div class="acciones">
-          <?php echo icono_edit() ?>
-          <?php echo icono_delete() ?>
-        </div>
-
+        if (count($reactivos) == 0) {
+          echo <<<EOF
+          <h4>No hay reactivos por aquí.</h4>
+          EOF;
+        }
+        ?>
       </section>
     </main>
   </section>
