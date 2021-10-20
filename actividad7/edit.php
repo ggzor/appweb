@@ -120,6 +120,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $multiple
     );
 
+    $conservar = [];
+    foreach ($opciones as $opcion) {
+      if (is_numeric($opcion['id_opcion'])) {
+        $id_opcion = intval($opcion['id_opcion']);
+        $conservar[] = $id_opcion;
+
+        actualizar_opcion($conn, $id_opcion, $opcion['correcta'], $opcion['contenido']);
+      } else {
+        $nueva = crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+        $conservar[] = $nueva;
+      }
+    }
+
+    if (count($conservar) > 0) {
+      $num_str = implode(", ", $conservar);
+      $conn->query("DELETE FROM opcion WHERE id_reactivo = $id_reactivo
+                                         AND id_opcion NOT IN ($num_str);");
+    }
+
     header("Location: edit.php?id_reactivo=$id_reactivo&update_ok=1");
     exit();
   }
@@ -272,7 +291,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
                 <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica">
-                <input type="checkbox" value="true" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta">
+                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta">
                 <div class="input-sizer" :data-value="opcion.contenido">
                   <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
                   </textarea>

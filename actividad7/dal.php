@@ -152,3 +152,25 @@ WHERE id_reactivo = ?;
       $stmt->close();
   }
 }
+
+function actualizar_opcion($conn, $id_opcion, $correcta, $contenido)
+{
+  $stmt = null;
+
+  try {
+    $stmt = $conn->prepare("
+UPDATE opcion
+SET
+  correcta = ?,
+  contenido = ?
+WHERE id_opcion = ?;
+");
+    $stmt->bind_param("isi", $correcta, $contenido, $id_opcion);
+    return $stmt->execute();
+  } catch (\Throwable $th) {
+    throw $th;
+  } finally {
+    if ($stmt)
+      $stmt->close();
+  }
+}
