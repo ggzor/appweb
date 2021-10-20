@@ -52,7 +52,11 @@ const OPCION_NUEVA_PREFIJO = 'nueva_';
 const OPCION_RADIO_KEY = 'opcionradio';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $crear_nuevo =  boolval($_REQUEST['create']);
+  $crear_nuevo = array_key_exists('create', $_REQUEST);
+
+  if (!$crear_nuevo) {
+    $id_reactivo = intval($_REQUEST['update']);
+  }
 
   $tema = intval($_REQUEST['tema']);
   $nivel = $_REQUEST['nivel'];
@@ -105,6 +109,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
 
     header("Location: questions.php?create_ok=1");
+    exit();
+  } else {
+    actualizar_reactivo(
+      $conn,
+      $id_reactivo,
+      $tema,
+      $nivel,
+      $enunciado,
+      $multiple
+    );
+
+    header("Location: edit.php?id_reactivo=$id_reactivo&update_ok=1");
     exit();
   }
 
@@ -179,7 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       json_encode([
         'editable' => $editable,
         'multiple' => $multiple,
-        'unica' => $correcta == null ? "{$opciones[0]['id_opcion']}" : "$correcta",
+        'unica' => intval($correcta == null ? "{$opciones[0]['id_opcion']}" : "$correcta"),
         'contador' => $contador,
         'opciones' => $opciones
       ], JSON_UNESCAPED_UNICODE)
@@ -242,7 +258,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
                 <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-model="unica" x-show="!multiple" :disabled="!editable">
-                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-model="opcion.correcta" x-show="multiple">
+                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-model="opcion.correcta" x-show="multiple" :disabled="!editable">
                 <div class="input-sizer" :data-value="opcion.contenido">
                   <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
                   </textarea>
