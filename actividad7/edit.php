@@ -81,8 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       if ($multiple) {
         $nombre_check = OPCION_CHECK_PREFIJO . $nombre;
-        $correcta = array_key_exists($nombre_check, $_REQUEST)
-          && $_REQUEST[$nombre_check];
+        $correcta = array_key_exists($nombre_check, $_REQUEST);
       } else {
         $correcta = $_REQUEST[OPCION_RADIO_KEY] == $nombre;
       }
