@@ -3,6 +3,20 @@ session_start();
 
 require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
+
+require_once 'dal.php';
+$conn = crear_conexion();
+
+$error = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  echo "<pre>";
+  var_dump($_POST);
+  echo "</pre>";
+
+  exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -37,32 +51,33 @@ solo_permitir([USUARIO_ADMIN]);
     <?php
     const MEDIDA_ICONO = 6;
 
-    $todos_temas = [1 => "Matemáticas", 2 => "Español"];
+    $todos_temas = obtener_temas($conn);
     $todos_niveles = [NIVEL_BASICO, NIVEL_INTERMEDIO, NIVEL_AVANZADO];
 
-    $tema = 1;
+    $tema = array_keys($todos_temas)[0];
     $nivel = NIVEL_BASICO;
     $multiple = false;
-    $enunciado = "Son algunos de los marcadores gráficos que se utilizan para organizar el contenido de un reglamento.";
-
+    $enunciado = "En este espacio es donde va tu reactivo, da click para editar.";
     $opciones = [
       [
-        'id_opcion' => 1, 'correcta' => true,
-        'contenido' => "Incisos, viñetas, números romanos y negritas."
+        'id_opcion' => 'nueva_1',
+        'correcta' => true,
+        'contenido' => 'Esta es una opción seleccionada, haz click para editar.'
       ],
       [
-        'id_opcion' => 2, 'correcta' => false,
-        'contenido' => "Puntos, comas, signos de interrogación y signos de admiración."
-      ],
-      [
-        'id_opcion' => 3, 'correcta' => false,
-        'contenido' => "Guion largo, guion corto y paréntesis."
-      ],
-      [
-        'id_opcion' => 4, 'correcta' => false,
-        'contenido' => "Párrafos, versos y estrofas."
-      ],
+        'id_opcion' => 'nueva_2',
+        'correcta' => false,
+        'contenido' => 'Esta es una opción no seleccionada, haz click para editar.'
+      ]
     ];
+    $contador = 3;
+    $editable = true;
+
+    $es_nueva = false;
+
+    if (array_key_exists('new', $_GET)) {
+      $es_nueva = true;
+    }
 
     $correcta = null;
     if (!$multiple) {
@@ -78,17 +93,17 @@ solo_permitir([USUARIO_ADMIN]);
       '"',
       "'",
       json_encode([
-        'editable' => false,
+        'editable' => $editable,
         'multiple' => $multiple,
         'unica' => $correcta == null ? "{$opciones[0]['id_opcion']}" : "$correcta",
-        'contador' => 1,
+        'contador' => $contador,
         'opciones' => $opciones
       ], JSON_UNESCAPED_UNICODE)
     );
 
     ?>
 
-    <main x-data="<?php echo $target_data ?>">
+    <form action="edit.php?create=1" method="POST" class="main" x-data="<?php echo $target_data ?>" x-cloak>
       <section class="edit-section">
         <h2>General</h2>
         <article class="nivel">
@@ -140,14 +155,14 @@ solo_permitir([USUARIO_ADMIN]);
           <ul class="opciones">
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
-                <input type="radio" name="opciones_radio" id="opcion_radio_1" :value="opcion.id_opcion" x-model="unica" x-show="!multiple" :disabled="!editable">
-                <input type="checkbox" name="opciones_check" id="opcion_check_1" x-model="opcion.correcta" x-show="multiple">
+                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-model="unica" x-show="!multiple" :disabled="!editable">
+                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-model="opcion.correcta" x-show="multiple">
                 <div class="input-sizer" :data-value="opcion.contenido">
-                  <textarea oninput="this.parentNode.dataset.value = this.value" name="opcion1_texto" id="opcion1_texto" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
+                  <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
                   </textarea>
                 </div>
                 <div class="buttons">
-                  <button class="tiny secondary" x-show="editable && opciones.length > 2" @click="
+                  <button class="tiny secondary" x-show="editable && opciones.length > 2" @click.prevent="
 opciones.splice(opciones.findIndex(op => op.id_opcion == opcion.id_opcion), 1);
 ">×</button>
                 </div>
@@ -156,7 +171,7 @@ opciones.splice(opciones.findIndex(op => op.id_opcion == opcion.id_opcion), 1);
           </ul>
         </article>
         <article class="option-buttons horizontal" x-cloak x-show="editable">
-          <button class="subnormal secondary tiny upper" @click="
+          <button class="subnormal secondary tiny upper" @click.prevent="
 opciones.push({
   id_opcion: `nueva_${contador}`,
   contenido: `Nueva opción ${contador}`,
@@ -165,7 +180,7 @@ opciones.push({
 contador += 1;
 ">+ Agregar opción</button>
           <div class="bar"></div>
-          <input type="checkbox" class="subnormal" name="multiple" id="multiple" x-model="multiple">
+          <input type="checkbox" value="1" class="subnormal" name="multiple" id="multiple" x-model="multiple">
           <label class="upper subnormal faded" for="multiple">Permitir más de una correcta</label>
         </article>
       </section>
@@ -177,9 +192,9 @@ contador += 1;
 
       <section class="edit-section horizontal form-buttons" x-cloak x-show="editable">
         <a href="questions.php" class="btn small secondary">Cancelar</a>
-        <input class="small" type="submit" value="Guardar cambios">
+        <input class="small" type="submit" value="<?php echo ($es_nueva ? "Crear" : "Guardar cambios") ?>">
       </section>
-    </main>
+      </main>
   </section>
 
   <script src="public/alpine.js"></script>
