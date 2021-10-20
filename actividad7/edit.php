@@ -7,14 +7,119 @@ solo_permitir([USUARIO_ADMIN]);
 require_once 'dal.php';
 $conn = crear_conexion();
 
+$todos_temas = obtener_temas($conn);
+$todos_niveles = [NIVEL_BASICO, NIVEL_INTERMEDIO, NIVEL_AVANZADO];
+
+$tema = array_keys($todos_temas)[0];
+$nivel = NIVEL_BASICO;
+$multiple = false;
+$enunciado = "En este espacio es donde va tu reactivo, da click para editar.";
+$opciones = [
+  [
+    'id_opcion' => 'nueva_1',
+    'correcta' => true,
+    'contenido' => 'Esta es una opción seleccionada, haz click para editar.'
+  ],
+  [
+    'id_opcion' => 'nueva_2',
+    'correcta' => false,
+    'contenido' => 'Esta es una opción no seleccionada, haz click para editar.'
+  ]
+];
+$contador = 3;
+$editable = true;
+$id_reactivo = null;
+
 $error = null;
 
+function starts_with($src, $prefix)
+{
+  return substr($src, 0, strlen($prefix)) === $prefix;
+}
+
+function remove_prefix($src, $prefix)
+{
+  if (starts_with($src, $prefix)) {
+    return substr($src, strlen($prefix));
+  } else {
+    return $src;
+  }
+}
+
+const OPCION_TEXTO_PREFIJO = 'opciontexto_';
+const OPCION_CHECK_PREFIJO = 'opcioncheck_';
+const OPCION_NUEVA_PREFIJO = 'nueva_';
+const OPCION_RADIO_KEY = 'opcionradio';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  echo "<pre>";
-  var_dump($_POST);
-  echo "</pre>";
+  $crear_nuevo =  boolval($_REQUEST['create']);
+
+  $tema = intval($_REQUEST['tema']);
+  $nivel = $_REQUEST['nivel'];
+  $enunciado = $_REQUEST['enunciado'];
+  $multiple = array_key_exists('multiple', $_REQUEST)
+    ? boolval($_REQUEST['multiple'])
+    : false;
+  $opciones = [];
+
+  foreach ($_REQUEST as $clave => $valor) {
+    if (starts_with($clave, OPCION_TEXTO_PREFIJO)) {
+      $nombre = remove_prefix($clave, OPCION_TEXTO_PREFIJO);
+      $contenido = $valor;
+
+      if (starts_with($nombre, OPCION_NUEVA_PREFIJO)) {
+        $numero = intval(remove_prefix($nombre, OPCION_NUEVA_PREFIJO));
+
+        if ($numero >= $contador) {
+          $contador = $numero + 1;
+        }
+      }
+
+      if ($multiple) {
+        $nombre_check = OPCION_CHECK_PREFIJO . $nombre;
+        $correcta = array_key_exists($nombre_check, $_REQUEST)
+          && $_REQUEST[$nombre_check];
+      } else {
+        $correcta = $_REQUEST[OPCION_RADIO_KEY] == $nombre;
+      }
+
+      $opciones[] = [
+        'id_opcion' => $nombre,
+        'correcta' => $correcta,
+        'contenido' => $contenido,
+      ];
+    }
+  }
+
+  if ($crear_nuevo) {
+    $id_reactivo = crear_reactivo(
+      $conn,
+      $_SESSION['id_usuario'],
+      $tema,
+      $nivel,
+      $enunciado,
+      $multiple
+    );
+
+    foreach ($opciones as $opcion)
+      crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+
+    header("Location: questions.php?create_ok=1");
+    exit();
+  }
 
   exit();
+} else if (array_key_exists('id_reactivo', $_REQUEST)) {
+  $id_reactivo = intval($_REQUEST['id_reactivo']);
+  $info_reactivo = obtener_informacion_reactivo($conn, $id_reactivo);
+  $opciones = obtener_opciones_por_reactivo($conn, $id_reactivo);
+
+  $tema = $info_reactivo['id_tema'];
+  $nivel = $info_reactivo['nivel'];
+  $multiple = boolval($info_reactivo['multiple']);
+  $enunciado = $info_reactivo['enunciado'];
+  $contador = 1;
+  $editable = false;
 }
 
 ?>
@@ -51,27 +156,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     const MEDIDA_ICONO = 6;
 
-    $todos_temas = obtener_temas($conn);
-    $todos_niveles = [NIVEL_BASICO, NIVEL_INTERMEDIO, NIVEL_AVANZADO];
-
-    $tema = array_keys($todos_temas)[0];
-    $nivel = NIVEL_BASICO;
-    $multiple = false;
-    $enunciado = "En este espacio es donde va tu reactivo, da click para editar.";
-    $opciones = [
-      [
-        'id_opcion' => 'nueva_1',
-        'correcta' => true,
-        'contenido' => 'Esta es una opción seleccionada, haz click para editar.'
-      ],
-      [
-        'id_opcion' => 'nueva_2',
-        'correcta' => false,
-        'contenido' => 'Esta es una opción no seleccionada, haz click para editar.'
-      ]
-    ];
-    $contador = 3;
-    $editable = true;
 
     $es_nueva = false;
 
@@ -101,9 +185,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       ], JSON_UNESCAPED_UNICODE)
     );
 
+    $target_url = $es_nueva ? "edit.php?create=1" : "edit.php?update=$id_reactivo";
+
     ?>
 
-    <form action="edit.php?create=1" method="POST" class="main" x-data="<?php echo $target_data ?>" x-cloak>
+    <form action="<?php echo $target_url ?>" method="POST" class="main" x-data="<?php echo $target_data ?>" x-cloak>
       <section class="edit-section">
         <h2>General</h2>
         <article class="nivel">
@@ -187,7 +273,7 @@ contador += 1;
 
       <section class="edit-section horizontal form-buttons" x-cloak x-show="!editable">
         <a href="questions.php" class="btn small secondary">Volver</a>
-        <button class="small" @click="editable = true">Editar</button>
+        <button class="small" @click.prevent="editable = true">Editar</button>
       </section>
 
       <section class="edit-section horizontal form-buttons" x-cloak x-show="editable">

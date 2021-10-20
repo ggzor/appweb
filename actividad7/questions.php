@@ -78,7 +78,9 @@ if (array_key_exists('delete', $_GET)) {
 
       <?php
       if (array_key_exists('delete_ok', $_GET)) {
-        echo "<p class='message success'> Reactivo eliminado correctamente </p>";
+        echo "<p class='message success'> Reactivo <b>eliminado</b> correctamente </p>";
+      } else if (array_key_exists('create_ok', $_GET)) {
+        echo "<p class='message success'> Reactivo <b>creado</b> correctamente </p>";
       }
       ?>
 

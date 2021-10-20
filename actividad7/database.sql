@@ -199,6 +199,16 @@ ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo
    AND opcion.id_opcion = opcion_elegida.id_opcion
 ORDER BY ref_reactivo.id_examen, reactivo.id_reactivo, opcion.id_opcion;
 
+CREATE VIEW opciones_por_reactivo AS
+SELECT reactivo.id_reactivo as id_reactivo,
+       opcion.id_opcion as id_opcion,
+       correcta,
+       contenido
+FROM reactivo
+JOIN opcion
+ON reactivo.id_reactivo = opcion.id_reactivo
+ORDER BY opcion.id_opcion;
+
 INSERT INTO reactivo VALUES
   (4, true, 1, 2, '2021-10-01 08:10:10', 'BASICO', 'Son los subgéneros del cuento y la novela.', true),
   (5, true, 1, 2, '2021-10-01 10:20:10', 'BASICO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
