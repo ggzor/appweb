@@ -68,17 +68,25 @@ ul.opciones > * {
 
 ul.opciones .opcion-reactivo {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: flex-start;
 }
 
-ul.opciones .opcion-reactivo input[type="radio"] {
+ul.opciones .opcion-reactivo input[type] {
+  align-self: flex-start;
   margin-top: 11px;
   margin-right: 12px;
 }
 
 ul.opciones .opcion-reactivo textarea {
   font-weight: 300;
+}
+
+ul.opciones .opcion-reactivo .buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-direction: column;
+  margin-left: 8px;
 }
 
 .edit-section .option-buttons {

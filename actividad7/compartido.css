@@ -99,6 +99,17 @@ a.btn.small {
   font-size: 1em;
 }
 
+.extra-tiny,
+input[type="submit"].extra-tiny,
+a.btn.extra-tiny {
+  padding: 2px 4px;
+  border-radius: 2px;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .tiny,
 input[type="submit"].tiny,
 a.btn.tiny {
@@ -158,4 +169,8 @@ input[type="password"]:focus {
 
 .logo > p > b {
   font-weight: 700;
+}
+
+[x-cloak] {
+  display: none !important;
 }
