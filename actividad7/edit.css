@@ -1,0 +1,97 @@
+main {
+  margin: 32px;
+}
+
+.edit-section > h2 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+
+  color: var(--color-black-light);
+}
+
+.edit-section:not(:first-of-type) {
+  margin-top: 32px;
+}
+
+.edit-section > article {
+  margin-top: 8px;
+}
+
+.edit-section p {
+  margin: 0;
+}
+
+.edit-section input[type="checkbox"] {
+  margin-right: -8px;
+  align-self: center;
+}
+
+.enunciado {
+  line-height: 1.5;
+}
+
+.faded {
+  color: var(--color-black-light);
+}
+
+.subnormal {
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
+.horizontal {
+  display: flex;
+  align-items: baseline;
+}
+
+.horizontal > *:not(:first-child) {
+  margin-left: 16px;
+}
+
+.bar {
+  width: 2px;
+  height: 16px;
+  align-self: center;
+  background-color: var(--color-black-light2);
+}
+
+ul.opciones {
+  padding: 0;
+}
+
+ul.opciones > * {
+  font-weight: 300;
+}
+
+ul.opciones > *:not(:first-child) {
+  margin-top: 16px;
+}
+
+.edit-section .option-buttons {
+  margin-top: 24px;
+}
+
+.nivel {
+  display: flex;
+  align-items: baseline;
+}
+
+.nivel > *:not(:first-child) {
+  margin-left: 48px;
+}
+
+.nivel > div {
+  display: flex;
+  align-items: baseline;
+}
+
+.nivel > div > svg {
+  align-self: center;
+}
+
+.nivel > div > *:not(:first-child) {
+  margin-left: 8px;
+}

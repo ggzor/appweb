@@ -41,6 +41,10 @@
 
   --color-grey: #666666;
   --color-grey-light: #f2f2f2;
+
+  --color-black-light: rgba(0, 0, 0, 60%);
+  --color-black-light2: rgba(0, 0, 0, 16%);
+  --color-black-light3: rgba(0, 0, 0, 4%);
 }
 
 body {
@@ -67,6 +71,44 @@ button:hover,
 input[type="submit"]:hover,
 a.btn:hover {
   background-color: var(--color-accent-dark);
+}
+
+.secondary,
+a.btn.secondary {
+  background: none;
+  color: var(--color-black-light);
+}
+
+.secondary:hover,
+a.btn.secondary:hover {
+  background-color: var(--color-black-light3);
+}
+
+.secondary:active,
+a.btn.secondary:active {
+  background-color: var(--color-black-light2);
+}
+
+.small,
+input[type="submit"].small,
+a.btn.small {
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.tiny,
+input[type="submit"].tiny,
+a.btn.tiny {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+.upper,
+input[type="submit"].upper,
+a.btn.upper {
+  text-transform: uppercase;
 }
 
 input[type="text"],

@@ -126,7 +126,7 @@ $m_about = function ($selected) {
   $cls = $selected ? "seleccionado" : "";
   return <<<EOF
 <a class="$cls" href="about.php">
-  <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+  <svg width="32" height="32" viewBox="-8 -8 48 48" xmlns="http://www.w3.org/2000/svg">
     <path d="M16 25.219a1.563 1.563 0 1 0 0-3.125 1.563 1.563 0 0 0 0 3.125Z" />
     <path d="M16 0C7.157 0 0 7.156 0 16c0 8.843 7.156 16 16 16 8.843 0 16-7.156
               16-16 0-8.843-7.156-16-16-16Zm0 29.5C8.539 29.5 2.5 23.462 2.5 16
@@ -158,26 +158,42 @@ $m_questions = function ($selected) {
 EOF;
 };
 
-function icono_para_nivel($nivel)
+$m_edit = function ($selected) {
+  $cls = $selected ? "seleccionado" : "";
+
+  return <<<EOF
+<a class="$cls" href="questions.php">
+  <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+    <path d="m20 21.333-5.333 5.334H28v-5.334h-8ZM16.08 9.587 4 21.667v5h5l12.08-12.08-5-5ZM7.893 24H6.667v-1.227l9.413-9.413 1.227 1.227L7.893 24ZM24.947 10.72c.52-.52.52-1.36 0-1.88l-3.12-3.12a1.31 1.31 0 0 0-.947-.387c-.333 0-.68.134-.933.387l-2.44 2.44 5 5 2.44-2.44Z" />
+    </svg>
+  Editar reactivo
+</a>
+EOF;
+};
+
+function icono_para_nivel($nivel, $base_size = 10)
 {
+  $double = $base_size * 2.5;
+  $triple = $base_size * 3;
+
   switch ($nivel) {
     case NIVEL_BASICO:
       return <<<EOF
-      <svg width="10" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$base_size" height="$base_size" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M.5.5h9v9h-9z"/>
       </svg>
 EOF;
       break;
     case NIVEL_INTERMEDIO:
       return <<<EOF
-      <svg width="25" height="10" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$double" height="$base_size" viewBox="0 0 25 10" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M0 0h10v10H0zM15 0h10v10H15z"/>
       </svg>
 EOF;
       break;
     case NIVEL_AVANZADO:
       return <<<EOF
-      <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="$triple" height="$triple" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill="#648DE5" d="M20 0h10v10H20zM0 20h10v10H0zM10 10h10v10H10z"/>
       </svg>
 EOF;
