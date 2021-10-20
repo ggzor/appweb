@@ -10,12 +10,21 @@
 }
 
 .tabla-reactivos td {
-    color: #000000;
-    border-bottom: 1px solid rgb(31, 27, 27);
+    font-size: 18px;
+    border-bottom: 1px solid #d4d4d4;
+    
+}
+
+.tabla-reactivos td.fecha, td.tema {
+    color: #616161;
 
 }
 
 .tabla-reactivos td.tema {
     font-weight: bold;
+}
+
+.tabla-reactivos td.id {
+    color: #000000;
 }
 

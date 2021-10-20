@@ -39,23 +39,35 @@ solo_permitir([USUARIO_ADMIN]);
         <tr>
           <th>Id</th>
           <th>Tema</th>
+          <th>Fecha</th>
           <th>Nivel</th>
           <th>Enunciado</th>
           <th>Publicado</th>
         </tr>
         <tr>
-          <td class="id">Maria Anders</td>
-          <td class="tema">Germany</td>
+          <td class="id">1</td>
+          <td class="fecha">Hoy</td>
+          <td class="tema">Matemáticas</td>
           <td class="nivel"><?php echo icono_para_nivel(NIVEL_BASICO) ?></td>
           <td class="enunciado">Francisco Chang</td>
-          <td class="publicado">Mexico</td>
+          <td class="publicado"><?php echo icono_checkmark() ?></td>
         </tr>
         <tr>
-          <td class="id">Maria Anders</td>
+          <td class="id">2</td>
+          <td class="fecha">02 Agosto</td>
           <td class="tema">Germany</td>
-          <td class="nivel">Centro comercial Moctezuma</td>
+          <td class="nivel"><?php echo icono_para_nivel(NIVEL_AVANZADO) ?></td>
+          <td class="enunciado">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Ea repellat facere voluptatum harum modi officia. </td>
+          <td class="publicado"><?php echo icono_checkmark() ?></td>
+        </tr>
+        <tr>
+          <td class="id">3</td>
+          <td class="fecha">08 de Cotubre</td>
+          <td class="tema">Germany</td>
+          <td class="nivel"><?php echo icono_para_nivel(NIVEL_INTERMEDIO) ?></td>
           <td class="enunciado">Francisco Chang</td>
-          <td class="publicado">Mexico</td>
+          <td class="publicado"><?php echo icono_checkmark() ?></td>
         </tr>
       </table>
     </main>

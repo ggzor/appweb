@@ -188,29 +188,38 @@ EOF;
 function icono_checkmark()
 {
   return <<<EOF
-<svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M11.25 20.25 6 15l-1.75 1.75 7 7 15-15L24.5 7 11.25 20.25Z" fill="#648DE5"/>
-</svg>
+  <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.25 20.25 6 15l-1.75 1.75 7 7 15-15L24.5 7 11.25 20.25Z" fill="#648DE5"/>
+  </svg>
 EOF;
 }
 
 function icono_edit()
 {
   return <<<EOF
-<svg width="29" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M3.625 21.563v4.687h4.531L21.52 12.425l-4.53-4.687L3.624 21.563ZM25.025 
+  <svg width="29" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3.625 21.563v4.687h4.531L21.52 12.425l-4.53-4.687L3.624 21.563ZM25.025 
            8.8a1.275 1.275 0 0 0 0-1.762l-2.828-2.925a1.175 1.175 0 0 0-1.704 
            0L18.283 6.4l4.53 4.688L25.025 8.8Z" fill="#000"/>
-</svg>
+  </svg>
 EOF;
 }
 
 function icon_delete()
 {
   return <<<EOF
-<svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M7.5 23.75c0 1.375 1.125 2.5 2.5 2.5h10c1.375 0 2.5-1.125 2.5-2.5v-15h-15v15ZM23.75 
-  5h-4.375l-1.25-1.25h-6.25L10.625 5H6.25v2.5h17.5V5Z" fill="#E56464"/>
-</svg>
+  <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.5 23.75c0 1.375 1.125 2.5 2.5 2.5h10c1.375 0 2.5-1.125 2.5-2.5v-15h-15v15ZM23.75 
+    5h-4.375l-1.25-1.25h-6.25L10.625 5H6.25v2.5h17.5V5Z" fill="#E56464"/>
+  </svg>
+EOF;
+}
+
+function up_arrow()
+{
+  return <<<EOF
+  <svg width="12" height="12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="m0 6 1.058 1.058L5.25 2.872V12h1.5V2.873l4.185 4.192L12 6 6 0 0 6Z" fill="#000"/>
+  </svg>
 EOF;
 }
