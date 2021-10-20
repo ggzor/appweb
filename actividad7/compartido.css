@@ -45,6 +45,8 @@
   --color-black-light: rgba(0, 0, 0, 60%);
   --color-black-light2: rgba(0, 0, 0, 16%);
   --color-black-light3: rgba(0, 0, 0, 4%);
+
+  --color-black-light-30: rgba(0, 0, 0, 30%);
 }
 
 body {

@@ -221,7 +221,7 @@ function icono_edit()
 EOF;
 }
 
-function icon_delete()
+function icono_delete()
 {
   return <<<EOF
   <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">

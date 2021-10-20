@@ -1,30 +1,63 @@
+main {
+  margin: 32px;
+}
+
 .tabla-reactivos {
-    border-collapse: collapse;
-    width: 90%;
+  border-collapse: collapse;
+  width: 100%;
+  display: grid;
+  grid-auto-flow: row;
+
+  grid-template-columns:
+    auto  /*id*/
+    auto  /*fecha*/ 
+    auto  /*tema*/  
+    auto  /*nivel*/
+    1fr  /*enunciado*/ 
+    auto  /*publicado*/
+    128px;
 }
 
-.tabla-reactivos th  {
-    color: #494949;
-    text-transform: uppercase;
-    background-color: #EDEDED;
+.tabla-reactivos p {
+  margin: 16px;
 }
 
-.tabla-reactivos td {
-    font-size: 18px;
-    border-bottom: 1px solid #d4d4d4;
-    
+.tabla-reactivos p.titulo  {
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 75%);
+  background-color: #EDEDED;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 4px 16px;
+
+  font-size: 0.85em;
 }
 
-.tabla-reactivos td.fecha, td.tema {
-    color: #616161;
-
+.tabla-reactivos p {
+  font-size: 18px;
 }
 
-.tabla-reactivos td.tema {
-    font-weight: bold;
+.tabla-reactivos p.fecha, p.tema {
+  color: var(--color-black-light);
 }
 
-.tabla-reactivos td.id {
-    color: #000000;
+.tabla-reactivos p.tema {
+  font-weight: bold;
+  color: var(--color-black-light);
+}
+.tabla-reactivos p.enunciado {
+  font-weight: 300;
+}
+.tabla-reactivos p.id {
+  color: #000000;
 }
 
+.tabla-reactivos p.nivel {
+  justify-self: center;
+}
+
+.tabla-reactivos .acciones {
+  justify-self: center;
+  align-self: center;
+}

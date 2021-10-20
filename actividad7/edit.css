@@ -66,8 +66,19 @@ ul.opciones > * {
   font-weight: 300;
 }
 
-ul.opciones > *:not(:first-child) {
-  margin-top: 16px;
+ul.opciones .opcion-reactivo {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-start;
+}
+
+ul.opciones .opcion-reactivo input[type="radio"] {
+  margin-top: 11px;
+  margin-right: 12px;
+}
+
+ul.opciones .opcion-reactivo textarea {
+  font-weight: 300;
 }
 
 .edit-section .option-buttons {
@@ -79,19 +90,133 @@ ul.opciones > *:not(:first-child) {
   align-items: baseline;
 }
 
-.nivel > *:not(:first-child) {
-  margin-left: 48px;
-}
-
 .nivel > div {
   display: flex;
   align-items: baseline;
+}
+
+.nivel > .select:nth-child(1) {
+  order: 1;
+}
+
+.nivel > .select:nth-child(2) {
+  order: 3;
+}
+
+.nivel > .icono {
+  width: 18px;
+  height: 18px;
+  align-self: center;
+  order: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 16px;
+  margin-right: 8px;
+}
+
+/* Handle select logic */
+.nivel > .icono {
+  display: none;
+}
+
+.select[data-value="BASICO"] ~ .icono.basico {
+  display: flex;
+}
+
+.select[data-value="INTERMEDIO"] ~ .icono.intermedio {
+  display: flex;
+}
+
+.select[data-value="AVANZADO"] ~ .icono.avanzado {
+  display: flex;
+}
+
+.nivel > div > *:not(:first-child) {
+  margin-left: 4px;
 }
 
 .nivel > div > svg {
   align-self: center;
 }
 
-.nivel > div > *:not(:first-child) {
-  margin-left: 8px;
+.edit-section select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  font-family: "Roboto", sans-serif;
+  padding: 4px 24px 4px 0px;
+}
+
+.edit-section select.bold {
+  font-weight: 700;
+}
+
+.edit-section select:hover {
+  background-color: var(--color-accent-light);
+}
+
+.edit-section select[disabled] {
+  background: none;
+  color: black;
+}
+
+.edit-section select:not([disabled]) {
+  border-radius: 1px;
+  outline: 2px dashed var(--color-black-light-30);
+}
+
+.edit-section select:not([disabled]):focus {
+  outline-color: var(--color-accent);
+}
+
+.edit-section option {
+  font-family: "Roboto", sans-serif;
+}
+
+.edit-section textarea {
+  appearance: none;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  outline: 2px dashed var(--color-black-light-30);
+}
+
+.edit-section textarea:focus:not([readonly]) {
+  background-color: var(--color-accent-light);
+  outline-color: var(--color-accent);
+}
+
+.edit-section .input-sizer {
+  display: inline-grid;
+  align-items: stretch;
+}
+
+.edit-section .input-sizer > textarea {
+  overflow: hidden;
+  padding: 8px;
+  margin: 0;
+  grid-area: 2 / 1;
+  max-width: 100%;
+}
+
+.edit-section .input-sizer::after {
+  padding: 8px;
+  content: attr(data-value) " ";
+  white-space: pre-wrap;
+  visibility: hidden;
+  grid-area: 2 / 1;
+}
+
+.edit-section textarea[readonly] {
+  outline: none;
+}
+
+.edit-section .textarea-inside {
+  display: grid;
+  align-items: stretch;
+  justify-items: stretch;
 }
