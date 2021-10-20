@@ -197,7 +197,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'multiple' => $multiple,
         'unica' => intval($correcta == null ? "{$opciones[0]['id_opcion']}" : "$correcta"),
         'contador' => $contador,
-        'opciones' => $opciones
+        'opciones' => $opciones,
+        'hide_messages' => false
+
       ], JSON_UNESCAPED_UNICODE)
     );
 
@@ -206,6 +208,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
 
     <form action="<?php echo $target_url ?>" method="POST" class="main" x-data="<?php echo $target_data ?>" x-cloak>
+      <?php
+      if (array_key_exists('update_ok', $_REQUEST)) {
+        echo "<p class='message success' x-show=\"!hide_messages\">Reactivo <b>actualizado</b> correctamente</p>";
+      }
+      ?>
+
       <section class="edit-section">
         <h2>General</h2>
         <article class="nivel">
@@ -289,7 +297,7 @@ contador += 1;
 
       <section class="edit-section horizontal form-buttons" x-cloak x-show="!editable">
         <a href="questions.php" class="btn small secondary">Volver</a>
-        <button class="small" @click.prevent="editable = true">Editar</button>
+        <button class="small" @click.prevent="hide_messages = editable = true">Editar</button>
       </section>
 
       <section class="edit-section horizontal form-buttons" x-cloak x-show="editable">
