@@ -196,9 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     const MEDIDA_ICONO = 6;
 
-
     $es_nueva = false;
-
     if (array_key_exists('new', $_GET)) {
       $es_nueva = true;
     }
@@ -219,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       json_encode([
         'editable' => $editable,
         'multiple' => $multiple,
-        'unica' => intval($correcta == null ? "{$opciones[0]['id_opcion']}" : "$correcta"),
+        'unica' => $correcta == null ? $opciones[0]['id_opcion'] : $correcta,
         'contador' => $contador,
         'opciones' => $opciones,
         'hide_messages' => false
