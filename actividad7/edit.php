@@ -10,7 +10,6 @@ require_once 'dal.php';
 $conn = crear_conexion();
 
 $todos_temas = obtener_temas($conn);
-$todos_niveles = [NIVEL_BASICO, NIVEL_INTERMEDIO, NIVEL_AVANZADO];
 
 $tema = array_keys($todos_temas)[0];
 $nivel = NIVEL_BASICO;
@@ -237,7 +236,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="select" data-value="<?php echo $nivel ?>">
             <select name="nivel" id="tema" onchange="this.parentElement.dataset.value = this.value" :disabled="!editable">
               <?php
-              foreach ($todos_niveles as $nivel_opcion) {
+              foreach (TODOS_NIVELES as $nivel_opcion) {
                 $selected_str = $nivel_opcion == $nivel ? 'selected' : '';
                 $opcion_str = obtener_cadena_nivel($nivel_opcion);
                 echo "<option value='$nivel_opcion' $selected_str>$opcion_str</option>";

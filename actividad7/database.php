@@ -7,6 +7,7 @@ const USUARIO_NORMAL = 1;
 const NIVEL_BASICO = 'BASICO';
 const NIVEL_INTERMEDIO = 'INTERMEDIO';
 const NIVEL_AVANZADO = 'AVANZADO';
+const TODOS_NIVELES = [NIVEL_BASICO, NIVEL_INTERMEDIO, NIVEL_AVANZADO];
 
 function obtener_cadena_nivel($nivel)
 {
