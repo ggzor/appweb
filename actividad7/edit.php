@@ -196,11 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php
     const MEDIDA_ICONO = 6;
 
-    $es_nueva = false;
-    if (array_key_exists('new', $_GET)) {
-      $es_nueva = true;
-    }
-
     $correcta = null;
     if (!$multiple) {
       foreach ($opciones as $opcion) {
@@ -221,11 +216,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'contador' => $contador,
         'opciones' => $opciones,
         'hide_messages' => false
-
       ], JSON_UNESCAPED_UNICODE)
     );
 
-    $target_url = $es_nueva ? "edit.php?create=1" : "edit.php?update=$id_reactivo";
+    $es_nueva = array_key_exists('new', $_GET);
+    $target_url = $es_nueva
+      ? "edit.php?create=1"
+      : "edit.php?update=$id_reactivo";
 
     ?>
 
