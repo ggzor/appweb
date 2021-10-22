@@ -1,4 +1,6 @@
 <?php
+require_once 'utils.php';
+
 session_start();
 
 require_once 'database.php';
@@ -31,20 +33,6 @@ $editable = true;
 $id_reactivo = null;
 
 $error = null;
-
-function starts_with($src, $prefix)
-{
-  return substr($src, 0, strlen($prefix)) === $prefix;
-}
-
-function remove_prefix($src, $prefix)
-{
-  if (starts_with($src, $prefix)) {
-    return substr($src, strlen($prefix));
-  } else {
-    return $src;
-  }
-}
 
 const OPCION_TEXTO_PREFIJO = 'opciontexto_';
 const OPCION_CHECK_PREFIJO = 'opcioncheck_';
