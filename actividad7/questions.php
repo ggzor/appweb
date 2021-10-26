@@ -50,13 +50,14 @@ if (array_key_exists('delete', $_GET)) {
     <?php
     links();
     $todos_temas = obtener_temas($conn);
+    array_unshift($todos_temas, "Todos los temas");
 
-    /* $todos_temas = [1 => "Todos los temas", 2 => "Matemáticas", 3 => "Español"]; */
-    /* $todos_niveles = [1 => "Todos los niveles", 2 => "Básico", 3 => "Intermedio", 4 => "Avanzado"]; */
+    $todos_niveles = TODOS_NIVELES;
+    array_unshift($todos_niveles, "Todos los niveles");
     ?>
 
     <main>
-      <section class="filtros" style="display: none;">
+      <section class="filtros">
         <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar...">
         <select class="bold" name="filtro_tema" id="filtro_tema">
           <?php
@@ -81,6 +82,8 @@ if (array_key_exists('delete', $_GET)) {
         echo "<p class='message success'> Reactivo <b>eliminado</b> correctamente </p>";
       } else if (array_key_exists('create_ok', $_GET)) {
         echo "<p class='message success'> Reactivo <b>creado</b> correctamente </p>";
+      } else if (array_key_exists('create_error', $_GET)) {
+        echo "<p class='message error'> No se pudo crear el reactivo </p>";
       }
       ?>
 
