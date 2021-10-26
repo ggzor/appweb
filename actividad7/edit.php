@@ -91,10 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $multiple
     );
 
-    foreach ($opciones as $opcion)
-      crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+    if ($id_reactivo !== false) {
+      foreach ($opciones as $opcion)
+        crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
 
-    header("Location: questions.php?create_ok=1");
+      header("Location: questions.php?create_ok=1");
+    } else {
+      header("Location: questions.php?create_error=1");
+    }
+
     exit();
   } else {
     actualizar_reactivo(
@@ -146,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nivel = $info_reactivo['nivel'];
   $enunciado = $info_reactivo['enunciado'];
   $contador = 1;
-  $editable = false;
+  $editable = true;
 }
 
 ?>

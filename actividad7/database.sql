@@ -169,6 +169,8 @@ VALUES
   (3, 8,  3),
   (3, 10, 3);
 
+-- VIEWS
+
 CREATE VIEW reactivos_por_examen AS
 SELECT id_examen,
        reactivo.id_reactivo as id_reactivo,
@@ -209,6 +211,8 @@ JOIN opcion
 ON reactivo.id_reactivo = opcion.id_reactivo
 ORDER BY opcion.id_opcion;
 
+-- Agregando más datos
+
 INSERT INTO reactivo VALUES
   (4, true, 1, 2, '2021-10-03 08:10:10', 'BASICO', 'Son los subgéneros del cuento y la novela.', true),
   (5, true, 1, 2, '2021-10-25 10:20:10', 'BASICO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
@@ -247,3 +251,20 @@ VALUES
 
 -- INSERT INTO ref_reactivo (id_examen, id_reactivo)
 -- VALUES (1, 4), (1, 5);
+
+-- TRIGGERS
+
+DELIMITER //
+
+
+-- Registrar fecha de modificación del reactivo.
+CREATE TRIGGER modificar_fecha_insert BEFORE INSERT ON reactivo 
+FOR EACH ROW SET NEW.fecha = NOW(); //
+
+CREATE TRIGGER modificar_fecha_update BEFORE UPDATE ON reactivo 
+FOR EACH ROW SET NEW.fecha = NOW(); //
+
+-- Registrar cuando se modifican las opciones de un reactivo.
+
+
+DELIMITER ;

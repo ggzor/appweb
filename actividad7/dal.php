@@ -61,8 +61,8 @@ function crear_reactivo($conn, $id_creador, $id_tema, $nivel, $enunciado, $multi
 
   try {
     $stmt = $conn->prepare("
-INSERT INTO reactivo (publicado, id_creador, id_tema, fecha, nivel, enunciado, multiple)
-VALUES (false, ?, ?, NOW(), ?, ?, ?);
+INSERT INTO reactivo (publicado, id_creador, id_tema, nivel, enunciado, multiple)
+VALUES (false, ?, ?, ?, ?, ?);
 ");
     $stmt->bind_param("iissi", $id_creador, $id_tema, $nivel, $enunciado, $multiple);
     if ($stmt->execute())
@@ -139,8 +139,7 @@ SET
   id_tema = ?,
   nivel = ?,
   enunciado = ?,
-  multiple = ?,
-  fecha = NOW()
+  multiple = ?
 WHERE id_reactivo = ?;
 ");
     $stmt->bind_param("issii", $id_tema, $nivel, $enunciado, $multiple, $id_reactivo);
