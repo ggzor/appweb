@@ -118,7 +118,7 @@ INSERT INTO opcion (id_opcion, id_reactivo, correcta, contenido) VALUES
 INSERT INTO reactivo VALUES
   (2, true,
       2, 1, -- creador, tema
-      '2020-01-01 10:10:10',
+      '2021-10-25 10:10:10',
       'AVANZADO',
       '¿Las manecillas del reloj están en ángulo recto cuando marcan las tres?',
       false); -- no multiple
@@ -132,7 +132,7 @@ VALUES
 INSERT INTO reactivo VALUES
   (3, true,
       2, 1, -- creador, tema
-      '2021-11-08 10:10:10',
+      '2021-10-19 10:10:10',
       'INTERMEDIO',
       'Figuras geometrícas con al menos 4 lados',
       true); -- multiple
@@ -210,12 +210,12 @@ ON reactivo.id_reactivo = opcion.id_reactivo
 ORDER BY opcion.id_opcion;
 
 INSERT INTO reactivo VALUES
-  (4, true, 1, 2, '2021-10-01 08:10:10', 'BASICO', 'Son los subgéneros del cuento y la novela.', true),
-  (5, true, 1, 2, '2021-10-01 10:20:10', 'BASICO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
-  (6, true, 1, 2, '2021-10-01 02:08:10', 'BASICO', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
-  (7, true, 2, 1, '2021-09-28 03:10:16', 'BASICO', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
-  (8, true, 2, 1, '2021-09-28 10:14:10', 'BASICO', 'Es el 25 % de 133.', false),
-  (9, true, 2, 1, '2021-09-14 01:10:15', 'BASICO', 'Son figuras geométricas que están formadas por cuatro lados.', false);
+  (4, true, 1, 2, '2021-10-03 08:10:10', 'BASICO', 'Son los subgéneros del cuento y la novela.', true),
+  (5, true, 1, 2, '2021-10-25 10:20:10', 'BASICO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
+  (6, true, 1, 2, '2021-10-20 02:08:10', 'BASICO', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
+  (7, true, 2, 1, '2021-10-13 03:10:16', 'BASICO', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
+  (8, true, 2, 1, '2021-10-25 14:14:10', 'BASICO', 'Es el 25 % de 133.', false),
+  (9, true, 2, 1, '2021-10-26 09:10:15', 'BASICO', 'Son figuras geométricas que están formadas por cuatro lados.', false);
 
 INSERT INTO opcion
 (id_reactivo, correcta, contenido)

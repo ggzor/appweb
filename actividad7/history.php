@@ -33,6 +33,7 @@ solo_permitir([USUARIO_NORMAL]);
   <section>
     <?php links() ?>
 
+
     <main>
       <?php
       $id_usuario = $_SESSION['id_usuario'];

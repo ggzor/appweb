@@ -106,6 +106,21 @@ if (array_key_exists('delete', $_GET)) {
 
           $result = $fecha->format('Y-m-d');
 
+          if ($diff->y > 0 || $diff->m > 0) {
+          } else {
+            if ($diff->d >= 2 || ($diff->d == 1 && $diff->h > intval($ahora->format('H')))) {
+              $result = "Hace {$diff->d} días";
+            } else {
+              $hora = $fecha->format('H:i');
+
+              if ($diff->d >= 1 || $diff->h > intval($ahora->format('H'))) {
+                $result = "Ayer a las $hora";
+              } else {
+                $result = "Hoy a las $hora";
+              }
+            }
+          }
+
           return $result;
         }
 
