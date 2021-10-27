@@ -70,7 +70,7 @@ if (array_key_exists('delete', $_GET)) {
 
       $busqueda = '';
       if (array_key_exists('filtro_busqueda', $_REQUEST)) {
-        $busqueda = $_REQUEST['filtro_busqueda'];
+        $busqueda = trim($_REQUEST['filtro_busqueda']);
       }
 
       $nivel = 'TODOS';
@@ -85,13 +85,13 @@ if (array_key_exists('delete', $_GET)) {
       ?>
 
       <form action="questions.php?search=10" method="GET" class="filtros">
-        <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar..." value="<?php echo $busqueda ?>">
+        <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar..." value="<?php echo $busqueda ?>" autofocus onfocus="this.select()">
         <button type="submit" class="btn secondary tiny"><?php echo $icono_busqueda ?></button>
 
         <div class="spacer"></div>
 
         <div class="select">
-          <select class="bold" name="tema" id="tema" :disabled="!editable">
+          <select class="bold" name="tema" id="tema" :disabled="!editable" onchange="this.form.submit()">
             <?php
             foreach ($todos_temas as $id_tema => $nombre_tema) {
               $selected_str = $id_tema == $tema ? 'selected' : '';
@@ -103,7 +103,7 @@ if (array_key_exists('delete', $_GET)) {
         </div>
 
         <div class="select" data-value="<?php echo $nivel ?>">
-          <select name="nivel" id="tema" onchange="this.parentElement.dataset.value = this.value" :disabled="!editable">
+          <select name="nivel" id="tema" onchange="this.parentElement.dataset.value = this.value; this.form.submit()" :disabled="!editable">
             <?php
             foreach ($todos_niveles as $nivel_opcion) {
               $selected_str = $nivel_opcion == $nivel ? 'selected' : '';
@@ -134,8 +134,6 @@ if (array_key_exists('delete', $_GET)) {
 
 
         <?php
-        $reactivos = obtener_reactivos($conn, $_SESSION['id_usuario']);
-
         function obtener_fecha_legible(DateTime $fecha)
         {
           $ahora = new DateTime();
@@ -160,6 +158,8 @@ if (array_key_exists('delete', $_GET)) {
 
           return $result;
         }
+
+        $reactivos = obtener_reactivos_query($conn, $_SESSION['id_usuario'], $busqueda, $tema, $nivel);
 
         $edit_icon = icono_edit();
         $delete_icon = icono_delete();

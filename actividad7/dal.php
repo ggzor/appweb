@@ -25,6 +25,21 @@ function obtener_reactivos($conn, $id_usuario)
   return $reactivos;
 }
 
+function obtener_reactivos_query($conn, $id_usuario, $busqueda, $tema, $nivel)
+{
+  $stmt = $conn->prepare("CALL hacer_query(?, ?, ?, ?)");
+  $stmt->bind_param("isis", $id_usuario, $busqueda, $tema, $nivel);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $reactivos = [];
+  while ($row = $result->fetch_assoc())
+    $reactivos[$row['id_reactivo']] = $row;
+  $result->close();
+  $stmt->close();
+
+  return $reactivos;
+}
+
 function obtener_temas($conn)
 {
   $stmt = $conn->prepare("SELECT * FROM tema ORDER BY id_tema");
