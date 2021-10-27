@@ -53,30 +53,10 @@ if (array_key_exists('delete', $_GET)) {
     array_unshift($todos_temas, "Todos los temas");
 
     $todos_niveles = TODOS_NIVELES;
-    array_unshift($todos_niveles, "Todos los niveles");
+    array_unshift($todos_niveles, "TODOS");
     ?>
 
     <main>
-      <section class="filtros">
-        <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar...">
-        <select class="bold" name="filtro_tema" id="filtro_tema">
-          <?php
-          foreach ($todos_temas as $id_tema => $nombre_tema) {
-            $selected_str = $id_tema == $filtro_tema ? 'selected' : '';
-            echo "<option value='$id_tema' $selected_str> $nombre_tema</option>";
-          }
-          ?>
-        </select>
-        <select class="bold" name="filtro_nivel" id="filtro_nivel">
-          <?php
-          foreach ($todos_niveles as $id_nivel => $nombre_nivel) {
-            $selected_str = $id_nivel == $filtro_nivel ? 'selected' : '';
-            echo "<option value='$id_nivel' $selected_str> $nombre_nivel</option>";
-          }
-          ?>
-        </select>
-      </section>
-
       <?php
       if (array_key_exists('delete_ok', $_GET)) {
         echo "<p class='message success'> Reactivo <b>eliminado</b> correctamente </p>";
@@ -85,9 +65,63 @@ if (array_key_exists('delete', $_GET)) {
       } else if (array_key_exists('create_error', $_GET)) {
         echo "<p class='message error'> No se pudo crear el reactivo </p>";
       }
+
+      $icono_busqueda = icono_search();
+
+      $busqueda = '';
+      if (array_key_exists('filtro_busqueda', $_REQUEST)) {
+        $busqueda = $_REQUEST['filtro_busqueda'];
+      }
+
+      $nivel = 'TODOS';
+      if (array_key_exists('nivel', $_REQUEST)) {
+        $nivel = $_REQUEST['nivel'];
+      }
+
+      $tema = 'Todos los temas';
+      if (array_key_exists('tema', $_REQUEST)) {
+        $tema = $_REQUEST['tema'];
+      }
       ?>
 
-      <a class="btn btn-nuevo small" href="edit.php?new=1">+ Crear nuevo</a>
+      <form action="questions.php?search=10" method="GET" class="filtros">
+        <input type="text" id="filtro_busqueda" name="filtro_busqueda" placeholder="Buscar..." value="<?php echo $busqueda ?>">
+        <button type="submit" class="btn secondary tiny"><?php echo $icono_busqueda ?></button>
+
+        <div class="spacer"></div>
+
+        <div class="select">
+          <select class="bold" name="tema" id="tema" :disabled="!editable">
+            <?php
+            foreach ($todos_temas as $id_tema => $nombre_tema) {
+              $selected_str = $id_tema == $tema ? 'selected' : '';
+              echo "<option value='$id_tema' $selected_str>$nombre_tema</option>";
+            }
+            ?>
+          </select>
+
+        </div>
+
+        <div class="select" data-value="<?php echo $nivel ?>">
+          <select name="nivel" id="tema" onchange="this.parentElement.dataset.value = this.value" :disabled="!editable">
+            <?php
+            foreach ($todos_niveles as $nivel_opcion) {
+              $selected_str = $nivel_opcion == $nivel ? 'selected' : '';
+
+              if (in_array($nivel_opcion, TODOS_NIVELES)) {
+                $opcion_str = obtener_cadena_nivel($nivel_opcion);
+              } else {
+                $opcion_str = 'Todos los niveles';
+              }
+
+              echo "<option value='$nivel_opcion' $selected_str>$opcion_str</option>";
+            }
+            ?>
+          </select>
+        </div>
+
+        <a class="btn btn-nuevo small" href="edit.php?new=1">+ Crear nuevo</a>
+      </form>
 
       <section class="tabla-reactivos">
         <p class="titulo">Id</p>

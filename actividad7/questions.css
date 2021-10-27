@@ -103,3 +103,67 @@ p.tema {
   align-self: flex-end;
 }
 
+.filtros {
+  display: flex;
+}
+
+.filtros > .spacer {
+  flex-grow: 1;
+}
+
+.filtros > :last-child {
+  align-self: center;
+}
+
+.filtros > :not(:first-child) {
+  margin-left: 16px;
+}
+
+.filtros > .select {
+  display: flex;
+}
+
+.filtros > input[type='text'] {
+  font-size: 1.25rem;
+}
+
+.filtros > input[type='text']::placeholder {
+  font-size: 1em;
+  font-weight: 400;
+  font-size: 1rem;
+  margin-top: auto;
+}
+
+.filtros > .btn[type=submit] > svg > path {
+}
+
+.nivel > .icono {
+  width: 18px;
+  height: 18px;
+  align-self: center;
+  order: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 16px;
+  margin-right: 8px;
+}
+
+/* Handle select logic */
+.nivel > .icono {
+  display: none;
+}
+
+.select[data-value="BASICO"] ~ .icono.basico {
+  display: flex;
+}
+
+.select[data-value="INTERMEDIO"] ~ .icono.intermedio {
+  display: flex;
+}
+
+.select[data-value="AVANZADO"] ~ .icono.avanzado {
+  display: flex;
+}
