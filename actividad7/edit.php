@@ -9,7 +9,9 @@ solo_permitir([USUARIO_ADMIN]);
 require_once 'dal.php';
 $conn = crear_conexion();
 
-$todos_temas = obtener_temas($conn);
+$db = new ExamenesDB();
+
+$todos_temas = $db->obtener_temas();
 
 $tema = array_keys($todos_temas)[0];
 $nivel = NIVEL_BASICO;

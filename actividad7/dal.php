@@ -30,6 +30,7 @@ class ExamenesDB extends Conexion
   function obtener_temas()
   {
     return $this->tabla('tema')
+      ->select('nombre')
       ->order_by('id_tema')
       ->get_idx();
   }
@@ -43,20 +44,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function obtener_temas($conn)
-{
-  $stmt = $conn->prepare("SELECT * FROM tema ORDER BY id_tema");
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $temas = [];
-  while ($row = $result->fetch_assoc())
-    $temas[$row['id_tema']] = $row['nombre'];
-  $result->close();
-  $stmt->close();
-
-  return $temas;
 }
 
 function borrar_reactivo($conn, $id)

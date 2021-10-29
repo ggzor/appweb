@@ -149,12 +149,24 @@ class Entidad
   {
     $this->padre = $padre;
     $this->tabla = $tabla;
+
+    $this->selects = '*';
     $this->wheres = [];
     $this->orders = [];
   }
 
   /**
-   * Sanitizar $atributo, de preferencia utilizar constantes
+   * Sanitizar $atributos, de preferencia utilizar constantes.
+   */
+  function select(...$atributos)
+  {
+    $this->selects = implode(',', $atributos);
+    $this->selects_attrs = $atributos;
+    return $this;
+  }
+
+  /**
+   * Sanitizar $atributo, de preferencia utilizar constantes.
    * */
   function where($atributo, $valor)
   {
@@ -163,7 +175,7 @@ class Entidad
   }
 
   /**
-   * Sanitizar $atributo y $tipo, de preferencia utilizar constantes
+   * Sanitizar $atributo y $tipo, de preferencia utilizar constantes.
    * */
   function order_by(string $atributo, $tipo = 'ASC')
   {
@@ -171,10 +183,20 @@ class Entidad
     return $this;
   }
 
-
   function get($indizador = null)
   {
-    $query = "SELECT * FROM $this->tabla";
+    $indizador_insertado = false;
+    $str_select = $this->selects;
+    if (
+      $this->selects !== '*'
+      && $indizador !== null
+      && !in_array($indizador, $this->selects_attrs)
+    ) {
+      $indizador_insertado = true;
+      $str_select .= ", $indizador";
+    }
+
+    $query = "SELECT $str_select FROM $this->tabla";
     $params_str = "";
     $params = [];
 
@@ -190,13 +212,25 @@ class Entidad
       $params_str = get_param_type($valor);
     }
 
-    return get_results(
+    $resultados = get_results(
       $this->padre->getConn(),
       $indizador,
       $query,
       $params_str,
       ...$params
     );
+
+    if ($indizador_insertado) {
+      foreach ($resultados as &$value) {
+        unset($value[$indizador]);
+      }
+    }
+
+    if ($this->selects !== '*' && count($this->selects_attrs) === 1) {
+      return array_map(fn ($row) => array_values($row)[0], $resultados);
+    } else {
+      return $resultados;
+    }
   }
 
   function get_idx()

@@ -51,7 +51,7 @@ if (array_key_exists('delete', $_GET)) {
   <section>
     <?php
     links();
-    $todos_temas = obtener_temas($conn);
+    $todos_temas = $db->obtener_temas();
     array_unshift($todos_temas, "Todos los temas");
 
     $todos_niveles = TODOS_NIVELES;
