@@ -11,19 +11,8 @@ function get_param_type(&$var)
     return 's';
 }
 
-/**
- * Realiza la llamada a un prepared statement utilizando el indizador indicado
- *
- * @param ?string $indizador El atributo sobre el cual indizar los resultados
- *
- */
-function get_results(
-  mysqli $conn,
-  ?string $indizador,
-  string $query,
-  string $params_str,
-  &...$params
-) {
+function run_prepared(mysqli $conn, string $query, string $params_str, &...$params)
+{
   $stmt_info = print_r([
     'query' => $query,
     'params_str' => $params_str,
@@ -32,9 +21,6 @@ function get_results(
 
   /** @var mysqli_stmt */
   $stmt = null;
-
-  /** @var mysqli_result */
-  $result = null;
 
   try {
     $stmt = $conn->prepare($query);
@@ -56,10 +42,42 @@ $stmt_info
 ");
     }
 
-    $result = $stmt->get_result();
+    return [$stmt->affected_rows, $stmt->get_result()];
+  } finally {
+    if ($stmt !== null)
+      $stmt->close();
+  }
 
+  return false;
+}
+
+/**
+ * Realiza la llamada a un prepared statement utilizando el indizador indicado
+ *
+ * @param ?string $indizador El atributo sobre el cual indizar los resultados
+ *
+ */
+function get_results(
+  mysqli $conn,
+  ?string $indizador,
+  string $query,
+  string $params_str,
+  &...$params
+) {
+  $stmt_info = print_r([
+    'query' => $query,
+    'params_str' => $params_str,
+    'params' => $params
+  ], true);
+
+  [, $result] = run_prepared($conn, $query, $params_str, ...$params);
+
+  try {
     if ($result === false) {
-      throw new Exception("Error al obtener los resultados: \n$stmt_info");
+      throw new Exception("
+Error al obtener los resultados, puede que no sea un statement que devuelve valores:
+$stmt_info
+");
     }
 
     $entidades = [];
@@ -71,13 +89,9 @@ $stmt_info
     }
 
     return $entidades;
-  } catch (\Throwable $th) {
-    throw $th;
   } finally {
     if ($result !== null)
       $result->close();
-    if ($stmt !== null)
-      $stmt->close();
   }
 }
 
@@ -151,6 +165,7 @@ class Entidad
     $this->tabla = $tabla;
 
     $this->selects = '*';
+    $this->selects_attrs = [];
     $this->wheres = [];
     $this->orders = [];
   }
@@ -158,10 +173,12 @@ class Entidad
   /**
    * Sanitizar $atributos, de preferencia utilizar constantes.
    */
-  function select(...$atributos)
+  function select($atributo, ...$otros_atributos)
   {
-    $this->selects = implode(',', $atributos);
-    $this->selects_attrs = $atributos;
+    $todos_atributos = [$atributo, ...$otros_atributos];
+
+    $this->selects = implode(',', $todos_atributos);
+    $this->selects_attrs = $todos_atributos;
     return $this;
   }
 
@@ -183,6 +200,16 @@ class Entidad
     return $this;
   }
 
+  private function agregar_wheres(string &$query, string &$params_str, array &$params)
+  {
+    foreach ($this->wheres as [$op, $attr, $valor]) {
+      $query .= " WHERE $attr $op ?";
+
+      $params_str .= get_param_type($valor);
+      $params[] = $valor;
+    }
+  }
+
   function get($indizador = null)
   {
     $indizador_insertado = false;
@@ -200,16 +227,11 @@ class Entidad
     $params_str = "";
     $params = [];
 
-    foreach ($this->wheres as [$op, $attr, $valor]) {
-      $query .= " WHERE $attr $op ?";
 
-      $params_str[] = get_param_type($valor);
-      $params[] = $valor;
-    }
+    $this->agregar_wheres($query, $params_str, $params);
 
     foreach ($this->orders as [$atributo, $tipo]) {
       $query .= " ORDER BY $atributo $tipo";
-      $params_str = get_param_type($valor);
     }
 
     $resultados = get_results(
@@ -236,5 +258,27 @@ class Entidad
   function get_idx()
   {
     return $this->get('id_' . $this->tabla);
+  }
+
+  function delete(): int
+  {
+    if (!empty($this->selects_attrs)) {
+      throw new Exception("No debes usar simultáneamente select() y delete()");
+    }
+
+    if (empty($this->wheres)) {
+      throw new Exception("
+Debes especificar un where al menos o se borrará toda la tabla.
+Si esto es lo que deseas, llama al metodo truncate()
+");
+    }
+
+    $query = "DELETE FROM $this->tabla";
+    $params_str = "";
+    $params = [];
+
+    $this->agregar_wheres($query, $params_str, $params);
+
+    return run_prepared($this->padre->getConn(), $query, $params_str, ...$params)[0];
   }
 }

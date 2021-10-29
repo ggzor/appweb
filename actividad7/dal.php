@@ -34,6 +34,13 @@ class ExamenesDB extends Conexion
       ->order_by('id_tema')
       ->get_idx();
   }
+
+  function borrar_reactivo($id)
+  {
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id)
+      ->delete();
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -44,22 +51,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function borrar_reactivo($conn, $id)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("DELETE FROM reactivo WHERE id_reactivo = ?");
-    $stmt->bind_param("i", $id);
-    return $stmt->execute();
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
-  }
 }
 
 function crear_reactivo($conn, $id_creador, $id_tema, $nivel, $enunciado, $multiple)

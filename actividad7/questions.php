@@ -13,7 +13,7 @@ if (array_key_exists('delete', $_GET)) {
   $id_delete = intval($_GET['delete']);
   var_dump("Delete: $id_delete");
 
-  $result = borrar_reactivo($conn, $id_delete);
+  $result = $db->borrar_reactivo($id_delete);
   var_dump($result);
 
   header("Location: questions.php?delete_ok=1");
