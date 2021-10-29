@@ -1,5 +1,33 @@
 <?php
 
+require_once "utils/query_builder.php";
+
+const DEFAULT_DATABASE = "examenes";
+
+class ExamenesDB extends Conexion
+{
+  function __construct()
+  {
+    parent::__construct("examenes", "localhost", "root", null);
+  }
+
+  function obtener_reactivos(
+    int $id_usuario,
+    string $busqueda,
+    int $tema,
+    string $nivel
+  ) {
+    return $this->procedure_idx(
+      'id_reactivo',
+      'hacer_query',
+      $id_usuario,
+      $busqueda,
+      $tema,
+      $nivel
+    );
+  }
+}
+
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
 {
   $conn = new mysqli($host, $user, $pass, $db);
@@ -8,36 +36,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function obtener_reactivos($conn, $id_usuario)
-{
-  $stmt = $conn->prepare("SELECT * FROM reactivo WHERE id_creador = ? ORDER BY fecha DESC");
-  $stmt->bind_param("i", $id_usuario);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $reactivos = [];
-  while ($row = $result->fetch_assoc())
-    $reactivos[$row['id_reactivo']] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $reactivos;
-}
-
-function obtener_reactivos_query($conn, $id_usuario, $busqueda, $tema, $nivel)
-{
-  $stmt = $conn->prepare("CALL hacer_query(?, ?, ?, ?)");
-  $stmt->bind_param("isis", $id_usuario, $busqueda, $tema, $nivel);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $reactivos = [];
-  while ($row = $result->fetch_assoc())
-    $reactivos[$row['id_reactivo']] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $reactivos;
 }
 
 function obtener_temas($conn)

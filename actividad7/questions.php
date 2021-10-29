@@ -7,6 +7,8 @@ solo_permitir([USUARIO_ADMIN]);
 require_once 'dal.php';
 $conn = crear_conexion();
 
+$db = new ExamenesDB();
+
 if (array_key_exists('delete', $_GET)) {
   $id_delete = intval($_GET['delete']);
   var_dump("Delete: $id_delete");
@@ -159,7 +161,12 @@ if (array_key_exists('delete', $_GET)) {
           return $result;
         }
 
-        $reactivos = obtener_reactivos_query($conn, $_SESSION['id_usuario'], $busqueda, $tema, $nivel);
+        $reactivos = $db->obtener_reactivos(
+          $_SESSION['id_usuario'],
+          $busqueda,
+          intval($tema),
+          $nivel
+        );
 
         $edit_icon = icono_edit();
         $delete_icon = icono_delete();
