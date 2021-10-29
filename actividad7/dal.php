@@ -26,6 +26,13 @@ class ExamenesDB extends Conexion
       $nivel
     );
   }
+
+  function obtener_temas()
+  {
+    return $this->tabla('tema')
+      ->order_by('id_tema')
+      ->get_idx();
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")

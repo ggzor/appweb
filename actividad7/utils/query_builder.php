@@ -42,8 +42,10 @@ function get_results(
     if ($stmt === false)
       throw new Exception("Statement incorrecto: \n$stmt_info");
 
-    if ($stmt->bind_param($params_str, ...$params) === false) {
-      throw new Exception("Número de parámetros incorrecto: \n$stmt_info");
+    if (!empty($params)) {
+      if ($stmt->bind_param($params_str, ...$params) === false) {
+        throw new Exception("Número de parámetros incorrecto: \n$stmt_info");
+      }
     }
 
     if ($stmt->execute() === false) {
@@ -195,5 +197,10 @@ class Entidad
       $params_str,
       ...$params
     );
+  }
+
+  function get_idx()
+  {
+    return $this->get('id_' . $this->tabla);
   }
 }
