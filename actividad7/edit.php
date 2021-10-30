@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else if (array_key_exists('id_reactivo', $_REQUEST)) {
   $id_reactivo = intval($_REQUEST['id_reactivo']);
   $info_reactivo = $db->obtener_reactivo_unico($id_reactivo);
-  $opciones = obtener_opciones_por_reactivo($conn, $id_reactivo);
+  $opciones = $db->obtener_opciones_por_reactivo($id_reactivo);
 
   $multiple = boolval($info_reactivo['multiple']);
   if ($multiple) {

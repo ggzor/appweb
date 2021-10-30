@@ -65,6 +65,13 @@ class ExamenesDB extends Conexion
       ->where('id_reactivo', $id_reactivo)
       ->single();
   }
+
+  function obtener_opciones_por_reactivo(int $id_reactivo)
+  {
+    return $this->tabla('opciones_por_reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->select();
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -75,21 +82,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function obtener_opciones_por_reactivo($conn, $id_reactivo)
-{
-  $stmt = $conn->prepare("SELECT * FROM opciones_por_reactivo WHERE id_reactivo = ?");
-  $stmt->bind_param("i", $id_reactivo);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $opciones = [];
-  while ($row = $result->fetch_assoc())
-    $opciones[] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $opciones;
 }
 
 function actualizar_reactivo($conn, $id_reactivo, $id_tema, $nivel, $enunciado, $multiple)
