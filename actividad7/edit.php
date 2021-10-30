@@ -121,7 +121,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_opcion = intval($opcion['id_opcion']);
         $conservar[] = $id_opcion;
 
-        actualizar_opcion($conn, $id_opcion, $opcion['correcta'], $opcion['contenido']);
+        $db->actualizar_opcion(
+          $id_opcion,
+          boolval($opcion['correcta']),
+          $opcion['contenido']
+        );
       } else {
         $nueva = $db->crear_opcion($id_reactivo, $opcion['correcta'], $opcion['contenido']);
         $conservar[] = $nueva;
