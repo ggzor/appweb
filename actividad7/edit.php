@@ -7,8 +7,6 @@ require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
 
 require_once 'dal.php';
-$conn = crear_conexion();
-
 $db = new ExamenesDB();
 
 $todos_temas = $db->obtener_temas();

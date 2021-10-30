@@ -108,13 +108,3 @@ class ExamenesDB extends Conexion
       ->delete();
   }
 }
-
-function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
-{
-  $conn = new mysqli($host, $user, $pass, $db);
-
-  # Inicializar utf8
-  $conn->query("SET NAMES utf8");
-
-  return $conn;
-}
