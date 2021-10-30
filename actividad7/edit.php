@@ -94,7 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id_reactivo !== false) {
       foreach ($opciones as $opcion)
-        crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+        $db->crear_opcion(
+          $id_reactivo,
+          boolval($opcion['correcta']),
+          $opcion['contenido']
+        );
 
       header("Location: questions.php?create_ok=1");
     } else {
@@ -120,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         actualizar_opcion($conn, $id_opcion, $opcion['correcta'], $opcion['contenido']);
       } else {
-        $nueva = crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+        $nueva = $db->crear_opcion($id_reactivo, $opcion['correcta'], $opcion['contenido']);
         $conservar[] = $nueva;
       }
     }

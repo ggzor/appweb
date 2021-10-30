@@ -51,6 +51,13 @@ class ExamenesDB extends Conexion
     return $this->tabla('reactivo')
       ->insert($params);
   }
+
+  function crear_opcion(int $id_reactivo, bool $correcta, string $contenido)
+  {
+    $params = get_defined_vars();
+    return $this->tabla('opcion')
+      ->insert($params);
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -61,28 +68,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function crear_opcion($conn, $id_reactivo, $correcta, $contenido)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-INSERT INTO opcion (id_reactivo, correcta, contenido)
-VALUES (?, ?, ?);
-");
-    $stmt->bind_param("iis", $id_reactivo, $correcta, $contenido);
-    if ($stmt->execute())
-      return $stmt->insert_id;
-    else
-      return false;
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
-  }
 }
 
 function obtener_informacion_reactivo($conn, $id_reactivo)
