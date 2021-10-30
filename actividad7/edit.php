@@ -84,8 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if ($crear_nuevo) {
-    $id_reactivo = crear_reactivo(
-      $conn,
+    $id_reactivo = $db->crear_reactivo(
       $_SESSION['id_usuario'],
       $tema,
       $nivel,

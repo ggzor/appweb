@@ -41,6 +41,16 @@ class ExamenesDB extends Conexion
       ->where('id_reactivo', $id)
       ->delete();
   }
+
+  function crear_reactivo(string $id_creador, int $id_tema, string $nivel, string $enunciado, bool $multiple)
+  {
+    # Trick to pass parameters for free
+    $params = get_defined_vars();
+    $params['publicado'] = false;
+
+    return $this->tabla('reactivo')
+      ->insert($params);
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -51,28 +61,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function crear_reactivo($conn, $id_creador, $id_tema, $nivel, $enunciado, $multiple)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-INSERT INTO reactivo (publicado, id_creador, id_tema, nivel, enunciado, multiple)
-VALUES (false, ?, ?, ?, ?, ?);
-");
-    $stmt->bind_param("iissi", $id_creador, $id_tema, $nivel, $enunciado, $multiple);
-    if ($stmt->execute())
-      return $stmt->insert_id;
-    else
-      return false;
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
-  }
 }
 
 function crear_opcion($conn, $id_reactivo, $correcta, $contenido)

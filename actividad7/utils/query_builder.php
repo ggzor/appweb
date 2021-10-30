@@ -5,13 +5,36 @@
  */
 function get_param_type(&$var)
 {
-  if (is_int($var))
+  if (is_int($var) || is_bool($var))
     return 'i';
   else
     return 's';
 }
 
-function run_prepared(mysqli $conn, string $query, string $params_str, &...$params)
+class PreparedResult
+{
+  public int $affected_rows;
+  public int $insert_id;
+  /**
+   * @var false|mysqli_result $result
+   */
+  public $result;
+
+  function __construct($affected_rows, $insert_id, $result)
+  {
+    $this->affected_rows = $affected_rows;
+    $this->insert_id = $insert_id;
+    $this->result = $result;
+  }
+
+  function __destruct()
+  {
+    if ($this->result !== false)
+      $this->result->close();
+  }
+}
+
+function run_prepared(mysqli $conn, string $query, string $params_str, &...$params): PreparedResult
 {
   $stmt_info = print_r([
     'query' => $query,
@@ -42,13 +65,15 @@ $stmt_info
 ");
     }
 
-    return [$stmt->affected_rows, $stmt->get_result()];
+    return new PreparedResult(
+      $stmt->affected_rows,
+      $stmt->insert_id,
+      $stmt->get_result()
+    );
   } finally {
     if ($stmt !== null)
       $stmt->close();
   }
-
-  return false;
 }
 
 /**
@@ -70,29 +95,24 @@ function get_results(
     'params' => $params
   ], true);
 
-  [, $result] = run_prepared($conn, $query, $params_str, ...$params);
+  $prepared_result = run_prepared($conn, $query, $params_str, ...$params);
 
-  try {
-    if ($result === false) {
-      throw new Exception("
-Error al obtener los resultados, puede que no sea un statement que devuelve valores:
+  if ($prepared_result->result === false) {
+    throw new Exception("
+Error al obtener los resultados, puede que sea un statement que no devuelve valores:
 $stmt_info
 ");
-    }
-
-    $entidades = [];
-    while ($row = $result->fetch_assoc()) {
-      if ($indizador !== null)
-        $entidades[$row[$indizador]] = $row;
-      else
-        $entidades[] = $row;
-    }
-
-    return $entidades;
-  } finally {
-    if ($result !== null)
-      $result->close();
   }
+
+  $entidades = [];
+  while ($row = $prepared_result->result->fetch_assoc()) {
+    if ($indizador !== null)
+      $entidades[$row[$indizador]] = $row;
+    else
+      $entidades[] = $row;
+  }
+
+  return $entidades;
 }
 
 class Conexion
@@ -275,6 +295,33 @@ Si esto es lo que deseas, llama al metodo truncate()
 
     $this->agregar_wheres($query, $params_str, $params);
 
-    return run_prepared($this->padre->getConn(), $query, $params_str, ...$params)[0];
+    $result = run_prepared($this->padre->getConn(), $query, $params_str, ...$params);
+    return $result->affected_rows;
+  }
+
+  function insert(array $keyValues): int
+  {
+    $query = "INSERT INTO $this->tabla (";
+    $params_str = "";
+    $params = [];
+
+    foreach ($keyValues as $key => $value) {
+      $query .= "$key, ";
+    }
+
+    $query = trim($query, ', ');
+    $query .= ') VALUES (';
+
+    foreach ($keyValues as $key => $value) {
+      $params_str .= get_param_type($value);
+      $params[] = $value;
+      $query .= '?, ';
+    }
+
+    $query = trim($query, ', ');
+    $query .= ')';
+
+    $result = run_prepared($this->padre->getConn(), $query, $params_str, ...$params);
+    return $result->insert_id;
   }
 }
