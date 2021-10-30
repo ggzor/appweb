@@ -30,9 +30,9 @@ class ExamenesDB extends Conexion
   function obtener_temas()
   {
     return $this->tabla('tema')
-      ->select('nombre')
       ->order_by('id_tema')
-      ->get_idx();
+      ->index()
+      ->select('nombre');
   }
 
   function borrar_reactivo($id)

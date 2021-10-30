@@ -164,21 +164,21 @@ class Entidad
     $this->padre = $padre;
     $this->tabla = $tabla;
 
-    $this->selects = '*';
-    $this->selects_attrs = [];
+    $this->indizador = false;
     $this->wheres = [];
     $this->orders = [];
   }
 
   /**
-   * Sanitizar $atributos, de preferencia utilizar constantes.
+   * Sanitizar $by, de preferencia utilizar constantes.
    */
-  function select($atributo, ...$otros_atributos)
+  function index($by = null)
   {
-    $todos_atributos = [$atributo, ...$otros_atributos];
+    if ($by === null)
+      $this->indizador = "id_" . $this->tabla;
+    else
+      $this->indizador = $by;
 
-    $this->selects = implode(',', $todos_atributos);
-    $this->selects_attrs = $todos_atributos;
     return $this;
   }
 
@@ -210,62 +210,58 @@ class Entidad
     }
   }
 
-  function get($indizador = null)
+  private function agregar_orderby(string &$query)
   {
-    $indizador_insertado = false;
-    $str_select = $this->selects;
-    if (
-      $this->selects !== '*'
-      && $indizador !== null
-      && !in_array($indizador, $this->selects_attrs)
-    ) {
-      $indizador_insertado = true;
-      $str_select .= ", $indizador";
-    }
-
-    $query = "SELECT $str_select FROM $this->tabla";
-    $params_str = "";
-    $params = [];
-
-
-    $this->agregar_wheres($query, $params_str, $params);
-
     foreach ($this->orders as [$atributo, $tipo]) {
       $query .= " ORDER BY $atributo $tipo";
     }
+  }
+
+  function select($atributo = '*', ...$otros_atributos)
+  {
+    $todos_atributos = [$atributo, ...$otros_atributos];
+    $selecciona_todos = count($todos_atributos) === 1 && $todos_atributos[0] === '*';
+
+    $insertar_indizador =  !$selecciona_todos
+      && $this->indizador !== false
+      && !in_array($this->indizador, $todos_atributos);
+
+    if ($insertar_indizador) {
+      $todos_atributos[] = $this->indizador;
+    }
+
+    $select_str = implode(',', $todos_atributos);
+
+    $query = "SELECT $select_str FROM $this->tabla";
+    $params_str = "";
+    $params = [];
+
+    $this->agregar_wheres($query, $params_str, $params);
+    $this->agregar_orderby($query);
 
     $resultados = get_results(
       $this->padre->getConn(),
-      $indizador,
+      $this->indizador,
       $query,
       $params_str,
       ...$params
     );
 
-    if ($indizador_insertado) {
+    if ($insertar_indizador) {
       foreach ($resultados as &$value) {
-        unset($value[$indizador]);
+        unset($value[$this->indizador]);
       }
     }
 
-    if ($this->selects !== '*' && count($this->selects_attrs) === 1) {
+    if (!$selecciona_todos && empty($otros_atributos)) {
       return array_map(fn ($row) => array_values($row)[0], $resultados);
     } else {
       return $resultados;
     }
   }
 
-  function get_idx()
-  {
-    return $this->get('id_' . $this->tabla);
-  }
-
   function delete(): int
   {
-    if (!empty($this->selects_attrs)) {
-      throw new Exception("No debes usar simultáneamente select() y delete()");
-    }
-
     if (empty($this->wheres)) {
       throw new Exception("
 Debes especificar un where al menos o se borrará toda la tabla.
