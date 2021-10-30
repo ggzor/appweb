@@ -5,8 +5,6 @@ require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
 
 require_once 'dal.php';
-$conn = crear_conexion();
-
 $db = new ExamenesDB();
 
 if (array_key_exists('delete', $_GET)) {

@@ -99,6 +99,14 @@ class ExamenesDB extends Conexion
       ->where('id_opcion', $id_opcion)
       ->update($params);
   }
+
+  function conservar_opciones(int $id_reactivo, array $mantener)
+  {
+    return $this->tabla('opcion')
+      ->where('id_reactivo', $id_reactivo)
+      ->where('id_opcion', 'NOT IN', $mantener)
+      ->delete();
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")

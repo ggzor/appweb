@@ -133,9 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (count($conservar) > 0) {
-      $num_str = implode(", ", $conservar);
-      $conn->query("DELETE FROM opcion WHERE id_reactivo = $id_reactivo
-                                         AND id_opcion NOT IN ($num_str);");
+      $db->conservar_opciones($id_reactivo, $conservar);
     }
 
     header("Location: edit.php?id_reactivo=$id_reactivo&update_ok=1");

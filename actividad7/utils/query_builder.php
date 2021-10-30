@@ -203,11 +203,24 @@ class Entidad
   }
 
   /**
-   * Sanitizar $atributo, de preferencia utilizar constantes.
-   * */
-  function where($atributo, $valor)
+   * Sanitizar $atributo y $valor_o_operador, de preferencia utilizar constantes.
+   * Los otros operadores reconocidos son IN y NOT IN.
+   */
+  function where($atributo, $valor_o_operador, $valor_cuando_operador = null)
   {
-    $this->wheres[] = ['=', $atributo, $valor];
+    $operador = '=';
+    $valor = $valor_o_operador;
+
+    if ($valor_cuando_operador !== null) {
+      $operador = $valor_o_operador;
+      $valor = $valor_cuando_operador;
+    }
+
+    if (strpos($operador, 'IN') !== false && empty($valor)) {
+      throw new Exception("No se puede pasar un arreglo vacío de valores con IN o NOT IN");
+    }
+
+    $this->wheres[] = [$operador, $atributo, $valor];
     return $this;
   }
 
@@ -222,11 +235,31 @@ class Entidad
 
   private function agregar_wheres(string &$query, string &$params_str, array &$params)
   {
-    foreach ($this->wheres as [$op, $attr, $valor]) {
-      $query .= " WHERE $attr $op ?";
+    if (!empty($this->wheres)) {
+      $query .= " WHERE";
+      $primero = true;
 
-      $params_str .= get_param_type($valor);
-      $params[] = $valor;
+      foreach ($this->wheres as [$op, $attr, $valor]) {
+        if ($primero) {
+          $primero = false;
+        } else {
+          $query .= " AND";
+        }
+
+        if (strpos($op, 'IN') !== false) {
+          $unknowns = implode(", ", array_fill(0, count($valor), '?'));
+          $query .= " $attr $op ($unknowns)";
+
+          foreach ($valor as $item) {
+            $params_str .= get_param_type($item);
+            $params[] = $item;
+          }
+        } else {
+          $query .= " $attr $op ?";
+          $params_str .= get_param_type($valor);
+          $params[] = $valor;
+        }
+      }
     }
   }
 
