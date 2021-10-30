@@ -107,8 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     exit();
   } else {
-    actualizar_reactivo(
-      $conn,
+    $db->actualizar_reactivo(
       $id_reactivo,
       $tema,
       $nivel,

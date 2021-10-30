@@ -72,6 +72,17 @@ class ExamenesDB extends Conexion
       ->where('id_reactivo', $id_reactivo)
       ->select();
   }
+
+  function actualizar_reactivo($id_reactivo, $id_tema, $nivel, $enunciado, $multiple)
+  {
+    $params = get_defined_vars();
+    # Do not change the id
+    unset($params['id_reactivo']);
+
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->update($params);
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -82,30 +93,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   $conn->query("SET NAMES utf8");
 
   return $conn;
-}
-
-function actualizar_reactivo($conn, $id_reactivo, $id_tema, $nivel, $enunciado, $multiple)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-UPDATE reactivo
-SET
-  id_tema = ?,
-  nivel = ?,
-  enunciado = ?,
-  multiple = ?
-WHERE id_reactivo = ?;
-");
-    $stmt->bind_param("issii", $id_tema, $nivel, $enunciado, $multiple, $id_reactivo);
-    return $stmt->execute();
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
-  }
 }
 
 function actualizar_opcion($conn, $id_opcion, $correcta, $contenido)

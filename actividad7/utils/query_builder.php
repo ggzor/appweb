@@ -338,4 +338,31 @@ Si esto es lo que deseas, llama al metodo truncate()
     $result = run_prepared($this->padre->getConn(), $query, $params_str, ...$params);
     return $result->insert_id;
   }
+
+  function update(array $keyValues): int
+  {
+    if (empty($this->wheres)) {
+      throw new Exception("
+Debes especificar un where al menos o se borrará toda la tabla.
+Si esto es lo que deseas, llama al metodo truncate()
+");
+    }
+
+    $query = "UPDATE $this->tabla SET ";
+    $params_str = "";
+    $params = [];
+
+    foreach ($keyValues as $key => $value) {
+      $query .= "$key = ?, ";
+      $params_str .= get_param_type($value);
+      $params[] = $value;
+    }
+
+    $query = trim($query, ", ");
+    $this->agregar_wheres($query, $params_str, $params);
+
+    $result = run_prepared($this->padre->getConn(), $query, $params_str, ...$params);
+
+    return $result->affected_rows;
+  }
 }
