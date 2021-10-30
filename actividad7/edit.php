@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Enunciado</h2>
         <article class="textarea-inside">
           <div class="input-sizer" data-value="<?php echo $enunciado ?>">
-            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable"><?php echo $enunciado ?></textarea>
+            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable" onfocus="this.select()"><?php echo $enunciado ?></textarea>
           </div>
         </article>
       </section>
@@ -278,10 +278,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <ul class="opciones">
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
-                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica">
-                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta">
+                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica" tabindex="-1">
+                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta" tabindex="-1">
                 <div class="input-sizer" :data-value="opcion.contenido">
-                  <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
+                  <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido" onfocus="this.select()">
                   </textarea>
                 </div>
                 <div class="buttons">
