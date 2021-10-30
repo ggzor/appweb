@@ -58,6 +58,13 @@ class ExamenesDB extends Conexion
     return $this->tabla('opcion')
       ->insert($params);
   }
+
+  function obtener_reactivo_unico(int $id_reactivo)
+  {
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->single();
+  }
 }
 
 function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
@@ -70,20 +77,6 @@ function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db =
   return $conn;
 }
 
-function obtener_informacion_reactivo($conn, $id_reactivo)
-{
-  $stmt = $conn->prepare("SELECT * FROM reactivo WHERE id_reactivo = ?");
-  $stmt->bind_param("i", $id_reactivo);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  $reactivo = $result->fetch_assoc();
-
-  $result->close();
-  $stmt->close();
-
-  return $reactivo;
-}
 function obtener_opciones_por_reactivo($conn, $id_reactivo)
 {
   $stmt = $conn->prepare("SELECT * FROM opciones_por_reactivo WHERE id_reactivo = ?");

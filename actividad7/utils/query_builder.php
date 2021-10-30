@@ -184,7 +184,7 @@ class Entidad
     $this->padre = $padre;
     $this->tabla = $tabla;
 
-    $this->indizador = false;
+    $this->indizador = null;
     $this->wheres = [];
     $this->orders = [];
   }
@@ -243,7 +243,7 @@ class Entidad
     $selecciona_todos = count($todos_atributos) === 1 && $todos_atributos[0] === '*';
 
     $insertar_indizador =  !$selecciona_todos
-      && $this->indizador !== false
+      && $this->indizador !== null
       && !in_array($this->indizador, $todos_atributos);
 
     if ($insertar_indizador) {
@@ -278,6 +278,20 @@ class Entidad
     } else {
       return $resultados;
     }
+  }
+
+  function single(string $atributo = '*', ...$otros_atributos)
+  {
+    if ($this->indizador !== null)
+      throw new Exception("No se puede indizar con single");
+
+    $resultado = $this->select($atributo, ...$otros_atributos);
+
+    if (count($resultado) !== 1) {
+      throw new Exception("Se encontró más de un resultado");
+    }
+
+    return $resultado[0];
   }
 
   function delete(): int
