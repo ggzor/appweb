@@ -15,6 +15,7 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
   <title>Principal</title>
   <link rel="stylesheet" href="compartido.css">
   <link rel="stylesheet" href="generic_menu.css">
+  <link rel="stylesheet" href="about.css">
 </head>
 
 <body>
@@ -37,10 +38,59 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
   </section>
 
   <section>
-    <?php links() ?>
+    <?php links();
+    ?>
 
-    <main>
-    </main>
+    <?php
+    $icono_php = icono_php();
+    $icono_mysql = icono_mysql();
+    $icono_html = icono_html();
+    $icono_css = icono_css();
+    $icono_js = icono_js();
+    $icono_alpine = icono_alpine();
+
+    $icono_github = icono_github();
+    $icono_gmail = icono_gmail();
+
+    echo <<<EOF
+        <main>
+
+          <h2>Acerca de</h2>
+          <p>Proyecto final de la materia <b>Aplicaciones Web Otoño 2021.</b></p>
+
+          <div class="iconos">
+            <a href="https://www.php.net/docs.php">$icono_php</a>
+            <a href="https://www.mysql.com/">$icono_mysql</a>
+            <a href="https://developer.mozilla.org/es/docs/Web/HTML">$icono_html </a>
+            <a href="https://developer.mozilla.org/es/docs/Web/CSS">$icono_css</a>
+            <a href="https://developer.mozilla.org/es/docs/Web/JavaScript">$icono_js</a>
+            <a href="https://alpinejs.dev/">$icono_alpine</a>
+          </div>
+
+          <h2>Autores </h2>
+
+          <section class="autores">
+            <div class="autor">
+              <div class="barra"></div>
+              <div class="datos">
+                <p class="nombre">Axel Suárez Polo</p>
+                <a href="http://" class="github">$icono_github @ggzor</a>
+                <a href="mailto:ggzorgg@outlook.com" class="gmail">$icono_gmail ggzorgg@outlook.com</a>
+              </div>
+            </div>
+            
+            <div class="autor">
+              <div class="barra"></div>
+              <div class="datos">
+                <p class="nombre">Marisol Huitzil Juárez</p>
+                <a href="http://" class="github">$icono_github @Axol44</a>
+                <a href="mailto:k3ho45@gmail.com" class="gmail">$icono_gmail k3ho45@gmail.com</a>
+              </div>
+            </div>
+          </section>
+        </main>
+        EOF;
+    ?>
   </section>
 </body>
 
