@@ -1,190 +1,110 @@
 <?php
 
-function crear_conexion($host = 'localhost', $user = 'root', $pass = null, $db = "examenes")
+require_once "utils/query_builder.php";
+
+const DEFAULT_DATABASE = "examenes";
+
+class ExamenesDB extends Conexion
 {
-  $conn = new mysqli($host, $user, $pass, $db);
-
-  # Inicializar utf8
-  $conn->query("SET NAMES utf8");
-
-  return $conn;
-}
-
-function obtener_reactivos($conn, $id_usuario)
-{
-  $stmt = $conn->prepare("SELECT * FROM reactivo WHERE id_creador = ? ORDER BY fecha DESC");
-  $stmt->bind_param("i", $id_usuario);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $reactivos = [];
-  while ($row = $result->fetch_assoc())
-    $reactivos[$row['id_reactivo']] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $reactivos;
-}
-
-function obtener_reactivos_query($conn, $id_usuario, $busqueda, $tema, $nivel)
-{
-  $stmt = $conn->prepare("CALL hacer_query(?, ?, ?, ?)");
-  $stmt->bind_param("isis", $id_usuario, $busqueda, $tema, $nivel);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $reactivos = [];
-  while ($row = $result->fetch_assoc())
-    $reactivos[$row['id_reactivo']] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $reactivos;
-}
-
-function obtener_temas($conn)
-{
-  $stmt = $conn->prepare("SELECT * FROM tema ORDER BY id_tema");
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $temas = [];
-  while ($row = $result->fetch_assoc())
-    $temas[$row['id_tema']] = $row['nombre'];
-  $result->close();
-  $stmt->close();
-
-  return $temas;
-}
-
-function borrar_reactivo($conn, $id)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("DELETE FROM reactivo WHERE id_reactivo = ?");
-    $stmt->bind_param("i", $id);
-    return $stmt->execute();
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
+  function __construct()
+  {
+    parent::__construct("examenes", "localhost", "root", null);
   }
-}
 
-function crear_reactivo($conn, $id_creador, $id_tema, $nivel, $enunciado, $multiple)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-INSERT INTO reactivo (publicado, id_creador, id_tema, nivel, enunciado, multiple)
-VALUES (false, ?, ?, ?, ?, ?);
-");
-    $stmt->bind_param("iissi", $id_creador, $id_tema, $nivel, $enunciado, $multiple);
-    if ($stmt->execute())
-      return $stmt->insert_id;
-    else
-      return false;
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
+  function obtener_reactivos(
+    int $id_usuario,
+    string $busqueda,
+    int $tema,
+    string $nivel
+  ) {
+    return $this->procedure_idx(
+      'id_reactivo',
+      'hacer_query',
+      $id_usuario,
+      $busqueda,
+      $tema,
+      $nivel
+    );
   }
-}
 
-function crear_opcion($conn, $id_reactivo, $correcta, $contenido)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-INSERT INTO opcion (id_reactivo, correcta, contenido)
-VALUES (?, ?, ?);
-");
-    $stmt->bind_param("iis", $id_reactivo, $correcta, $contenido);
-    if ($stmt->execute())
-      return $stmt->insert_id;
-    else
-      return false;
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
+  function obtener_temas()
+  {
+    return $this->tabla('tema')
+      ->order_by('id_tema')
+      ->index()
+      ->select('nombre');
   }
-}
 
-function obtener_informacion_reactivo($conn, $id_reactivo)
-{
-  $stmt = $conn->prepare("SELECT * FROM reactivo WHERE id_reactivo = ?");
-  $stmt->bind_param("i", $id_reactivo);
-  $stmt->execute();
-  $result = $stmt->get_result();
-
-  $reactivo = $result->fetch_assoc();
-
-  $result->close();
-  $stmt->close();
-
-  return $reactivo;
-}
-function obtener_opciones_por_reactivo($conn, $id_reactivo)
-{
-  $stmt = $conn->prepare("SELECT * FROM opciones_por_reactivo WHERE id_reactivo = ?");
-  $stmt->bind_param("i", $id_reactivo);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $opciones = [];
-  while ($row = $result->fetch_assoc())
-    $opciones[] = $row;
-  $result->close();
-  $stmt->close();
-
-  return $opciones;
-}
-
-function actualizar_reactivo($conn, $id_reactivo, $id_tema, $nivel, $enunciado, $multiple)
-{
-  $stmt = null;
-
-  try {
-    $stmt = $conn->prepare("
-UPDATE reactivo
-SET
-  id_tema = ?,
-  nivel = ?,
-  enunciado = ?,
-  multiple = ?
-WHERE id_reactivo = ?;
-");
-    $stmt->bind_param("issii", $id_tema, $nivel, $enunciado, $multiple, $id_reactivo);
-    return $stmt->execute();
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
+  function borrar_reactivo($id)
+  {
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id)
+      ->delete();
   }
-}
 
-function actualizar_opcion($conn, $id_opcion, $correcta, $contenido)
-{
-  $stmt = null;
+  function crear_reactivo(string $id_creador, int $id_tema, string $nivel, string $enunciado, bool $multiple)
+  {
+    # Trick to pass parameters for free
+    $params = get_defined_vars();
+    $params['publicado'] = false;
 
-  try {
-    $stmt = $conn->prepare("
-UPDATE opcion
-SET
-  correcta = ?,
-  contenido = ?
-WHERE id_opcion = ?;
-");
-    $stmt->bind_param("isi", $correcta, $contenido, $id_opcion);
-    return $stmt->execute();
-  } catch (\Throwable $th) {
-    throw $th;
-  } finally {
-    if ($stmt)
-      $stmt->close();
+    return $this->tabla('reactivo')
+      ->insert($params);
+  }
+
+  function crear_opcion(int $id_reactivo, bool $correcta, string $contenido)
+  {
+    $params = get_defined_vars();
+    return $this->tabla('opcion')
+      ->insert($params);
+  }
+
+  function obtener_reactivo_unico(int $id_reactivo)
+  {
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->single();
+  }
+
+  function obtener_opciones_por_reactivo(int $id_reactivo)
+  {
+    return $this->tabla('opciones_por_reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->select();
+  }
+
+  function actualizar_reactivo(
+    int $id_reactivo,
+    int $id_tema,
+    string $nivel,
+    string $enunciado,
+    bool $multiple
+  ) {
+    $params = get_defined_vars();
+    # Do not change the id
+    unset($params['id_reactivo']);
+
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->update($params);
+  }
+
+  function actualizar_opcion(int $id_opcion, bool $correcta, string $contenido)
+  {
+    $params = get_defined_vars();
+    # Do not change the id
+    unset($params['id_opcion']);
+
+    return $this->tabla('opcion')
+      ->where('id_opcion', $id_opcion)
+      ->update($params);
+  }
+
+  function conservar_opciones(int $id_reactivo, array $mantener)
+  {
+    return $this->tabla('opcion')
+      ->where('id_reactivo', $id_reactivo)
+      ->where('id_opcion', 'NOT IN', $mantener)
+      ->delete();
   }
 }

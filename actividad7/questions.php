@@ -5,13 +5,13 @@ require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
 
 require_once 'dal.php';
-$conn = crear_conexion();
+$db = new ExamenesDB();
 
 if (array_key_exists('delete', $_GET)) {
   $id_delete = intval($_GET['delete']);
   var_dump("Delete: $id_delete");
 
-  $result = borrar_reactivo($conn, $id_delete);
+  $result = $db->borrar_reactivo($id_delete);
   var_dump($result);
 
   header("Location: questions.php?delete_ok=1");
@@ -49,7 +49,7 @@ if (array_key_exists('delete', $_GET)) {
   <section>
     <?php
     links();
-    $todos_temas = obtener_temas($conn);
+    $todos_temas = $db->obtener_temas();
     array_unshift($todos_temas, "Todos los temas");
 
     $todos_niveles = TODOS_NIVELES;
@@ -159,7 +159,12 @@ if (array_key_exists('delete', $_GET)) {
           return $result;
         }
 
-        $reactivos = obtener_reactivos_query($conn, $_SESSION['id_usuario'], $busqueda, $tema, $nivel);
+        $reactivos = $db->obtener_reactivos(
+          $_SESSION['id_usuario'],
+          $busqueda,
+          intval($tema),
+          $nivel
+        );
 
         $edit_icon = icono_edit();
         $delete_icon = icono_delete();

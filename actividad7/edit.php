@@ -7,9 +7,9 @@ require_once 'database.php';
 solo_permitir([USUARIO_ADMIN]);
 
 require_once 'dal.php';
-$conn = crear_conexion();
+$db = new ExamenesDB();
 
-$todos_temas = obtener_temas($conn);
+$todos_temas = $db->obtener_temas();
 
 $tema = array_keys($todos_temas)[0];
 $nivel = NIVEL_BASICO;
@@ -82,8 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
   if ($crear_nuevo) {
-    $id_reactivo = crear_reactivo(
-      $conn,
+    $id_reactivo = $db->crear_reactivo(
       $_SESSION['id_usuario'],
       $tema,
       $nivel,
@@ -93,7 +92,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id_reactivo !== false) {
       foreach ($opciones as $opcion)
-        crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+        $db->crear_opcion(
+          $id_reactivo,
+          boolval($opcion['correcta']),
+          $opcion['contenido']
+        );
 
       header("Location: questions.php?create_ok=1");
     } else {
@@ -102,8 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     exit();
   } else {
-    actualizar_reactivo(
-      $conn,
+    $db->actualizar_reactivo(
       $id_reactivo,
       $tema,
       $nivel,
@@ -117,17 +119,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_opcion = intval($opcion['id_opcion']);
         $conservar[] = $id_opcion;
 
-        actualizar_opcion($conn, $id_opcion, $opcion['correcta'], $opcion['contenido']);
+        $db->actualizar_opcion(
+          $id_opcion,
+          boolval($opcion['correcta']),
+          $opcion['contenido']
+        );
       } else {
-        $nueva = crear_opcion($conn, $id_reactivo, $opcion['correcta'], $opcion['contenido']);
+        $nueva = $db->crear_opcion($id_reactivo, $opcion['correcta'], $opcion['contenido']);
         $conservar[] = $nueva;
       }
     }
 
     if (count($conservar) > 0) {
-      $num_str = implode(", ", $conservar);
-      $conn->query("DELETE FROM opcion WHERE id_reactivo = $id_reactivo
-                                         AND id_opcion NOT IN ($num_str);");
+      $db->conservar_opciones($id_reactivo, $conservar);
     }
 
     header("Location: edit.php?id_reactivo=$id_reactivo&update_ok=1");
@@ -137,8 +141,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   exit();
 } else if (array_key_exists('id_reactivo', $_REQUEST)) {
   $id_reactivo = intval($_REQUEST['id_reactivo']);
-  $info_reactivo = obtener_informacion_reactivo($conn, $id_reactivo);
-  $opciones = obtener_opciones_por_reactivo($conn, $id_reactivo);
+  $info_reactivo = $db->obtener_reactivo_unico($id_reactivo);
+  $opciones = $db->obtener_opciones_por_reactivo($id_reactivo);
 
   $multiple = boolval($info_reactivo['multiple']);
   if ($multiple) {
@@ -265,7 +269,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2>Enunciado</h2>
         <article class="textarea-inside">
           <div class="input-sizer" data-value="<?php echo $enunciado ?>">
-            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable"><?php echo $enunciado ?></textarea>
+            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable" onfocus="this.select()"><?php echo $enunciado ?></textarea>
           </div>
         </article>
       </section>
@@ -276,10 +280,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <ul class="opciones">
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
               <div class="opcion-reactivo">
-                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica">
-                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta">
+                <input type="radio" name="opcionradio" :value="opcion.id_opcion" x-show="!multiple" :disabled="!editable" x-model="unica" tabindex="-1">
+                <input type="checkbox" value="1" :name="`opcioncheck_${opcion.id_opcion}`" x-show="multiple" :disabled="!editable" x-model="opcion.correcta" tabindex="-1">
                 <div class="input-sizer" :data-value="opcion.contenido">
-                  <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido">
+                  <textarea oninput="this.parentNode.dataset.value = this.value" :name="`opciontexto_${opcion.id_opcion}`" placeholder="Aquí va el contenido de un reactivo..." required :readonly="!editable" x-text="opcion.contenido" onfocus="this.select()">
                   </textarea>
                 </div>
                 <div class="buttons">
