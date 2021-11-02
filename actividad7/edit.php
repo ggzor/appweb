@@ -237,6 +237,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               <?php
               foreach ($todos_temas as $id_tema => $nombre_tema) {
                 $selected_str = $id_tema == $tema ? 'selected' : '';
+                $nombre_tema = xss_escape($nombre_tema);
                 echo "<option value='$id_tema' $selected_str>$nombre_tema</option>";
               }
               ?>
@@ -268,8 +269,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <section class="edit-section">
         <h2>Enunciado</h2>
         <article class="textarea-inside">
-          <div class="input-sizer" data-value="<?php echo $enunciado ?>">
-            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable" onfocus="this.select()"><?php echo $enunciado ?></textarea>
+          <?php
+          $enunciado_seguro = xss_escape($enunciado);
+          ?>
+
+          <div class="input-sizer" data-value="<?php echo $enunciado_seguro ?>">
+            <textarea oninput="this.parentNode.dataset.value = this.value" name="enunciado" id="enunciado" placeholder="Aquí va el enunciado..." required :readonly="!editable" onfocus="this.select()"><?php echo $enunciado_seguro ?></textarea>
           </div>
         </article>
       </section>
