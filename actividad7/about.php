@@ -59,12 +59,12 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
           <p>Proyecto final de la materia <b>Aplicaciones Web Otoño 2021.</b></p>
 
           <div class="iconos">
-            <a href="https://www.php.net/docs.php">$icono_php</a>
-            <a href="https://www.mysql.com/">$icono_mysql</a>
-            <a href="https://developer.mozilla.org/es/docs/Web/HTML">$icono_html </a>
-            <a href="https://developer.mozilla.org/es/docs/Web/CSS">$icono_css</a>
-            <a href="https://developer.mozilla.org/es/docs/Web/JavaScript">$icono_js</a>
-            <a href="https://alpinejs.dev/">$icono_alpine</a>
+            <a href="https://www.php.net" target="_blank">$icono_php</a>
+            <a href="https://www.mysql.com/" target="_blank">$icono_mysql</a>
+            <a href="https://developer.mozilla.org/es/docs/Web/HTML" target="_blank">$icono_html </a>
+            <a href="https://developer.mozilla.org/es/docs/Web/CSS" target="_blank">$icono_css</a>
+            <a href="https://developer.mozilla.org/es/docs/Web/JavaScript" target="_blank">$icono_js</a>
+            <a href="https://alpinejs.dev/" target="_blank">$icono_alpine</a>
           </div>
 
           <h2>Autores </h2>
@@ -74,8 +74,8 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
               <div class="barra"></div>
               <div class="datos">
                 <p class="nombre">Axel Suárez Polo</p>
-                <a href="http://" class="github">$icono_github @ggzor</a>
-                <a href="mailto:ggzorgg@outlook.com" class="gmail">$icono_gmail ggzorgg@outlook.com</a>
+                <a href="https://github.com/ggzor" class="github" target="_blank">$icono_github @ggzor</a>
+                <a href="mailto:ggzorgg@outlook.com" class="gmail" target="_blank">$icono_gmail ggzorgg@outlook.com</a>
               </div>
             </div>
             
@@ -83,8 +83,8 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
               <div class="barra"></div>
               <div class="datos">
                 <p class="nombre">Marisol Huitzil Juárez</p>
-                <a href="http://" class="github">$icono_github @Axol44</a>
-                <a href="mailto:k3ho45@gmail.com" class="gmail">$icono_gmail k3ho45@gmail.com</a>
+                <a href="https://github.com/Axol44" class="github" target="_blank">$icono_github @Axol44</a>
+                <a href="mailto:k3ho45@gmail.com" class="gmail" target="_blank">$icono_gmail k3ho45@gmail.com</a>
               </div>
             </div>
           </section>
