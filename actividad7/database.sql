@@ -61,12 +61,11 @@ CREATE TABLE ref_reactivo
 
 CREATE TABLE opcion
 (
-  id_opcion INT NOT NULL AUTO_INCREMENT,
+  id_opcion INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   id_reactivo INT NOT NULL,
   correcta BOOLEAN NOT NULL,
   contenido TEXT NOT NULL,
 
-  PRIMARY KEY (id_opcion, id_reactivo),
   FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo) ON DELETE CASCADE
 );
 
@@ -75,12 +74,10 @@ CREATE TABLE opcion_elegida
   id_opcion_elegida INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   id_ref_reactivo INT NOT NULL,
   id_opcion INT NOT NULL,
-  id_reactivo INT NOT NULL,
 
   UNIQUE KEY (id_ref_reactivo, id_opcion),
   FOREIGN KEY (id_ref_reactivo) REFERENCES ref_reactivo(id_ref_reactivo),
-  CONSTRAINT fk_opcion FOREIGN KEY (id_opcion, id_reactivo) REFERENCES opcion(id_opcion, id_reactivo)
-    ON DELETE CASCADE
+  FOREIGN KEY (id_opcion) REFERENCES opcion(id_opcion) ON DELETE CASCADE
 );
 
 INSERT INTO usuarios
@@ -163,13 +160,13 @@ VALUES
   (5, 2, 3);
 
 INSERT INTO opcion_elegida
-  (id_ref_reactivo, id_opcion, id_reactivo)
+  (id_ref_reactivo, id_opcion)
 VALUES
   -- Primer examen, contestado
-  (1, 1,  1),
-  (2, 5,  2),
-  (3, 8,  3),
-  (3, 10, 3);
+  (1, 1),
+  (2, 5),
+  (3, 8),
+  (3, 10);
 
 -- VIEWS
 
@@ -259,16 +256,16 @@ VALUES
 DELIMITER //
 
 -- Registrar fecha de modificación del reactivo.
-CREATE TRIGGER modificar_fecha_insert BEFORE INSERT ON reactivo 
+CREATE TRIGGER modificar_fecha_insert BEFORE INSERT ON reactivo
 FOR EACH ROW SET NEW.fecha = NOW(); //
 
-CREATE TRIGGER modificar_fecha_update BEFORE UPDATE ON reactivo 
+CREATE TRIGGER modificar_fecha_update BEFORE UPDATE ON reactivo
 FOR EACH ROW SET NEW.fecha = NOW(); //
 
 CREATE PROCEDURE hacer_query(id_usuario INT, busqueda TEXT, tema INT, nivel VARCHAR(50))
   BEGIN
-  SELECT * FROM reactivo 
-    WHERE reactivo.id_creador = id_usuario 
+  SELECT * FROM reactivo
+    WHERE reactivo.id_creador = id_usuario
       AND (tema = 0 OR reactivo.id_tema = tema)
       AND (nivel = 'TODOS' OR reactivo.nivel = nivel)
       AND (busqueda = '' OR (MATCH (enunciado) AGAINST (busqueda)))
