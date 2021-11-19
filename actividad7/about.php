@@ -54,8 +54,7 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
 
     echo <<<EOF
         <main>
-
-          <h2>Acerca de</h2>
+          <h2 class="title-2">Acerca de</h2>
           <p>Proyecto final de la materia <b>Aplicaciones Web Otoño 2021.</b></p>
 
           <div class="iconos">
@@ -67,8 +66,7 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
             <a href="https://alpinejs.dev/" target="_blank">$icono_alpine</a>
           </div>
 
-          <h2>Autores </h2>
-
+          <h2 class="title-2">Autores </h2>
           <section class="autores">
             <div class="autor">
               <div class="barra"></div>
@@ -78,7 +76,7 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
                 <a href="mailto:ggzorgg@outlook.com" class="gmail" target="_blank">$icono_gmail ggzorgg@outlook.com</a>
               </div>
             </div>
-            
+
             <div class="autor">
               <div class="barra"></div>
               <div class="datos">

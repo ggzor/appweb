@@ -1,11 +1,6 @@
 main {
-  margin-left: 32px;  
-}
-
-h2 {
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  color: var(--color-black-light);
+  margin-left: 32px;
+  margin-top: 32px;
 }
 
 p {
@@ -28,12 +23,14 @@ p {
 .autor {
   display: flex;
   flex-direction: row;
+
+  margin-top: 16px;
 }
 
 .barra {
   height: 100%;
   width: 8px;
-  background-color: #648DE5;
+  background-color: #648de5;
   margin-right: 32px;
 }
 
@@ -49,7 +46,8 @@ p {
   margin: 8px 0;
 }
 
-.github, .gmail {
+.github,
+.gmail {
   font-size: 1rem;
   text-decoration: none;
   margin: 8px 0;
@@ -59,3 +57,4 @@ p {
   color: var(--color-black-light);
   column-gap: 8px;
 }
+

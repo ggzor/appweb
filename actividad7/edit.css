@@ -2,16 +2,6 @@
   margin: 32px;
 }
 
-.edit-section > h2 {
-  font-size: 0.8em;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 0;
-
-  color: var(--color-black-light);
-}
-
 .edit-section:not(:first-of-type) {
   margin-top: 32px;
 }

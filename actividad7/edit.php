@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       ?>
 
       <section class="edit-section">
-        <h2>General</h2>
+        <h2 class="title-2">General</h2>
         <article class="nivel">
           <div class="select">
             <select class="bold" name="tema" id="tema" :disabled="!editable">
@@ -267,7 +267,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </section>
 
       <section class="edit-section">
-        <h2>Enunciado</h2>
+        <h2 class="title-2">Enunciado</h2>
         <article class="textarea-inside">
           <?php
           $enunciado_seguro = xss_escape($enunciado);
@@ -280,7 +280,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </section>
 
       <section class="edit-section">
-        <h2>Opciones</h2>
+        <h2 class="title-2">Opciones</h2>
         <article>
           <ul class="opciones">
             <template x-for="opcion in opciones" :key="opcion.id_opcion">
