@@ -49,7 +49,6 @@ function menu($options)
 
   echo '
 <section class="menu">
-  <p>Menú</p>
   ';
 
   for ($i = 0; $i < count($items); $i++) {
