@@ -97,12 +97,12 @@ VALUES
 INSERT INTO tema
   (id_tema, nombre, descripcion_tema, imagen_tema)
 VALUES
-  (1, 'Matemáticas', 
+  (1, 'Matemáticas',
       'Ejercicios que requieren de tu habilidad lógica y de calcular para resolverlos.',
       'imagenes/temas/matematicas.png'),
-  (2, 'Español', 
+  (2, 'Español',
       '¿Qué tanto dominas tu propio lenguaje? ¡Pruébalo!',
-      'imagenes/temas/espanol.png');  
+      'imagenes/temas/espanol.png');
 
 -- Opción múltiple
 INSERT INTO reactivo VALUES
@@ -215,6 +215,11 @@ FROM reactivo
 JOIN opcion
 ON reactivo.id_reactivo = opcion.id_reactivo
 ORDER BY opcion.id_opcion;
+
+CREATE VIEW maximos_por_tema AS
+SELECT id_tema, nivel, COUNT(*) as cantidad
+FROM reactivo
+GROUP BY id_tema, nivel;
 
 -- Agregando más datos
 

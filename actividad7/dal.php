@@ -107,4 +107,17 @@ class ExamenesDB extends Conexion
       ->where('id_opcion', 'NOT IN', $mantener)
       ->delete();
   }
+
+  function obtener_maximos_por_tema()
+  {
+    $temas = $this->tabla('maximos_por_tema')
+      ->select();
+
+    $temas_dict = [];
+    foreach ($temas as $t) {
+      $temas_dict[$t['id_tema']][$t['nivel']] = $t['cantidad'];
+    }
+
+    return $temas_dict;
+  }
 }

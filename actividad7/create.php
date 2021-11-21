@@ -37,54 +37,84 @@ $db = new ExamenesDB();
   <section>
     <?php links() ?>
 
-    <main>
-      <?php
-      $todos_temas = $db->obtener_temas();
-      $todos_niveles = TODOS_NIVELES;
-      ?>
-      <form action="do_create.php">
-        <h1>Crear nuevo examen</h1>
+    <?php
+    $todos_temas = $db->obtener_temas();
+    $todos_niveles = TODOS_NIVELES;
 
-        <h2>Tema</h2>
-        <select name="tema" id="tema" required>
-          <?php
-          foreach ($todos_temas as $id_tema => $tema) {
-            echo <<<EOF
+    $target_data = mb_ereg_replace(
+      '"',
+      "'",
+      json_encode([
+        'tema' => 1,
+        'nivel' => 'BASICO',
+        'todosTemas' => $todos_temas,
+        'maximos' => $db->obtener_maximos_por_tema()
+      ], JSON_UNESCAPED_UNICODE)
+    );
+    ?>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.store('data', {
+          ...<?php echo $target_data ?>,
+          get maximoActual() {
+            return Math.min(this.maximos[this.tema]?. [this.nivel] ?? 0, 20)
+          },
+          get imagen() {
+            return this.todosTemas[this.tema]['imagen_tema']
+          },
+          get descripcion() {
+            return this.todosTemas[this.tema]['descripcion_tema']
+          },
+        })
+      })
+    </script>
+
+    <main x-data="<?php echo $target_data ?>">
+      <h1>Crear nuevo examen</h1>
+      <section>
+        <form action="do_create.php">
+          <h2>Tema</h2>
+          <select name="tema" id="tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
+            <?php
+            foreach ($todos_temas as $id_tema => $tema) {
+              echo <<<EOF
               <option value="$id_tema">$tema[nombre]</option>
             EOF;
-          }
-          ?>
-        </select>
+            }
+            ?>
+          </select>
 
-        <h2>Nivel</h2>
-        <select name="nivel" id="nivel" required>
-          <?php
-          foreach ($todos_niveles as $nivel) {
-            $nivel_str = obtener_cadena_nivel($nivel);
+          <h2>Nivel</h2>
+          <select name="nivel" id="nivel" required @change="$store.data.nivel = $event.target.value" autocomplete="off">
+            <?php
+            foreach ($todos_niveles as $nivel) {
+              $nivel_str = obtener_cadena_nivel($nivel);
 
-            echo <<<EOF
+              echo <<<EOF
               <option value="$nivel">$nivel_str</option>
             EOF;
-          }
-          ?>
-        </select>
+            }
+            ?>
+          </select>
 
-        <h2>Reactivos</h2>
-        <input type="number" name="cantidad" value="10" id="cantidad" min="0" max="10" required>
-        <p>Máximo: 30</p>
+          <h2>Reactivos</h2>
+          <input x-ref="cantidad" type="number" x-effect="$refs.cantidad.value = Math.min($store.data.maximoActual, this.cantidad.value)" value="1" name="cantidad" id="cantidad" min="1" :max="$store.data.maximoActual" required>
+          <p>Máximo: <span x-text="$store.data.maximoActual"></span></p>
 
-        <br>
-        <input class="small" type="submit" value="Crear" required>
-      </form>
+          <br>
+          <input class="small" type="submit" value="Crear" required>
+        </form>
 
-      <section class="descripcion">
-        <img src="imagenes/temas/matematicas.png" alt="Matemáticas" required>
-        <p>
-          Ejercicios que requieren de tu habilidad lógica y de calcular para resolverlos.
-        </p>
+        <section class="descripcion">
+          <img :src="$store.data.imagen" :alt="$store.data.nombre_tema" required>
+          <p x-text="$store.data.descripcion" />
+        </section>
       </section>
     </main>
   </section>
+
+  <script src="public/alpine.js"></script>
 </body>
 
 </html>
