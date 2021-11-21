@@ -51,7 +51,7 @@ if (array_key_exists('delete', $_GET)) {
     <?php
     links();
     $todos_temas = $db->obtener_temas();
-    array_unshift($todos_temas, "Todos los temas");
+    array_unshift($todos_temas, ["nombre" => "Todos los temas"]);
 
     $todos_niveles = TODOS_NIVELES;
     array_unshift($todos_niveles, "TODOS");
@@ -94,7 +94,9 @@ if (array_key_exists('delete', $_GET)) {
         <div class="select">
           <select class="bold" name="tema" id="tema" :disabled="!editable" onchange="this.form.submit()">
             <?php
-            foreach ($todos_temas as $id_tema => $nombre_tema) {
+            foreach ($todos_temas as $id_tema => $tema_select) {
+              $nombre_tema = $tema_select['nombre'];
+
               $selected_str = $id_tema == $tema ? 'selected' : '';
               $nombre_tema = xss_escape($nombre_tema);
               echo "<option value='$id_tema' $selected_str>$nombre_tema</option>";
@@ -174,7 +176,7 @@ if (array_key_exists('delete', $_GET)) {
         foreach ($reactivos as $reactivo) {
           $id = $reactivo['id_reactivo'];
           $fecha = obtener_fecha_legible(DateTime::createFromFormat("Y-m-d H:i:s", $reactivo['fecha']));
-          $tema = xss_escape($todos_temas[$reactivo['id_tema']]);
+          $tema = xss_escape($todos_temas[$reactivo['id_tema']]['nombre']);
           $icono = icono_para_nivel($reactivo['nivel']);
           $enunciado = xss_escape($reactivo['enunciado']);
           $publicado = $reactivo['publicado'] ? icono_checkmark() : '';

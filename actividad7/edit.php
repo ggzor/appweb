@@ -235,7 +235,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="select">
             <select class="bold" name="tema" id="tema" :disabled="!editable">
               <?php
-              foreach ($todos_temas as $id_tema => $nombre_tema) {
+              foreach ($todos_temas as $id_tema => $tema_select) {
+                $nombre_tema = $tema_select['nombre'];
+
                 $selected_str = $id_tema == $tema ? 'selected' : '';
                 $nombre_tema = xss_escape($nombre_tema);
                 echo "<option value='$id_tema' $selected_str>$nombre_tema</option>";

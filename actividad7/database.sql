@@ -27,7 +27,9 @@ CREATE TABLE examen
 CREATE TABLE tema
 (
   id_tema INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(50) NOT NULL UNIQUE
+  nombre VARCHAR(50) NOT NULL UNIQUE,
+  descripcion_tema TEXT NOT NULL,
+  imagen_tema TEXT NOT NULL
 );
 
 CREATE TABLE reactivo
@@ -93,10 +95,14 @@ VALUES
       '¿Color favorito?', 'Azul', 1);
 
 INSERT INTO tema
-  (id_tema, nombre)
+  (id_tema, nombre, descripcion_tema, imagen_tema)
 VALUES
-  (1, 'Matemáticas'),
-  (2, 'Español');
+  (1, 'Matemáticas', 
+      'Ejercicios que requieren de tu habilidad lógica y de calcular para resolverlos.',
+      'imagenes/temas/matematicas.png'),
+  (2, 'Español', 
+      '¿Qué tanto dominas tu propio lenguaje? ¡Pruébalo!',
+      'imagenes/temas/espanol.png');  
 
 -- Opción múltiple
 INSERT INTO reactivo VALUES

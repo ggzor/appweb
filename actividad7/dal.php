@@ -32,7 +32,7 @@ class ExamenesDB extends Conexion
     return $this->tabla('tema')
       ->order_by('id_tema')
       ->index()
-      ->select('nombre');
+      ->select();
   }
 
   function borrar_reactivo($id)
