@@ -75,7 +75,7 @@ $db = new ExamenesDB();
       <section>
         <form action="do_create.php" method="POST">
           <h2>Tema</h2>
-          <select class="bold" name="id_tema" id="id_tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
+          <select name="id_tema" id="id_tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
             <?php
             foreach ($todos_temas as $id_tema => $tema) {
               echo <<<EOF
@@ -86,17 +86,27 @@ $db = new ExamenesDB();
           </select>
 
           <h2>Nivel</h2>
-          <select name="nivel" id="nivel" required @change="$store.data.nivel = $event.target.value" autocomplete="off">
-            <?php
-            foreach ($todos_niveles as $nivel) {
-              $nivel_str = obtener_cadena_nivel($nivel);
+          <section class="linea-nivel">
+            <div class="icono-nivel" :data-nivel="$store.data.nivel">
+              <?php
+              echo icono_para_nivel('BASICO', 10);
+              echo icono_para_nivel('INTERMEDIO', 10);
+              echo icono_para_nivel('AVANZADO', 10);
+              ?>
+            </div>
 
-              echo <<<EOF
-              <option value="$nivel">$nivel_str</option>
-            EOF;
-            }
-            ?>
-          </select>
+            <select id="nivel" name="nivel" required @change="$store.data.nivel = $event.target.value" autocomplete="off">
+              <?php
+              foreach ($todos_niveles as $nivel) {
+                $nivel_str = obtener_cadena_nivel($nivel);
+
+                echo <<<EOF
+                  <option value="$nivel">$nivel_str</option>
+                EOF;
+              }
+              ?>
+            </select>
+          </section>
 
           <h2>Reactivos</h2>
           <input x-ref="cantidad" type="number" x-effect="$refs.cantidad.value = Math.min($store.data.maximoActual, this.cantidad.value)" value="1" name="cantidad" id="cantidad" min="1" :max="$store.data.maximoActual" required>

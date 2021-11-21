@@ -1,0 +1,121 @@
+main {
+  margin: 0;
+  padding: 0;
+}
+
+main > section {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 800px;
+
+  margin-top: 64px;
+}
+
+h1 {
+  font-size: 48px;
+  color: var(--color-black-light);
+  font-weight: 300;
+  margin-top: 0px;
+}
+h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.125rem;
+  color: var(--color-black-light);
+}
+
+h2:not(:first-child) {
+  margin-top: 48px;
+}
+
+form {
+  flex-grow: 1;
+}
+
+form p {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.descripcion {
+  display: flex;
+  flex-direction: column;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.descripcion p {
+  width: 40ch;
+  text-align: center;
+  color: var(--color-black-light);
+} 
+
+img {
+  width: 40ch;
+}
+
+form select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  padding: 8px 24px 8px 8px;
+}
+
+form select:hover {
+  background-color: var(--color-black-light3);
+  border-radius: 5px;
+}
+
+form input[type=number] {
+  border: none;
+  font-size: 1.5rem;
+  width: 6ch;
+
+  background-color: var(--color-black-light3);
+  padding: 4px 0px 4px 16px;
+  border-radius: 5px;
+}
+
+.linea-nivel {
+  display: flex;
+  flex-direction: row;
+}
+
+.icono-nivel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 32px;
+  height: 32px;
+
+  margin-right: 8px;
+}
+
+.icono-nivel > * {
+  display: none;
+}
+
+.icono-nivel[data-nivel="BASICO"] > :nth-child(1) {
+  display: block;
+}
+
+.icono-nivel[data-nivel="INTERMEDIO"] > :nth-child(2) {
+  display: block;
+}
+
+.icono-nivel[data-nivel="AVANZADO"] > :nth-child(3) {
+  display: block;
+}
+
+.small {
+  margin-top: 4em;
+}
