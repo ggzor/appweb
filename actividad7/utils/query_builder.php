@@ -34,6 +34,22 @@ class PreparedResult
   }
 }
 
+function get_params_for_procedure(string $procedure, &...$args)
+{
+  $params_str = "";
+  $procedure_call_str = "CALL $procedure(";
+
+  foreach ($args as &$param) {
+    $params_str .= get_param_type($param);
+    $procedure_call_str .= "?, ";
+  }
+
+  $procedure_call_str = trim($procedure_call_str, ", ");
+  $procedure_call_str .= ")";
+
+  return [$procedure_call_str, $params_str];
+}
+
 function run_prepared(mysqli $conn, string $query, string $params_str, &...$params): PreparedResult
 {
   $stmt_info = print_r([
@@ -141,23 +157,21 @@ class Conexion
     return new Entidad($this, $tabla);
   }
 
+  function invoke_procedure(string $procedure, &...$params)
+  {
+    [$query, $params_str] = get_params_for_procedure($procedure, ...$params);
+
+    return run_prepared($this->conn, $query, $params_str, ...$params)->result;
+  }
+
   function procedure_idx(?string $indizador, string $procedure, &...$params)
   {
-    $params_str = "";
-    $procedure_call_str = "CALL $procedure(";
-
-    foreach ($params as &$param) {
-      $params_str .= get_param_type($param);
-      $procedure_call_str .= "?, ";
-    }
-
-    $procedure_call_str = trim($procedure_call_str, ", ");
-    $procedure_call_str .= ")";
+    [$query, $params_str] = get_params_for_procedure($procedure, ...$params);
 
     return get_results(
       $this->getConn(),
       $indizador,
-      $procedure_call_str,
+      $query,
       $params_str,
       ...$params
     );

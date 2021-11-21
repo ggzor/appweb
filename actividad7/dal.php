@@ -120,4 +120,9 @@ class ExamenesDB extends Conexion
 
     return $temas_dict;
   }
+
+  function crear_examen(int $id_usuario, int $id_tema, string $nivel, int $cantidad)
+  {
+    return $this->invoke_procedure('crear_examen', $id_usuario, $id_tema, $nivel, $cantidad);
+  }
 }

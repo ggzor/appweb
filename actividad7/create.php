@@ -73,9 +73,9 @@ $db = new ExamenesDB();
     <main x-data="<?php echo $target_data ?>">
       <h1>Crear nuevo examen</h1>
       <section>
-        <form action="do_create.php">
+        <form action="do_create.php" method="POST">
           <h2>Tema</h2>
-          <select name="tema" id="tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
+          <select class="bold" name="id_tema" id="id_tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
             <?php
             foreach ($todos_temas as $id_tema => $tema) {
               echo <<<EOF

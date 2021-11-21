@@ -283,4 +283,20 @@ CREATE PROCEDURE hacer_query(id_usuario INT, busqueda TEXT, tema INT, nivel VARC
     ORDER BY fecha DESC;
   END; //
 
+CREATE PROCEDURE crear_examen(id_usuario INT, id_tema INT, nivel VARCHAR(50), cantidad INT)
+  BEGIN
+    INSERT INTO examen
+      (id_usuario, fecha, calificacion)
+    VALUES
+      (id_usuario, NOW(), NULL);
+
+    SET @id_examen = LAST_INSERT_ID();
+
+    INSERT INTO ref_reactivo (id_examen, id_reactivo)
+      SELECT @id_examen as id_examen, id_reactivo FROM reactivo
+      WHERE reactivo.id_tema = id_tema AND reactivo.nivel = nivel
+      ORDER BY RAND()
+      LIMIT cantidad;
+  END; //
+
 DELIMITER ;
