@@ -66,6 +66,21 @@ class ExamenesDB extends Conexion
       ->single();
   }
 
+  function obtener_reactivos_por_examen(int $id_examen)
+  {
+    return $this->tabla('reactivos_por_examen')
+      ->where('id_examen', $id_examen)
+      ->select();
+  }
+
+  function obtener_elegidas_por_reactivo(int $id_examen, int $id_reactivo)
+  {
+    return $this->tabla('elegidas_por_reactivo')
+      ->where('id_examen', $id_examen)
+      ->where('id_reactivo', $id_reactivo)
+      ->select();
+  }
+
   function obtener_opciones_por_reactivo(int $id_reactivo)
   {
     return $this->tabla('opciones_por_reactivo')
@@ -132,5 +147,12 @@ class ExamenesDB extends Conexion
       ->where('id_usuario', $id_usuario)
       ->order_by('fecha', 'DESC')
       ->select();
+  }
+
+  function obtener_examen(int $id_examen)
+  {
+    return $this->tabla('examen')
+      ->where('id_examen', $id_examen)
+      ->single();
   }
 }

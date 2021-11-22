@@ -172,6 +172,19 @@ $m_edit = function ($selected) {
 EOF;
 };
 
+$m_details = function ($selected) {
+  $cls = $selected ? "seleccionado" : "";
+  return <<<EOF
+<a class="$cls" href="about.php">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 6L18.29 8.29L13.41 13.17L9.41 9.17L2 16.59L3.41 18L9.41 12L13.41 16L19.71 9.71L22 
+             12V6H16Z"/>
+  </svg>
+  Detalles
+</a>
+EOF;
+};
+
 function icono_para_nivel($nivel, $base_size = 10)
 {
   $double = $base_size * 2.5;

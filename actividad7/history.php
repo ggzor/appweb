@@ -122,7 +122,7 @@ $db = new ExamenesDB();
                 </section>
                 <p class="calificacion">$examen[calificacion]</p>
                 <div></div>
-                <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
+                <a class="btn small secondary accent" href="details.php?id_examen=$examen[id_examen]">Detalles</a>
               </article>
               EOF;
             }
