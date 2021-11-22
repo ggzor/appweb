@@ -20,6 +20,13 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+.main-content {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+
+  height: 100vh;
+}
+
 .menu {
   display: flex;
   flex-direction: column;

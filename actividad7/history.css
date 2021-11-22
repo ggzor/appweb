@@ -1,0 +1,113 @@
+main {
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: auto 1fr;
+
+  padding-top: 16px;
+  padding-left: 32px;
+}
+
+h1 {
+  margin: 0;
+}
+
+h2 {
+  margin: 0;
+  margin-top: 32px;
+}
+
+.examenes {
+  height: 100%;
+  padding-bottom: 64px;
+  overflow-y: scroll;
+}
+
+.exam-list {
+  display: flex;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  margin-top: 16px;
+
+  column-gap: 32px;
+  row-gap: 32px;
+}
+
+article {
+  display: grid;
+  grid-auto-flow: row;
+
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(3, auto);
+
+  row-gap: 16px;
+  column-gap: 48px;
+
+  align-items: baseline;
+
+  padding: 16px;
+
+  border-radius: 15px;
+  color: var(--color-black-light);
+}
+
+article.pending {
+  background-color: var(--color-black-light3);
+}
+
+article.complete {
+  border-color: var(--color-accent);
+  border-width: 2px;
+  border-style: solid;
+}
+
+.numero-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.numero {
+  font-size: var(--text-2xl);
+}
+
+article.complete .numero {
+  color: var(--color-accent);
+}
+
+.tiempo {
+  font-weight: bold;
+  font-size: var(--text-lg);
+
+  justify-self: flex-end;
+}
+
+.titulo {
+  font-size: var(--text-2xl);
+}
+
+.calificacion {
+  color: var(--color-accent);
+
+  font-size: var(--text-4xl);
+  font-weight: 700;
+
+  align-self: center;
+  justify-self: center;
+}
+
+article > svg {
+  fill: var(--color-black-light);
+  justify-self: center;
+}
+
+article > a {
+  justify-self: flex-end;
+}
+
+article p {
+  margin: 0;
+}

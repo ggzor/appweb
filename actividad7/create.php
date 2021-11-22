@@ -71,10 +71,10 @@ $db = new ExamenesDB();
     </script>
 
     <main x-data="<?php echo $target_data ?>">
-      <h1>Crear nuevo examen</h1>
+      <h1 class="titulo-1">Crear nuevo examen</h1>
       <section>
         <form action="do_create.php" method="POST">
-          <h2>Tema</h2>
+          <h2 class="titulo-2">Tema</h2>
           <select name="id_tema" id="id_tema" required @change="$store.data.tema = $event.target.value" autocomplete="off">
             <?php
             foreach ($todos_temas as $id_tema => $tema) {
@@ -85,7 +85,7 @@ $db = new ExamenesDB();
             ?>
           </select>
 
-          <h2>Nivel</h2>
+          <h2 class="titulo-2">Nivel</h2>
           <section class="linea-nivel">
             <div class="icono-nivel" :data-nivel="$store.data.nivel">
               <?php
@@ -108,7 +108,7 @@ $db = new ExamenesDB();
             </select>
           </section>
 
-          <h2>Reactivos</h2>
+          <h2 class="titulo-2">Reactivos</h2>
           <input x-ref="cantidad" type="number" x-effect="$refs.cantidad.value = Math.min($store.data.maximoActual, this.cantidad.value)" value="1" name="cantidad" id="cantidad" min="1" :max="$store.data.maximoActual" required>
           <p>Máximo: <span x-text="$store.data.maximoActual"></span></p>
 

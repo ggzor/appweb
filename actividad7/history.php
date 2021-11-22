@@ -3,6 +3,9 @@ session_start();
 
 require_once 'database.php';
 solo_permitir([USUARIO_NORMAL]);
+
+require_once 'dal.php';
+$db = new ExamenesDB();
 ?>
 
 <!DOCTYPE html>
@@ -15,6 +18,7 @@ solo_permitir([USUARIO_NORMAL]);
   <title>Principal</title>
   <link rel="stylesheet" href="compartido.css">
   <link rel="stylesheet" href="generic_menu.css">
+  <link rel="stylesheet" href="history.css">
 </head>
 
 <body>
@@ -30,86 +34,112 @@ solo_permitir([USUARIO_NORMAL]);
     ?>
   </section>
 
-  <section>
+  <section class="main-content">
     <?php links() ?>
-
 
     <main>
       <?php
-      $id_usuario = $_SESSION['id_usuario'];
-
-      $conn = new mysqli("localhost", "root", null, "examenes");
-      $conn->query("SET NAMES utf8");
-
-      $stmt = $conn->prepare("SELECT id_examen, fecha FROM examen WHERE id_usuario = ?");
-      $stmt->bind_param("i", $id_usuario);
-      $stmt->execute();
-      $result = $stmt->get_result();
-      $examenes = $result->fetch_all();
-      $result->close();
-      $stmt->close();
-
-      foreach ($examenes as [$id_examen, $fecha]) {
-        echo "<h3>Examen $id_examen - $fecha</h3>";
-
-        $stmt = $conn->prepare("SELECT * FROM reactivos_por_examen WHERE id_examen = ?");
-        $stmt->bind_param("i", $id_examen);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $reactivos = [];
-        while ($row = $result->fetch_assoc())
-          $reactivos[$row['id_reactivo']] = $row;
-        $result->close();
-        $stmt->close();
-
-        $stmt = $conn->prepare("SELECT * FROM elegidas_por_reactivo WHERE id_examen = ?");
-        $stmt->bind_param("i", $id_examen);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $opciones = [];
-        while ($row = $result->fetch_assoc()) {
-          if (!array_key_exists($row['id_reactivo'], $opciones))
-            $opciones[$row['id_reactivo']] = [];
-
-          $opciones[$row['id_reactivo']][$row['id_opcion']] = $row;
-        }
-        $result->close();
-        $stmt->close();
-
-        echo "<ol>";
-        foreach ($reactivos as $id_reactivo => $reactivo) {
-          $reactivo_opciones = $opciones[$id_reactivo];
-          $tipo_entrada = $reactivo['multiple'] ? "checkbox" : "radio";
-
-          echo "<li>";
-
-          echo "<p>$reactivo[enunciado]</p>";
-          echo "<ol type='a'>";
-
-          $primero = true;
-          foreach ($reactivo_opciones as $id_opcion => $opcion) {
-            if ($opcion['id_opcion_elegida'] == NULL) {
-              $seleccionado = $primero && !$reactivo['multiple'];
-            } else {
-              $seleccionado = true;
-            }
-            $checked = $seleccionado ? 'checked' : '';
-
-            $primero = false;
-
-            echo "<li>";
-            echo "
-<input id='opcion_$id_opcion' name='reactivo_$id_reactivo' type='$tipo_entrada' $checked>
-<label for='opcion_$id_opcion'>$opcion[contenido]</label>
-<br>";
-            echo "</li>";
-          }
-          echo "</ol>";
-          echo "</li>";
-        }
-        echo "</ol>";
-      }
+      $clock = icono_timer();
+      $checkmark = icono_checkmark();
       ?>
+
+      <h1 class="titulo-1">Historial de exámenes</h1>
+
+      <section class="examenes">
+        <h2 class="titulo-2">Pendientes</h2>
+
+        <section class="exam-list">
+
+          <article class="pending">
+            <p class="numero">#10</p>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <?php echo $clock ?>
+            <div></div>
+            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
+          </article>
+
+          <article class="pending">
+            <p class="numero">#10</p>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <?php echo $clock ?>
+            <div></div>
+            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
+          </article>
+
+          <article class="pending">
+            <p class="numero">#10</p>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <?php echo $clock ?>
+            <div></div>
+            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
+          </article>
+
+        </section>
+
+        <h2 class="titulo-2">Completados</h2>
+
+        <section class="exam-list">
+
+          <article class="complete">
+            <section class="numero-container">
+              <p class="numero">#10</p>
+              <?php echo $checkmark ?>
+            </section>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <p class="calificacion">9.8</p>
+            <div></div>
+            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
+          </article>
+
+          <article class="complete">
+            <section class="numero-container">
+              <p class="numero">#10</p>
+              <?php echo $checkmark ?>
+            </section>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <p class="calificacion">9.8</p>
+            <div></div>
+            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
+          </article>
+
+          <article class="complete">
+            <section class="numero-container">
+              <p class="numero">#10</p>
+              <?php echo $checkmark ?>
+            </section>
+            <p class="tiempo">Hace 2 horas</p>
+            <section>
+              <p class="titulo">Matemáticas<br>Intermedio</p>
+              <p class="preguntas">10 preguntas</p>
+            </section>
+            <p class="calificacion">9.8</p>
+            <div></div>
+            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
+          </article>
+
+        </section>
+      </section>
+
     </main>
   </section>
 </body>
