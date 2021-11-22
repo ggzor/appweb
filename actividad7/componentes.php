@@ -24,10 +24,12 @@ function links()
 ';
 }
 
-function logo()
+function logo($enlazar = true)
 {
+  $href_str = $enlazar ? 'href="index.php"' : '';
+
   return <<<EOF
-<a href="index.php" class="logo">
+<a $href_str class="logo">
   <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 46 50">
     <path d="M22 48l-2 2H8c-4 0-7-4-7-8V8c0-4 3-8 7-8h24c5 0 8 4 8
             8v21a2 2 0 01-4 0V8c0-2-1-4-4-4H8C6 4 5 6 5 8v34c0 2
@@ -181,6 +183,25 @@ $m_details = function ($selected) {
              12V6H16Z"/>
   </svg>
   Detalles
+</a>
+EOF;
+};
+
+$m_solve = function ($selected) {
+  $cls = $selected ? "seleccionado" : "";
+  return <<<EOF
+<a class="$cls" href="javascript:location.reload()">
+  <svg width="32" height="32" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.586 3.58598C13.7705 3.39496 13.9912 3.24259 14.2352 3.13778C14.4792
+             3.03296 14.7416 2.97779 15.0072 2.97548C15.2727 2.97317 15.5361 3.02377
+             15.7819 3.12434C16.0277 3.2249 16.251 3.3734 16.4388 3.56119C16.6265
+             3.74897 16.775 3.97228 16.8756 4.21807C16.9762 4.46386 17.0268 4.72722
+             17.0245 4.99278C17.0222 5.25834 16.967 5.52078 16.8622 5.76479C16.7574
+             6.0088 16.605 6.22949 16.414 6.41398L15.621 7.20698L12.793 4.37898L13.586
+             3.58598V3.58598Z"/>
+    <path d="M11.379 5.79297L3 14.172V17H5.828L14.208 8.62097L11.378 5.79297H11.379Z" />
+  </svg>
+  Resolviendo
 </a>
 EOF;
 };

@@ -82,17 +82,20 @@ a.btn:hover {
 }
 
 .secondary,
+input[type="submit"].secondary,
 a.btn.secondary {
   background: none;
   color: var(--color-black-light);
 }
 
 .secondary:hover,
+input[type="submit"].secondary:hover,
 a.btn.secondary:hover {
   background-color: var(--color-black-light3);
 }
 
 .secondary:active,
+input[type="submit"].secondary:active,
 a.btn.secondary:active {
   background-color: var(--color-black-light2);
 }
@@ -207,4 +210,3 @@ input[type="password"]:focus {
   font-size: var(--text-lg);
   color: var(--color-black-light);
 }
-

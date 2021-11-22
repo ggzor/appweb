@@ -87,7 +87,7 @@ $db = new ExamenesDB();
                 </section>
                 $clock
                 <div></div>
-                <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
+                <a class="btn small secondary" href="solve.php?id_examen=$examen[id_examen]">Continuar</a>
               </article>
               EOF;
             }
