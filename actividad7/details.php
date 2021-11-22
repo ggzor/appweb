@@ -30,8 +30,8 @@ $db = new ExamenesDB();
 
     echo logo();
     menu([
-      'items' => [$m_details, $m_history, $m_create, $m_about],
-      'selected' => 0
+      'items' => [$m_history, $m_create, $m_about, $m_details],
+      'selected' => 3
     ]);
     ?>
   </section>
