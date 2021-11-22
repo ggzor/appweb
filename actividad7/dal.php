@@ -125,4 +125,12 @@ class ExamenesDB extends Conexion
   {
     return $this->invoke_procedure('crear_examen', $id_usuario, $id_tema, $nivel, $cantidad);
   }
+
+  function obtener_examenes(int $id_usuario)
+  {
+    return $this->tabla('examen')
+      ->where('id_usuario', $id_usuario)
+      ->order_by('fecha', 'DESC')
+      ->select();
+  }
 }

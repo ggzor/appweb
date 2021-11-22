@@ -138,31 +138,6 @@ if (array_key_exists('delete', $_GET)) {
 
 
         <?php
-        function obtener_fecha_legible(DateTime $fecha)
-        {
-          $ahora = new DateTime();
-          $diff = $ahora->diff($fecha, true);
-
-          $result = $fecha->format('Y-m-d');
-
-          if ($diff->y > 0 || $diff->m > 0) {
-          } else {
-            if ($diff->d >= 2 || ($diff->d == 1 && $diff->h > intval($ahora->format('H')))) {
-              $result = "Hace {$diff->d} días";
-            } else {
-              $hora = $fecha->format('H:i');
-
-              if ($diff->d >= 1 || $diff->h > intval($ahora->format('H'))) {
-                $result = "Ayer a las $hora";
-              } else {
-                $result = "Hoy a las $hora";
-              }
-            }
-          }
-
-          return $result;
-        }
-
         $reactivos = $db->obtener_reactivos(
           $_SESSION['id_usuario'],
           $busqueda,
@@ -175,7 +150,7 @@ if (array_key_exists('delete', $_GET)) {
 
         foreach ($reactivos as $reactivo) {
           $id = $reactivo['id_reactivo'];
-          $fecha = obtener_fecha_legible(DateTime::createFromFormat("Y-m-d H:i:s", $reactivo['fecha']));
+          $fecha = obtener_fecha_legible(fecha_de_sql($reactivo['fecha']));
           $tema = xss_escape($todos_temas[$reactivo['id_tema']]['nombre']);
           $icono = icono_para_nivel($reactivo['nivel']);
           $enunciado = xss_escape($reactivo['enunciado']);

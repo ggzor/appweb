@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+require_once 'utils.php';
+
 require_once 'database.php';
 solo_permitir([USUARIO_NORMAL]);
 
@@ -39,106 +41,97 @@ $db = new ExamenesDB();
 
     <main>
       <?php
+
       $clock = icono_timer();
       $checkmark = icono_checkmark();
+
+      $id_usuario = $_SESSION['id_usuario'];
+      $examenes = $db->obtener_examenes($id_usuario);
+      $examenes_pendientes = array_filter($examenes, fn ($examen) => $examen['calificacion'] == null);
+      $examenes_previos = array_filter($examenes, fn ($examen) => $examen['calificacion'] != null);
+
+      $todos_temas = $db->obtener_temas();
+
+      $calcular_extras = function ($examen) use (&$todos_temas) {
+        return [
+          'nombre_tema' => $todos_temas[$examen['id_tema']]['nombre'],
+          'nivel_str' => obtener_cadena_nivel($examen['nivel']),
+          'fecha' => obtener_fecha_legible(fecha_de_sql($examen['fecha']))
+        ];
+      }
+
       ?>
 
       <h1 class="titulo-1">Historial de exámenes</h1>
 
       <section class="examenes">
-        <h2 class="titulo-2">Pendientes</h2>
+        <?php
 
-        <section class="exam-list">
+        if (count($examenes_pendientes) > 0) {
+        ?>
+          <h2 class="titulo-2">Pendientes</h2>
+          <section class="exam-list">
 
-          <article class="pending">
-            <p class="numero">#10</p>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
+          <?php
+          foreach ($examenes as $examen) {
+            $extras = $calcular_extras($examen);
+
+            if ($examen['calificacion'] == null) {
+              echo <<<EOF
+              <article class="pending">
+                <p class="numero">#$examen[id_examen]</p>
+                <p class="tiempo">$extras[fecha]</p>
+                <section>
+                  <p class="titulo">$extras[nombre_tema]<br>$extras[nivel_str]</p>
+                  <p class="preguntas">$examen[cantidad_reactivos] preguntas</p>
+                </section>
+                $clock
+                <div></div>
+                <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
+              </article>
+              EOF;
+            }
+          }
+          echo '</section>';
+        }
+          ?>
+
+          <?php
+
+          if (count($examenes_previos) > 0) {
+          ?>
+
+            <h2 class="titulo-2">Completados</h2>
+            <section class="exam-list">
+
+            <?php
+
+            foreach ($examenes_previos as $examen) {
+              $extras = $calcular_extras($examen);
+
+              echo <<<EOF
+              <article class="complete">
+                <section class="numero-container">
+                  <p class="numero">#$examen[id_examen]</p>
+                  $checkmark
+                </section>
+                <p class="tiempo">$extras[fecha]</p>
+                <section>
+                  <p class="titulo">$extras[nombre_tema]<br>$extras[nivel_str]</p>
+                  <p class="preguntas">$examen[cantidad_reactivos] preguntas</p>
+                </section>
+                <p class="calificacion">$examen[calificacion]</p>
+                <div></div>
+                <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
+              </article>
+              EOF;
+            }
+
+            echo '</section>';
+          }
+            ?>
             </section>
-            <?php echo $clock ?>
-            <div></div>
-            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
-          </article>
-
-          <article class="pending">
-            <p class="numero">#10</p>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
-            </section>
-            <?php echo $clock ?>
-            <div></div>
-            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
-          </article>
-
-          <article class="pending">
-            <p class="numero">#10</p>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
-            </section>
-            <?php echo $clock ?>
-            <div></div>
-            <a class="btn small secondary" href="contestar.php?id_examen=10">Continuar</a>
-          </article>
-
-        </section>
-
-        <h2 class="titulo-2">Completados</h2>
-
-        <section class="exam-list">
-
-          <article class="complete">
-            <section class="numero-container">
-              <p class="numero">#10</p>
-              <?php echo $checkmark ?>
-            </section>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
-            </section>
-            <p class="calificacion">9.8</p>
-            <div></div>
-            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
-          </article>
-
-          <article class="complete">
-            <section class="numero-container">
-              <p class="numero">#10</p>
-              <?php echo $checkmark ?>
-            </section>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
-            </section>
-            <p class="calificacion">9.8</p>
-            <div></div>
-            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
-          </article>
-
-          <article class="complete">
-            <section class="numero-container">
-              <p class="numero">#10</p>
-              <?php echo $checkmark ?>
-            </section>
-            <p class="tiempo">Hace 2 horas</p>
-            <section>
-              <p class="titulo">Matemáticas<br>Intermedio</p>
-              <p class="preguntas">10 preguntas</p>
-            </section>
-            <p class="calificacion">9.8</p>
-            <div></div>
-            <a class="btn small secondary accent" href="detalles.php?id_examen=10">Detalles</a>
-          </article>
-
-        </section>
-      </section>
+          </section>
 
     </main>
   </section>

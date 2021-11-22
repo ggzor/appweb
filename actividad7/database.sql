@@ -18,8 +18,12 @@ CREATE TABLE examen
 (
   id_examen INT KEY NOT NULL AUTO_INCREMENT,
   id_usuario INT NOT NULL,
-  fecha DATE NOT NULL,
-  calificacion FLOAT,
+  fecha DATETIME NOT NULL,
+  id_tema INT NOT NULL,
+  nivel ENUM('BASICO', 'INTERMEDIO', 'AVANZADO') NOT NULL,
+
+  calificacion FLOAT DEFAULT NULL,
+  cantidad_reactivos INT DEFAULT 0,
 
   FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
 );
@@ -150,10 +154,11 @@ VALUES
   (10, 3, true,  'Pentágono');
 
 INSERT INTO examen
-  (id_examen, id_usuario, fecha, calificacion)
+  (id_examen, id_usuario, fecha, calificacion,
+    id_tema, nivel, cantidad_reactivos)
 VALUES
-  (1, 3, NOW(), 8.8),
-  (2, 4, NOW(), NULL);
+  (1, 3, NOW(), 8.8, 1, 'INTERMEDIO', 3),
+  (2, 4, NOW(), NULL, 2, 'AVANZADO', 2);
 
 INSERT INTO ref_reactivo
   (id_ref_reactivo, id_examen, id_reactivo)
@@ -187,7 +192,7 @@ JOIN reactivo
 ON ref_reactivo.id_reactivo = reactivo.id_reactivo
 JOIN tema
 ON reactivo.id_tema = tema.id_tema
-ORDER BY id_examen, reactivo.id_reactivo;
+ORDER BY id_examen, ref_reactivo.id_ref_reactivo;
 
 CREATE VIEW elegidas_por_reactivo AS
 SELECT ref_reactivo.id_examen as id_examen,
@@ -204,7 +209,7 @@ ON reactivo.id_reactivo = opcion.id_reactivo
 LEFT JOIN opcion_elegida
 ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo
    AND opcion.id_opcion = opcion_elegida.id_opcion
-ORDER BY ref_reactivo.id_examen, reactivo.id_reactivo, opcion.id_opcion;
+ORDER BY ref_reactivo.id_examen, ref_reactivo.id_ref_reactivo, opcion.id_opcion;
 
 CREATE VIEW opciones_por_reactivo AS
 SELECT reactivo.id_reactivo as id_reactivo,
@@ -283,12 +288,16 @@ CREATE PROCEDURE hacer_query(id_usuario INT, busqueda TEXT, tema INT, nivel VARC
     ORDER BY fecha DESC;
   END; //
 
-CREATE PROCEDURE crear_examen(id_usuario INT, id_tema INT, nivel VARCHAR(50), cantidad INT)
+CREATE PROCEDURE crear_examen(
+  id_usuario INT,
+  id_tema INT,
+  nivel VARCHAR(50),
+  cantidad_reactivos INT)
   BEGIN
     INSERT INTO examen
-      (id_usuario, fecha, calificacion)
+      (id_usuario, fecha, calificacion, cantidad_reactivos, id_tema, nivel)
     VALUES
-      (id_usuario, NOW(), NULL);
+      (id_usuario, NOW(), NULL, cantidad_reactivos, id_tema, nivel);
 
     SET @id_examen = LAST_INSERT_ID();
 
@@ -296,7 +305,7 @@ CREATE PROCEDURE crear_examen(id_usuario INT, id_tema INT, nivel VARCHAR(50), ca
       SELECT @id_examen as id_examen, id_reactivo FROM reactivo
       WHERE reactivo.id_tema = id_tema AND reactivo.nivel = nivel
       ORDER BY RAND()
-      LIMIT cantidad;
+      LIMIT cantidad_reactivos;
   END; //
 
 DELIMITER ;
