@@ -47,8 +47,8 @@ $db = new ExamenesDB();
 
       $id_usuario = $_SESSION['id_usuario'];
       $examenes = $db->obtener_examenes($id_usuario);
-      $examenes_pendientes = array_filter($examenes, fn ($examen) => $examen['calificacion'] == null);
-      $examenes_previos = array_filter($examenes, fn ($examen) => $examen['calificacion'] != null);
+      $examenes_pendientes = array_filter($examenes, fn ($examen) => $examen['calificacion'] === null);
+      $examenes_previos = array_filter($examenes, fn ($examen) => $examen['calificacion'] !== null);
 
       $todos_temas = $db->obtener_temas();
 
@@ -73,11 +73,9 @@ $db = new ExamenesDB();
           <section class="exam-list">
 
           <?php
-          foreach ($examenes as $examen) {
+          foreach ($examenes_pendientes as $examen) {
             $extras = $calcular_extras($examen);
-
-            if ($examen['calificacion'] == null) {
-              echo <<<EOF
+            echo <<<EOF
               <article class="pending">
                 <p class="numero">#$examen[id_examen]</p>
                 <p class="tiempo">$extras[fecha]</p>
@@ -90,7 +88,6 @@ $db = new ExamenesDB();
                 <a class="btn small secondary" href="solve.php?id_examen=$examen[id_examen]">Continuar</a>
               </article>
               EOF;
-            }
           }
           echo '</section>';
         }
