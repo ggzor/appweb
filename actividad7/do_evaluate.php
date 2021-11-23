@@ -78,5 +78,10 @@ foreach ($agregar_params as [$id_ref_reactivo, $id_opcion]) {
   $db->elegir_opcion($id_ref_reactivo, $id_opcion);
 }
 
-header('Location: history.php');
+if ($_REQUEST['action'] == 'Finalizar') {
+  header("Location: do_assign_score.php?id_examen=$id_examen");
+} else {
+  header('Location: history.php');
+}
+
 exit();

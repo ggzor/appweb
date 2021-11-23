@@ -170,4 +170,11 @@ class ExamenesDB extends Conexion
     return $this->tabla('opcion_elegida')
       ->insert($params);
   }
+
+  function asignar_calificacion(int $id_examen, float $calificacion)
+  {
+    return $this->tabla('examen')
+      ->where('id_examen', $id_examen)
+      ->update(['calificacion' => $calificacion]);
+  }
 }
