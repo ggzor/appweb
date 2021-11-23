@@ -33,22 +33,20 @@ $db = new ExamenesDB();
   </section>
 
   <section class="main-content">
-    <form class="card" action="do_evaluate.php" method="POST">
-      <?php
+    <?php
+    $id_usuario = intval($_SESSION['id_usuario']);
+    $nombre_usuario = xss_escape($_SESSION['nombre']);
 
-      $id_usuario = intval($_SESSION['id_usuario']);
-      $nombre_usuario = xss_escape($_SESSION['nombre']);
+    $id_examen = intval($_GET['id_examen']);
+    $examen = $db->obtener_examen($id_examen);
 
-      $id_examen = intval($_GET['id_examen']);
-      $examen = $db->obtener_examen($id_examen);
+    $todos_temas = $db->obtener_temas();
 
-      $todos_temas = $db->obtener_temas();
+    $nombre_tema = $todos_temas[$examen['id_tema']]['nombre'];
+    $nivel_str = obtener_cadena_nivel($examen['nivel']);
+    ?>
 
-      $nombre_tema = $todos_temas[$examen['id_tema']]['nombre'];
-      $nivel_str = obtener_cadena_nivel($examen['nivel']);
-
-      ?>
-
+    <form class="card" action="do_evaluate.php?id_examen=<?php echo $id_examen ?>" method="POST">
       <section class="header">
         <h1 class="titulo-1">Examen #<?php echo $id_examen ?></h1>
 
@@ -98,11 +96,11 @@ $db = new ExamenesDB();
 
                   if ($reactivo['multiple']) {
                     echo <<<EOF
-                        <input id="opcion_$opcion[id_opcion]" type="checkbox" $checked_str>
+                        <input type="checkbox" name="opcioncheck_$reactivo[id_reactivo]_opcion_$opcion[id_opcion]" value="1" id="opcion_$opcion[id_opcion]" $checked_str>
                         EOF;
                   } else {
                     echo <<<EOF
-                        <input name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" type="radio" $checked_str required>
+                        <input type="radio" name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" value="$opcion[id_opcion]" $checked_str required>
                         EOF;
                   }
 

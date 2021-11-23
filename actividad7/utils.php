@@ -48,9 +48,9 @@ function fecha_de_sql(string $fecha)
   return DateTime::createFromFormat("Y-m-d H:i:s", $fecha);
 }
 
-function var_dump_pretty($var)
+function var_dump_pretty(...$var)
 {
   echo '<pre>';
-  var_dump($var);
+  var_dump(...$var);
   echo '</pre>';
 }

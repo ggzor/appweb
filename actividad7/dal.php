@@ -155,4 +155,19 @@ class ExamenesDB extends Conexion
       ->where('id_examen', $id_examen)
       ->single();
   }
+
+  function borrar_opciones_elegidas($id_opciones_elegidas)
+  {
+    return $this->tabla('opcion_elegida')
+      ->where('id_opcion_elegida', 'IN', $id_opciones_elegidas)
+      ->delete();
+  }
+
+  function elegir_opcion(int $id_ref_reactivo, int $id_opcion)
+  {
+    $params = get_defined_vars();
+
+    return $this->tabla('opcion_elegida')
+      ->insert($params);
+  }
 }
