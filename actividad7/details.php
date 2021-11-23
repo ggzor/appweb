@@ -94,7 +94,7 @@ if ($examen['id_usuario'] != $id_usuario) {
             <li>
               <section class="reactivo">
                 <section class="principal">
-                  <p><?php echo $reactivo['enunciado'] ?></p>
+                  <p><?php echo xss_escape($reactivo['enunciado']) ?></p>
                   <ul>
                     <?php foreach ($opciones as $opcion) {
                       $es_seleccionada = $opcion['id_opcion_elegida'] != NULL;
@@ -118,8 +118,9 @@ if ($examen['id_usuario'] != $id_usuario) {
                         EOF;
                       }
 
+                      $opcion_str = xss_escape($opcion['contenido']);
                       echo <<<EOF
-                        <label for="opcion_$opcion[id_opcion]">$opcion[contenido]</label>
+                        <label for="opcion_$opcion[id_opcion]">$opcion_str</label>
                       EOF;
 
                       echo '</li>';

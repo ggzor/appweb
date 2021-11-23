@@ -60,7 +60,7 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
         <section class="subheader">
           <article class="sub-item">
             <h2 class="title-2">Usuario</h2>
-            <p class="bold"><?php echo $nombre_usuario ?></p>
+            <p class="bold"><?php echo xss_escape($nombre_usuario) ?></p>
           </article>
           <article class="sub-item">
             <h2 class="title-2">Tema</h2>
@@ -91,7 +91,7 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
             $es_primera = true;
           ?>
             <li>
-              <p><?php echo $reactivo['enunciado'] ?></p>
+              <p><?php echo xss_escape($reactivo['enunciado']) ?></p>
               <ul>
                 <?php foreach ($opciones as $opcion) {
                   $es_seleccionada =
@@ -111,8 +111,10 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
                         EOF;
                   }
 
+                  $opcion_str = xss_escape($opcion['contenido']);
+
                   echo <<<EOF
-                        <label for="opcion_$opcion[id_opcion]">$opcion[contenido]</label>
+                        <label for="opcion_$opcion[id_opcion]">$opcion_str</label>
                       EOF;
 
                   echo '</li>';
