@@ -177,7 +177,8 @@ VALUES
   (1, 1),
   (2, 5),
   (3, 8),
-  (3, 10);
+  (3, 7),
+  (4, 2);
 
 -- VIEWS
 
@@ -234,8 +235,8 @@ INSERT INTO reactivo VALUES
   (4, true, 1, 2, '2021-10-03 08:10:10', 'AVANZADO', 'Son los subgéneros del cuento y la novela.', true),
   (5, true, 1, 2, '2021-10-25 10:20:10', 'INTERMEDIO', 'Son expresiones de sabiduría popular que utilizan el lenguaje en doble sentido.', false),
   (6, true, 1, 2, '2021-10-20 02:08:10', 'BASICO', 'Es quien se encarga de relatar los sucesos de una historia en los cuentos o novelas.', false),
-  (7, true, 2, 1, '2021-10-13 03:10:16', 'BASICO', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
-  (8, true, 1, 1, '2021-10-25 14:14:10', 'BASICO', 'Es el 25 % de 133.', false),
+  (7, true, 2, 1, '2021-10-13 03:10:16', 'AVANZADO', '¿Cuál es el valor absoluto del resultado de la siguiente operación? −8 + 3 =', false),
+  (8, true, 1, 1, '2021-10-25 14:14:10', 'INTERMEDIO', 'Es el 25 % de 133.', false),
   (9, true, 2, 1, '2021-10-26 09:10:15', 'BASICO', 'Son figuras geométricas que están formadas por cuatro lados.', false);
 
 INSERT INTO opcion
@@ -265,6 +266,17 @@ VALUES
 (9, false, 'triángulos'),
 (9, false, 'polígonos'),
 (9, true, 'cuadriláteros');
+
+INSERT INTO ref_reactivo
+  (id_ref_reactivo, id_examen, id_reactivo)
+VALUES
+  (6, 1, 8);
+
+INSERT INTO opcion_elegida
+  (id_ref_reactivo, id_opcion)
+VALUES
+  -- Primer examen, contestado
+  (6, 28);
 
 -- INSERT INTO ref_reactivo (id_examen, id_reactivo)
 -- VALUES (1, 4), (1, 5);

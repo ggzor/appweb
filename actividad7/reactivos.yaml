@@ -160,7 +160,7 @@ reactivos:
       - [false, 3cm 2cm 7cm]
 
   - tema: Matemáticas
-    nivel: AVANZADO
+    nivel: BASICO
     multiple: false
     enunciado: |
       Juan tiene 20 años menos que su padre y 
@@ -176,13 +176,13 @@ reactivos:
     nivel: AVANZADO
     multiple: false
     enunciado: |
-      En una panadería con 80 kg son capaces
+      En una panadería con 80 kg  de harina son capaces
       de hacer 120kg de pan. ¿Cuántos kg de de harina 
       serán necesarios para hacer 99 kg de pan?
     opciones:
       - [false, Si quieres hacer 99 panes necesitas 69 kg de harina]
       - [false, Si quieres hacer 99 panes necesitas 75 kg de harina]
-      - [false, Si quieres hacer 99 panes necesitas 70 kg de harina]
+      - [true, Si quieres hacer 99 panes necesitas 60 kg de harina]
       - [false, Si quieres hacer 99 panes necesitas 66 kg de harina]
   
   - tema: Matemáticas
@@ -275,3 +275,224 @@ reactivos:
     opciones:
       - [false, El que tiene sus lagos y ángulos desiguales.]
       - [true, El que tiene todos sus lados y sus ángulos iguales.]
+
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Las monografías suelen incluir un listado con todos los
+      documentos o libros que se han servido a la investigación.
+      ¿Qué nombre recibe este listado?
+    opciones:
+      - [false, Biblioteca.]
+      - [true, Bibliografía.]
+      - [false, Documentación.]
+      - [false, Índice.]
+
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cómo podemos definir una monografía atendiendo a su 
+      significado etimológico?
+    opciones:
+      - [false, Un texto de investigación muy largo.]
+      - [false, Una investigación realizada por una sola persona.]
+      - [true, Un escrito sobre un tema en concreto.]
+      - [false, Un listado de diversas investigaciones de un tema en concreto.]
+
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Indica cuál de estos datos no suelen aparecer en una ficha bibliográfica.
+    opciones:
+      - [false, Resumen del libro.]
+      - [false, Título.]
+      - [true, Autores.]
+      - [false, Resumen del libro.]
+
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Las fechas son importantes al investigar para una monografía 
+      señala la falsedad de las siguientes consideraciones.
+    opciones:
+      - [false, Suelen tener el mismo tamaño para facilitar su manejo.]
+      - [false, Pueden incluir referencias bibliográficas, citas textuales o resúmenes.]
+      - [false, Su orden puede variar según los requerimientos de la investigación.]
+      - [true, Pueden escribirse por las dos caras.]
+  
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cuál de los siguientes textos se citan en un párrafo propio y con sangría izquierda?
+    opciones:
+      - [false, La paráfrasis.]
+      - [false, Las citas textuales cortas.]
+      - [false, Todas las opciones.]
+      - [true, Las citas textuales largas.]
+
+  - tema: Español
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Relaciona respectivamente el uso de los siguientes conectores con las 
+      partes de una monografía: introducción, desarrollo y conclusión.
+    opciones:
+      - [false, En resumen, para comenzar, en relación con.]
+      - [false, Para comenzar, en resumen, en relación con.]
+      - [true, Para comenzar, en relación con, en resumen.]
+      - [false, En relación con, en resumen, para comenzar.]
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿Qué has de utilizar para explicar el significado de 
+      una palabra o expresión? 
+    opciones:
+      - [false, Ejemplos.]
+      - [false, Analogías.]
+      - [true, Definiciones.]
+      - [false, Paráfrasis.]
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Señala la afirmación incorrecta de las siguientes 
+      oraciones sobre monografías.  
+    opciones:
+      - [true, Son textos administrativos.]
+      - [false, Tratan un único tema.]
+      - [false, Requieren un gran esfuerzo de investigación.]
+      - [false, Son frecuentes en ambientes educativos.]
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿Cómo está compuesta una oración?
+    opciones:
+      - [false, Verbo y predicado.]
+      - [false, Persona, problema y adverbio.]
+      - [true, Sujeto, verbo y predicado.]
+      - [false, Verbo, sujeto y adjetivo.]
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿Cuál de estas palabras es un sínonimo de feliz?
+    opciones:
+      - [false, Furioso.]
+      - [false, Triste.]
+      - [true, Contento.]
+      - [false, Enojado.]
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿Cuáles son los signos de exclamación ?
+    opciones:
+      - [false, '##']
+      - [false, '**']
+      - [true, '¿?']
+      - [false, '!¡']
+
+  - tema: Español
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Elefante es una palabra...
+    opciones:
+      - [false, Sobresdrújula.]
+      - [true, Grave.]
+      - [false, Esdrújula.]
+      - [false, Aguda.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cuál de las siguientes es una palabra compuesta?
+    opciones:
+      - [false, Televisor.]
+      - [false, Micrófono.]
+      - [true, Abrelatas.]
+      - [false, Pelota.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cuántas silabas tiene la palabra 'carpintero'? 
+    opciones:
+      - [true, 4.]
+      - [false, 3.]
+      - [false, 5.]
+      - [false, 6.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cuál es el plural de la palabra 'habitante'?
+    opciones:
+      - [false, Habitad.]
+      - [false, Habitaciones.]
+      - [false, Habitares.]
+      - [true, Habitantes.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Quién es el sujeto de la siguiente oración?
+      'María como mucho todo el tiempo'. 
+    opciones:
+      - [false, La comida.]
+      - [true, Maria.]
+      - [false, No hay sujeto.]
+      - [false, El tiempo.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cómo se acentúa correctamente la palabra
+      'Oceanografia'?
+    opciones:
+      - [true, Oceanografía.]
+      - [false, Óceanografia.]
+      - [false, Océanografia.]
+      - [false, Oceanográfia.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cuál es el antónimo de la palabra 'oscuro'?
+    opciones:
+      - [false, Negro.]
+      - [false, Tenebroso.]
+      - [true, Claro.]
+      - [false, Fruncido.]
+
+  - tema: Español
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Qué nombre recibe el sonido más común que 
+      hacen los perros?
+    opciones:
+      - [false, Balido.]
+      - [true, Ladrido.]
+      - [false, Zumbido.]
+      - [false, Maullido.]
+
+
