@@ -56,7 +56,13 @@ $db = new ExamenesDB();
         return [
           'nombre_tema' => $todos_temas[$examen['id_tema']]['nombre'],
           'nivel_str' => obtener_cadena_nivel($examen['nivel']),
-          'fecha' => obtener_fecha_legible(fecha_de_sql($examen['fecha']))
+          'fecha' => obtener_fecha_legible(fecha_de_sql($examen['fecha'])),
+          'calificacion_str' => number_format($examen['calificacion'], 1),
+          'calificacion_clase' => $examen['calificacion'] > 8.5
+            ? 'alta'
+            : ($examen['calificacion'] > 6.0
+              ? 'media'
+              : 'baja')
         ];
       }
 
@@ -107,7 +113,7 @@ $db = new ExamenesDB();
               $extras = $calcular_extras($examen);
 
               echo <<<EOF
-              <article class="complete">
+              <article class="complete $extras[calificacion_clase]">
                 <section class="numero-container">
                   <p class="numero">#$examen[id_examen]</p>
                   $checkmark
@@ -117,7 +123,7 @@ $db = new ExamenesDB();
                   <p class="titulo">$extras[nombre_tema]<br>$extras[nivel_str]</p>
                   <p class="preguntas">$examen[cantidad_reactivos] preguntas</p>
                 </section>
-                <p class="calificacion">$examen[calificacion]</p>
+                <p class="calificacion $extras[calificacion_clase]">$extras[calificacion_str]</p>
                 <div></div>
                 <a class="btn small secondary accent" href="details.php?id_examen=$examen[id_examen]">Detalles</a>
               </article>

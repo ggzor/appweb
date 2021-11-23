@@ -42,8 +42,10 @@ article {
   grid-template-columns: 1fr auto;
   grid-template-rows: repeat(3, auto);
 
-  row-gap: 16px;
+  row-gap: 8px;
   column-gap: 48px;
+
+  min-width: 350px;
 
   align-items: baseline;
 
@@ -97,6 +99,20 @@ article.complete .numero {
 
   align-self: center;
   justify-self: center;
+}
+
+.calificacion.baja {
+  color: var(--color-black-light);
+}
+
+.calificacion.media {
+  color: var(--color-black-light);
+}
+
+.calificacion.alta {
+  background-color: var(--color-accent-light);
+  border-radius: 8px;
+  padding: 8px;
 }
 
 article > svg {

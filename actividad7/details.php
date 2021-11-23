@@ -50,6 +50,8 @@ $db = new ExamenesDB();
       $nombre_tema = $todos_temas[$examen['id_tema']]['nombre'];
       $nivel_str = obtener_cadena_nivel($examen['nivel']);
 
+      $calificacion_str = number_format($examen['calificacion'], 1);
+
       ?>
 
       <h1 class="titulo-1">Detalles del examen #<?php echo $id_examen ?></h1>
@@ -65,7 +67,7 @@ $db = new ExamenesDB();
         <p class="bold"><?php echo $examen['cantidad_reactivos'] ?></p>
 
         <h2 class="title-2">Calificación</h2>
-        <p class="bold"><?php echo $examen['calificacion'] ?></p>
+        <p class="bold"><?php echo $calificacion_str ?></p>
 
         <h2 class="title-2">Fecha de creación</h2>
         <p class="bold"><?php echo $examen['fecha'] ?></p>
