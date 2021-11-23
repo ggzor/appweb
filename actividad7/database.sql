@@ -184,6 +184,7 @@ VALUES
 CREATE VIEW reactivos_por_examen AS
 SELECT id_examen,
        reactivo.id_reactivo as id_reactivo,
+       ref_reactivo.id_ref_reactivo as id_ref_reactivo,
        nivel, tema.nombre as nombre_tema,
        enunciado,
        multiple
@@ -224,6 +225,7 @@ ORDER BY opcion.id_opcion;
 CREATE VIEW maximos_por_tema AS
 SELECT id_tema, nivel, COUNT(*) as cantidad
 FROM reactivo
+WHERE reactivo.publicado
 GROUP BY id_tema, nivel;
 
 -- Agregando más datos
@@ -304,6 +306,7 @@ CREATE PROCEDURE crear_examen(
     INSERT INTO ref_reactivo (id_examen, id_reactivo)
       SELECT @id_examen as id_examen, id_reactivo FROM reactivo
       WHERE reactivo.id_tema = id_tema AND reactivo.nivel = nivel
+        AND reactivo.publicado
       ORDER BY RAND()
       LIMIT cantidad_reactivos;
   END; //

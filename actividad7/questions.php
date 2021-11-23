@@ -154,7 +154,11 @@ if (array_key_exists('delete', $_GET)) {
           $tema = xss_escape($todos_temas[$reactivo['id_tema']]['nombre']);
           $icono = icono_para_nivel($reactivo['nivel']);
           $enunciado = xss_escape($reactivo['enunciado']);
-          $publicado = $reactivo['publicado'] ? icono_checkmark() : '';
+          $publicado = $reactivo['publicado']
+            ? icono_checkmark()
+            : "<a class='btn small secondary' href='do_publish.php?id_reactivo=$id'
+                onclick='return confirm(\"¿Seguro que quieres publicar este reactivo?\")'
+                >Publicar</a>";
 
 
           echo <<<EOF

@@ -177,4 +177,11 @@ class ExamenesDB extends Conexion
       ->where('id_examen', $id_examen)
       ->update(['calificacion' => $calificacion]);
   }
+
+  function publicar_reactivo(int $id_reactivo)
+  {
+    return $this->tabla('reactivo')
+      ->where('id_reactivo', $id_reactivo)
+      ->update(['publicado' => true]);
+  }
 }
