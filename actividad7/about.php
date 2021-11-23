@@ -56,6 +56,11 @@ solo_permitir([USUARIO_NORMAL, USUARIO_ADMIN]);
         <main>
           <h2 class="title-2">Acerca de</h2>
           <p>Proyecto final de la materia <b>Aplicaciones Web Otoño 2021.</b></p>
+          <p>
+          Esta aplicación web es capaz de generar exámenes aleatorios para
+          múltiples usuarios a partir de un banco de reactivos que puede ser
+          modificado y extendido por los profesores.
+          </p>
 
           <div class="iconos">
             <a href="https://www.php.net" target="_blank">$icono_php</a>
