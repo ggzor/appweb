@@ -1,6 +1,14 @@
 @import url("./compartido.css");
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
+  margin: 0;
+}
+
+.old-main {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 100px 1fr;
@@ -8,6 +16,61 @@ body {
   margin: 0;
 
   font-family: Roboto, sans-serif;
+}
+
+.down {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+
+  background-color: var(--color-accent-light);
+  height: 100vh;
+}
+
+.buttons-down {
+  align-self: flex-end;
+  justify-self: center;
+  margin-bottom: 64px;
+}
+
+.buttons-down > a {
+  display: flex;
+  gap: 16px;
+}
+
+.buttons-down .down-arrow {
+  align-self: center;
+  height: 18px;
+}
+
+.some-images {
+  align-self: center;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin: 64px;
+  column-gap: 128px;
+}
+
+.demo {
+  align-self: flex-start;
+  border-radius: 16px;
+  padding-top: 16px;
+}
+
+.demo img {
+  border-radius: 16px;
+  width: 100%;
+}
+
+.mucho-texto > :first-child {
+  line-height: 1.5;
+  font-size: 2.25rem;
+}
+
+.mucho-texto > :nth-child(2) {
+  line-height: 1.8;
+  font-size: 1.25rem;
 }
 
 .topbar {
@@ -165,4 +228,3 @@ main > * {
     0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725),
     0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802);
 }
-
