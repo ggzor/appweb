@@ -165,7 +165,7 @@ $m_edit = function ($selected) {
   $cls = $selected ? "seleccionado" : "";
 
   return <<<EOF
-<a class="$cls" href="questions.php">
+<a class="$cls" href="javascript:location.reload()">
   <svg width="32" height="32" xmlns="http://www.w3.org/2000/svg">
     <path d="m20 21.333-5.333 5.334H28v-5.334h-8ZM16.08 9.587 4 21.667v5h5l12.08-12.08-5-5ZM7.893 24H6.667v-1.227l9.413-9.413 1.227 1.227L7.893 24ZM24.947 10.72c.52-.52.52-1.36 0-1.88l-3.12-3.12a1.31 1.31 0 0 0-.947-.387c-.333 0-.68.134-.933.387l-2.44 2.44 5 5 2.44-2.44Z" />
     </svg>
