@@ -138,7 +138,7 @@ class ExamenesDB extends Conexion
 
   function crear_examen(int $id_usuario, int $id_tema, string $nivel, int $cantidad)
   {
-    return $this->invoke_procedure('crear_examen', $id_usuario, $id_tema, $nivel, $cantidad);
+    return $this->run_function('crear_examen', $id_usuario, $id_tema, $nivel, $cantidad);
   }
 
   function obtener_examenes(int $id_usuario)

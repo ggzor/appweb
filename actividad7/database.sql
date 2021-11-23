@@ -290,11 +290,11 @@ CREATE PROCEDURE hacer_query(id_usuario INT, busqueda TEXT, tema INT, nivel VARC
     ORDER BY fecha DESC;
   END; //
 
-CREATE PROCEDURE crear_examen(
+CREATE FUNCTION crear_examen(
   id_usuario INT,
   id_tema INT,
   nivel VARCHAR(50),
-  cantidad_reactivos INT)
+  cantidad_reactivos INT) RETURNS INT
   BEGIN
     INSERT INTO examen
       (id_usuario, fecha, calificacion, cantidad_reactivos, id_tema, nivel)
@@ -309,6 +309,8 @@ CREATE PROCEDURE crear_examen(
         AND reactivo.publicado
       ORDER BY RAND()
       LIMIT cantidad_reactivos;
+
+    RETURN @id_examen;
   END; //
 
 DELIMITER ;

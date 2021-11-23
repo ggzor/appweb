@@ -177,6 +177,29 @@ class Conexion
     );
   }
 
+  function run_function(string $func, &...$args)
+  {
+    $params_str = "";
+    $func_call_str = "SELECT $func(";
+
+    foreach ($args as &$param) {
+      $params_str .= get_param_type($param);
+      $func_call_str .= "?, ";
+    }
+
+    $func_call_str = trim($func_call_str, ", ");
+    $func_call_str .= ") AS result";
+
+    $result = get_results($this->getConn(), null, $func_call_str, $params_str, ...$args);
+    if (count($result) === 1) {
+      return $result[0]['result'];
+    } elseif (count($result) > 1) {
+      throw new Exception("Se encontró más de un resultado");
+    } elseif (count($result) === 0) {
+      throw new Exception("No se encontraron resultados");
+    }
+  }
+
   function procedure(string $procedure, &...$args)
   {
     return $this->procedure_idx(null, $procedure, ...$args);
