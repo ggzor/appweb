@@ -334,8 +334,10 @@ class Entidad
 
     $resultado = $this->select($atributo, ...$otros_atributos);
 
-    if (count($resultado) !== 1) {
+    if (count($resultado) > 1) {
       throw new Exception("Se encontró más de un resultado");
+    } elseif (count($resultado) === 0) {
+      throw new Exception("No se encontraron resultados");
     }
 
     return $resultado[0];

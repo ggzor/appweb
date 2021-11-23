@@ -92,7 +92,20 @@ ul > li input {
   color: var(--color-success);
 }
 
-.calificacion.incorrecta{
+.calificacion.incorrecta {
   background-color: var(--color-error-light);
   color: var(--color-error);
 }
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 16px;
+}
+
+.buttons > a {
+  align-self: center;
+}
+

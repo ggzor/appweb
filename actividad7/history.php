@@ -73,6 +73,12 @@ $db = new ExamenesDB();
       <section class="examenes">
         <?php
 
+        if (count($examenes) === 0) {
+          echo <<<EOF
+            <h2 class="titulo-2">No hay exámenes</h2>
+          EOF;
+        }
+
         if (count($examenes_pendientes) > 0) {
         ?>
           <h2 class="titulo-2">Pendientes</h2>

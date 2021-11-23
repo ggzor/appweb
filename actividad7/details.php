@@ -57,10 +57,12 @@ if ($examen['id_usuario'] != $id_usuario) {
       $nivel_str = obtener_cadena_nivel($examen['nivel']);
 
       $calificacion_str = number_format($examen['calificacion'], 1);
-
       ?>
 
-      <h1 class="titulo-1">Detalles del examen #<?php echo $id_examen ?></h1>
+      <section class="buttons">
+        <h1 class="titulo-1">Detalles del examen #<?php echo $id_examen ?></h1>
+        <a href="do_delete_exam.php?id_examen=<?php echo $id_examen ?>" class="btn small secondary" onclick="return confirm('¿Seguro que quieres eliminar este examen?')">Borrar examen</a>
+      </section>
 
       <section class="contenido">
         <h2 class="title-2">Tema</h2>

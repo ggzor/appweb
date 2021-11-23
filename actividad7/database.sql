@@ -61,7 +61,7 @@ CREATE TABLE ref_reactivo
 
   UNIQUE KEY (id_examen, id_reactivo),
 
-  FOREIGN KEY (id_examen) REFERENCES examen(id_examen),
+  FOREIGN KEY (id_examen) REFERENCES examen(id_examen) ON DELETE CASCADE,
   FOREIGN KEY (id_reactivo) REFERENCES reactivo(id_reactivo) ON DELETE CASCADE
 );
 
@@ -82,7 +82,7 @@ CREATE TABLE opcion_elegida
   id_opcion INT NOT NULL,
 
   UNIQUE KEY (id_ref_reactivo, id_opcion),
-  FOREIGN KEY (id_ref_reactivo) REFERENCES ref_reactivo(id_ref_reactivo),
+  FOREIGN KEY (id_ref_reactivo) REFERENCES ref_reactivo(id_ref_reactivo) ON DELETE CASCADE,
   FOREIGN KEY (id_opcion) REFERENCES opcion(id_opcion) ON DELETE CASCADE
 );
 

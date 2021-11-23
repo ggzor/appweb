@@ -184,4 +184,11 @@ class ExamenesDB extends Conexion
       ->where('id_reactivo', $id_reactivo)
       ->update(['publicado' => true]);
   }
+
+  function borrar_examen($id_examen)
+  {
+    return $this->tabla('examen')
+      ->where('id_examen', $id_examen)
+      ->delete();
+  }
 }
