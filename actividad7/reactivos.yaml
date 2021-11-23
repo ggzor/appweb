@@ -1,0 +1,277 @@
+reactivos:
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: true
+    enunciado: |
+      Figuras geometrícas con al menos 4 lados
+    opciones:
+      - [false, Triángulo]
+      - [true, Cuadrado]
+      - [false, Círculo]
+      - [true, Pentágono]
+
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Cuál es la representación gráfica del número nueve mil treinta y seis?
+    opciones:
+      - [false, 90036]
+      - [true, 9036]
+      - [false, 936]
+      - [false, 9936]
+
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿A cuántas unidades equivale 10 decenas de millar?
+    opciones:
+      - [false, 10000 unidades]
+      - [false, 10 unidades]
+      - [true, 100000 unidades]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: true
+    enunciado: |
+      ¿Qué cantidad expresa el número romano V?
+    opciones:
+      - [false, 10]
+      - [false, quince]
+      - [true, cien]
+      - [true, 5]
+
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿Verdadero o falso? Una división entera es aquella en la que el resto es cero.
+    opciones:
+      - [false, verdadero]
+      - [true, falso]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Verdadero o falso? Una división entera es aquella en la que el resto es cero.
+    opciones:
+      - [false, Septágono]
+      - [true, Heptágono]
+      - [false, Hexágono]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Qué es una recta secante?
+    opciones:
+      - [true, Es una recta que corta una curva en dos puntos.]
+      - [false, Es una recta exterior a una circunferencia.]
+      - [false, Es una recta que corta en un punto a una curva.]
+
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      Si tienes un billete de 100€, dos billetes de 20€ y cuatro monedas de 1 €, ¿cuánto dinero tienes en total?
+    opciones:
+      - [true, 140 euros]
+      - [false, 144 euros]
+      - [false, 154 euros]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cuándo años tengo sabiendo que la tercera parte de ellos menos 1 es igual a la sexta parte?
+    opciones:
+      - [false, 8]
+      - [true, 6]
+      - [false, 23]
+      - [false, 5]
+    
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      ¿A cuánto equivale π?
+    opciones:
+      - [true, 3.141592]
+      - [false, 3.149215]
+      - [false, 3.144123]
+  
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿7/5 + 2/3 -1?
+    opciones:
+      - [false, 17/15]
+      - [false, 8/8]
+      - [false, 1]
+      - [true, 16/17]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      ¿Qué formula es esta? π * R^2
+    opciones:
+      - [true, Área de un círculo]
+      - [false, Díametro de un círculo]
+      - [false, Volumen de un cilindro]
+      - [false, Área de un cuadrado ]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Por un bolso hemos pagado 50 euros, más 21% de IVA. ¿Cuánto hemos tenido que pagar en total?
+    opciones:
+      - [false, 70]
+      - [true, 60.50]
+      - [false, 61]
+      - [false, 65]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Una rueda de un coche da 4590 vueltas en 9 minutos. 
+      ¿Cuántas vueltas dará en 24h y 24m?
+    opciones:
+      - [false, 991440]
+      - [true, 746640]
+      - [false, 41310]
+      - [false, 64335]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cuáles de los siguientes triángulos, 
+      según sus medidas son rectángulos?
+    opciones:
+      - [false, 3cm 9cm 7cm]
+      - [false, 7cm 4cm 13cm]
+      - [true, 3cm 4cm 5cm]
+      - [false, 3cm 2cm 7cm]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      Juan tiene 20 años menos que su padre y 
+      este tiene el tripe de los años de su hijo.
+      ¿Qué edad tiene cada uno?
+    opciones:
+      - [false, 10 Juan y 34 el padre]
+      - [false, 11 Juan y 31 el padre]
+      - [true, 10 Juan y 30 el padre]
+      - [false, 14 Juan y 30 el padre]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      En una panadería con 80 kg son capaces
+      de hacer 120kg de pan. ¿Cuántos kg de de harina 
+      serán necesarios para hacer 99 kg de pan?
+    opciones:
+      - [false, Si quieres hacer 99 panes necesitas 69 kg de harina]
+      - [false, Si quieres hacer 99 panes necesitas 75 kg de harina]
+      - [false, Si quieres hacer 99 panes necesitas 70 kg de harina]
+      - [false, Si quieres hacer 99 panes necesitas 66 kg de harina]
+  
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cuánto es la cuarta parte de la tercera parte?
+    opciones:
+      - [true, Un doceavo]
+      - [false, Un séptimo]
+      - [false, 3/4 partes]
+      - [false, 4/6 partes]
+  
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Seis personas pueden vivir en un hotel durante 12 
+      días por 792 euros. ¿Cuánto costará el hotel de 15
+      personas durante 8 días?
+    opciones:
+      - [false, 1450 euros]
+      - [true, 1320 euros]
+      - [false, 1220 euros]
+      - [false, 1470 euros]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Seis obreros enlosan 1200 metros cuadrados de sueldo
+      en cuatro días. ¿Cuántos metros cuadrados enlosarán 
+      doce obreros en cinco días? 
+    opciones:
+      - [false, 2450 metros cuadrados]
+      - [false, 2320 metros cuadrados]
+      - [false, 2820 metros cuadrados]
+      - [true, 3000 metros cuadrados]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Cómo se llama a un poliedro de 20 caras? 
+    opciones:
+      - [false, dodecaedro]
+      - [false, tetradecaedro]
+      - [true, icosaedro]
+      - [false, apeiroedro]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Si 8 litros de aceite valen 60 euros. ¿Cuántos litros compraré con 15 euros?
+    opciones:
+      - [false, 2 litros de aceite]
+      - [false, 1.2 litros de aceite]
+      - [true, 1.4 litros de aceite]
+      - [false, 0.75 litros de aceite]
+
+  - tema: Matemáticas
+    nivel: INTERMEDIO
+    multiple: false
+    enunciado: |
+      Hoy han traído a la librería una caja con 125 libros y 
+      otra con 50 libros. Ya se han colocado 45 libros, 
+      ¿para saber cuántos faltan por colocar, qué operaciones 
+      hay que realizar?
+    opciones:
+      - [true, Sumar los libros que han llegado (125 + 50) y restarle los 45 que se han colocado.]
+      - [false, Sumar todas las cifras (125 + 50 + 45)]
+      - [false, Restar 125 a los 45 que se han colocado.]
+
+  - tema: Matemáticas
+    nivel: BASICO
+    multiple: false
+    enunciado: |
+      Cálculo mental rápido: cuánto es 6x8 menos cuatro.
+    opciones:
+      - [false, 50]
+      - [true, 44]
+      - [false, 54]
+
+  - tema: Matemáticas
+    nivel: AVANZADO
+    multiple: false
+    enunciado: |
+      ¿Qué es un polígono regular?
+    opciones:
+      - [false, El que tiene sus lagos y ángulos desiguales.]
+      - [true, El que tiene todos sus lados y sus ángulos iguales.]
