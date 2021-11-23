@@ -129,7 +129,7 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
 
       <section class="buttons">
         <input class="small secondary" name="action" type="submit" value="Continuar después">
-        <input class="small" name="action" type="submit" value="Finalizar">
+        <input class="small" name="action" type="submit" value="Finalizar" onclick="return confirm('¿Seguro que quieres finalizar este examen?')">
       </section>
     </form>
   </section>
