@@ -102,6 +102,10 @@ article.complete .numero {
 }
 
 .calificacion.baja {
+  background-color: var(--color-error-light);
+  border-radius: 8px;
+  padding: 8px;
+
   color: var(--color-black-light);
 }
 

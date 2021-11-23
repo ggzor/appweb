@@ -58,9 +58,9 @@ $db = new ExamenesDB();
           'nivel_str' => obtener_cadena_nivel($examen['nivel']),
           'fecha' => obtener_fecha_legible(fecha_de_sql($examen['fecha'])),
           'calificacion_str' => number_format($examen['calificacion'], 1),
-          'calificacion_clase' => $examen['calificacion'] > 8.5
+          'calificacion_clase' => $examen['calificacion'] >= 9
             ? 'alta'
-            : ($examen['calificacion'] > 6.0
+            : ($examen['calificacion'] >= 6.0
               ? 'media'
               : 'baja')
         ];
