@@ -8,6 +8,15 @@ solo_permitir([USUARIO_NORMAL]);
 
 require_once 'dal.php';
 $db = new ExamenesDB();
+
+$id_usuario = intval($_SESSION['id_usuario']);
+$id_examen = intval($_GET['id_examen']);
+$examen = $db->obtener_examen($id_examen);
+
+if ($examen['id_usuario'] != $id_usuario) {
+  header('Location: index.php');
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -41,9 +50,6 @@ $db = new ExamenesDB();
 
     <main>
       <?php
-
-      $id_examen = intval($_GET['id_examen']);
-      $examen = $db->obtener_examen($id_examen);
 
       $todos_temas = $db->obtener_temas();
 

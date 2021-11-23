@@ -8,6 +8,18 @@ solo_permitir([USUARIO_NORMAL]);
 
 require_once 'dal.php';
 $db = new ExamenesDB();
+
+$id_usuario = intval($_SESSION['id_usuario']);
+$nombre_usuario = xss_escape($_SESSION['nombre']);
+
+$id_examen = intval($_GET['id_examen']);
+$examen = $db->obtener_examen($id_examen);
+
+if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
+  header('Location: index.php');
+  exit();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +46,6 @@ $db = new ExamenesDB();
 
   <section class="main-content">
     <?php
-    $id_usuario = intval($_SESSION['id_usuario']);
-    $nombre_usuario = xss_escape($_SESSION['nombre']);
-
-    $id_examen = intval($_GET['id_examen']);
-    $examen = $db->obtener_examen($id_examen);
 
     $todos_temas = $db->obtener_temas();
 
