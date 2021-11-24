@@ -94,9 +94,7 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
               <p><?php echo xss_escape($reactivo['enunciado']) ?></p>
               <ul>
                 <?php foreach ($opciones as $opcion) {
-                  $es_seleccionada =
-                    $opcion['id_opcion_elegida'] != NULL
-                    || ($no_hay_seleccionadas && $es_primera);
+                  $es_seleccionada = $opcion['id_opcion_elegida'] != NULL;
                   $checked_str = $es_seleccionada ? 'checked' : '';
 
                   echo '<li class="reactivo">';
@@ -107,7 +105,7 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
                         EOF;
                   } else {
                     echo <<<EOF
-                        <input type="radio" name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" value="$opcion[id_opcion]" $checked_str required>
+                        <input type="radio" name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" value="$opcion[id_opcion]" $checked_str>
                         EOF;
                   }
 
