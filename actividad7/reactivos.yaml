@@ -1,16 +1,5 @@
 reactivos:
   - tema: Matemáticas
-    nivel: INTERMEDIO
-    multiple: true
-    enunciado: |
-      Figuras geometrícas con al menos 4 lados
-    opciones:
-      - [false, Triángulo]
-      - [true, Cuadrado]
-      - [false, Círculo]
-      - [true, Pentágono]
-
-  - tema: Matemáticas
     nivel: BASICO
     multiple: false
     enunciado: |
@@ -39,7 +28,7 @@ reactivos:
     opciones:
       - [false, 10]
       - [false, quince]
-      - [true, cien]
+      - [true, cinco]
       - [true, 5]
 
   - tema: Matemáticas
@@ -55,7 +44,7 @@ reactivos:
     nivel: AVANZADO
     multiple: false
     enunciado: |
-      ¿Verdadero o falso? Una división entera es aquella en la que el resto es cero.
+      ¿Cómo se llama un polígono de 7 lados?
     opciones:
       - [false, Septágono]
       - [true, Heptágono]
@@ -77,8 +66,8 @@ reactivos:
     enunciado: |
       Si tienes un billete de 100€, dos billetes de 20€ y cuatro monedas de 1 €, ¿cuánto dinero tienes en total?
     opciones:
-      - [true, 140 euros]
-      - [false, 144 euros]
+      - [false, 140 euros]
+      - [true, 144 euros]
       - [false, 154 euros]
 
   - tema: Matemáticas
@@ -111,7 +100,7 @@ reactivos:
       - [false, 17/15]
       - [false, 8/8]
       - [false, 1]
-      - [true, 16/17]
+      - [true, 16/15]
 
   - tema: Matemáticas
     nivel: INTERMEDIO
@@ -239,9 +228,9 @@ reactivos:
     enunciado: |
       Si 8 litros de aceite valen 60 euros. ¿Cuántos litros compraré con 15 euros?
     opciones:
-      - [false, 2 litros de aceite]
+      - [true, 2 litros de aceite]
       - [false, 1.2 litros de aceite]
-      - [true, 1.4 litros de aceite]
+      - [false, 1.4 litros de aceite]
       - [false, 0.75 litros de aceite]
 
   - tema: Matemáticas
