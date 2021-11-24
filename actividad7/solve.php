@@ -103,11 +103,11 @@ if ($examen['id_usuario'] != $id_usuario || $examen['calificacion'] !== null) {
 
                   if ($reactivo['multiple']) {
                     echo <<<EOF
-                        <input type="checkbox" name="opcioncheck_$reactivo[id_reactivo]_opcion_$opcion[id_opcion]" value="1" id="opcion_$opcion[id_opcion]">
+                        <input type="checkbox" name="opcioncheck_$reactivo[id_reactivo]_opcion_$opcion[id_opcion]" value="1" id="opcion_$opcion[id_opcion]" $checked_str>
                         EOF;
                   } else {
                     echo <<<EOF
-                        <input type="radio" name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" value="$opcion[id_opcion]">
+                        <input type="radio" name="reactivo_$reactivo[id_reactivo]" id="opcion_$opcion[id_opcion]" value="$opcion[id_opcion]" $checked_str required>
                         EOF;
                   }
 
