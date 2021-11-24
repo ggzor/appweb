@@ -48,8 +48,8 @@ reactivos:
     enunciado: |
       ¿Verdadero o falso? Una división entera es aquella en la que el resto es cero.
     opciones:
-      - [false, verdadero]
-      - [true, falso]
+      - [true, verdadero]
+      - [false, falso]
 
   - tema: Matemáticas
     nivel: AVANZADO
