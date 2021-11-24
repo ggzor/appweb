@@ -69,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ?>
     <input type="text" placeholder="Usuario" name="usuario" id="usuario" required autofocus /><br />
     <input type="password" placeholder="Contraseña" name="pass" id="pass" required /><br />
-    <a href="olvidado.php">Olvidé mi contraseña</a>
     <section class="bottom">
       <p>¿No tienes cuenta? <a href="register.php">Regístrate</a></p>
       <input type="submit" value="Iniciar sesión" />

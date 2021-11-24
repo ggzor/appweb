@@ -3,6 +3,8 @@ CREATE DATABASE examenes;
 
 USE examenes;
 
+-- Tablas principales
+
 CREATE TABLE usuarios
 (
   id_usuario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -86,16 +88,66 @@ CREATE TABLE opcion_elegida
   FOREIGN KEY (id_opcion) REFERENCES opcion(id_opcion) ON DELETE CASCADE
 );
 
+-- Views
+
+CREATE VIEW reactivos_por_examen AS
+SELECT id_examen,
+       reactivo.id_reactivo as id_reactivo,
+       ref_reactivo.id_ref_reactivo as id_ref_reactivo,
+       nivel, tema.nombre as nombre_tema,
+       enunciado,
+       multiple
+FROM ref_reactivo
+JOIN reactivo
+ON ref_reactivo.id_reactivo = reactivo.id_reactivo
+JOIN tema
+ON reactivo.id_tema = tema.id_tema
+ORDER BY id_examen, ref_reactivo.id_ref_reactivo;
+
+CREATE VIEW elegidas_por_reactivo AS
+SELECT ref_reactivo.id_examen as id_examen,
+       reactivo.id_reactivo as id_reactivo,
+       opcion.id_opcion as id_opcion,
+       correcta,
+       contenido,
+       opcion_elegida.id_opcion_elegida as id_opcion_elegida
+FROM ref_reactivo
+JOIN reactivo
+ON ref_reactivo.id_reactivo = reactivo.id_reactivo
+JOIN opcion
+ON reactivo.id_reactivo = opcion.id_reactivo
+LEFT JOIN opcion_elegida
+ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo
+   AND opcion.id_opcion = opcion_elegida.id_opcion
+ORDER BY ref_reactivo.id_examen, ref_reactivo.id_ref_reactivo, opcion.id_opcion;
+
+CREATE VIEW opciones_por_reactivo AS
+SELECT reactivo.id_reactivo as id_reactivo,
+       opcion.id_opcion as id_opcion,
+       correcta,
+       contenido
+FROM reactivo
+JOIN opcion
+ON reactivo.id_reactivo = opcion.id_reactivo
+ORDER BY opcion.id_opcion;
+
+CREATE VIEW maximos_por_tema AS
+SELECT id_tema, nivel, COUNT(*) as cantidad
+FROM reactivo
+WHERE reactivo.publicado
+GROUP BY id_tema, nivel;
+
+
 INSERT INTO usuarios
   (id_usuario, nombre, usuario, pass, pregunta, respuesta, tipo)
 VALUES
-  (1, 'Gustavo Cerati', 'admin', 'Admin_pass01',
+  (1, 'Gustavo Cerati', 'admin1', 'Admin_01',
       '¿Cuál fue tu mejor álbum?', 'Siempre es hoy', 0),
-  (2,'Felix Chan', 'admin1', 'adminPass1*',
+  (2,'Felix Chan', 'admin2', 'Admin_02',
      '¿Dónde vivo?', 'En mi casa', 0),
-  (3, 'Axel', 'axelsp', 'Contraseña_01',
+  (3, 'Axel', 'usuario1', 'Usuario_01',
       '¿Quién es tu artista favorito?', 'Gustavo Cerati', 1),
-  (4, 'Sol', 'sunSky', 'Contraseña1234_',
+  (4, 'Sol', 'usuario2', 'Usuario_02',
       '¿Color favorito?', 'Azul', 1);
 
 INSERT INTO tema
@@ -182,53 +234,6 @@ VALUES
 
 -- VIEWS
 
-CREATE VIEW reactivos_por_examen AS
-SELECT id_examen,
-       reactivo.id_reactivo as id_reactivo,
-       ref_reactivo.id_ref_reactivo as id_ref_reactivo,
-       nivel, tema.nombre as nombre_tema,
-       enunciado,
-       multiple
-FROM ref_reactivo
-JOIN reactivo
-ON ref_reactivo.id_reactivo = reactivo.id_reactivo
-JOIN tema
-ON reactivo.id_tema = tema.id_tema
-ORDER BY id_examen, ref_reactivo.id_ref_reactivo;
-
-CREATE VIEW elegidas_por_reactivo AS
-SELECT ref_reactivo.id_examen as id_examen,
-       reactivo.id_reactivo as id_reactivo,
-       opcion.id_opcion as id_opcion,
-       correcta,
-       contenido,
-       opcion_elegida.id_opcion_elegida as id_opcion_elegida
-FROM ref_reactivo
-JOIN reactivo
-ON ref_reactivo.id_reactivo = reactivo.id_reactivo
-JOIN opcion
-ON reactivo.id_reactivo = opcion.id_reactivo
-LEFT JOIN opcion_elegida
-ON ref_reactivo.id_ref_reactivo = opcion_elegida.id_ref_reactivo
-   AND opcion.id_opcion = opcion_elegida.id_opcion
-ORDER BY ref_reactivo.id_examen, ref_reactivo.id_ref_reactivo, opcion.id_opcion;
-
-CREATE VIEW opciones_por_reactivo AS
-SELECT reactivo.id_reactivo as id_reactivo,
-       opcion.id_opcion as id_opcion,
-       correcta,
-       contenido
-FROM reactivo
-JOIN opcion
-ON reactivo.id_reactivo = opcion.id_reactivo
-ORDER BY opcion.id_opcion;
-
-CREATE VIEW maximos_por_tema AS
-SELECT id_tema, nivel, COUNT(*) as cantidad
-FROM reactivo
-WHERE reactivo.publicado
-GROUP BY id_tema, nivel;
-
 -- Agregando más datos
 
 INSERT INTO reactivo VALUES
@@ -280,49 +285,3 @@ VALUES
 
 -- INSERT INTO ref_reactivo (id_examen, id_reactivo)
 -- VALUES (1, 4), (1, 5);
-
--- TRIGGERS
-
-DELIMITER //
-
--- Registrar fecha de modificación del reactivo.
-CREATE TRIGGER modificar_fecha_insert BEFORE INSERT ON reactivo
-FOR EACH ROW SET NEW.fecha = NOW(); //
-
-CREATE TRIGGER modificar_fecha_update BEFORE UPDATE ON reactivo
-FOR EACH ROW SET NEW.fecha = NOW(); //
-
-CREATE PROCEDURE hacer_query(id_usuario INT, busqueda TEXT, tema INT, nivel VARCHAR(50))
-  BEGIN
-  SELECT * FROM reactivo
-    WHERE reactivo.id_creador = id_usuario
-      AND (tema = 0 OR reactivo.id_tema = tema)
-      AND (nivel = 'TODOS' OR reactivo.nivel = nivel)
-      AND (busqueda = '' OR (MATCH (enunciado) AGAINST (busqueda)))
-    ORDER BY fecha DESC;
-  END; //
-
-CREATE FUNCTION crear_examen(
-  id_usuario INT,
-  id_tema INT,
-  nivel VARCHAR(50),
-  cantidad_reactivos INT) RETURNS INT
-  BEGIN
-    INSERT INTO examen
-      (id_usuario, fecha, calificacion, cantidad_reactivos, id_tema, nivel)
-    VALUES
-      (id_usuario, NOW(), NULL, cantidad_reactivos, id_tema, nivel);
-
-    SET @id_examen = LAST_INSERT_ID();
-
-    INSERT INTO ref_reactivo (id_examen, id_reactivo)
-      SELECT @id_examen as id_examen, id_reactivo FROM reactivo
-      WHERE reactivo.id_tema = id_tema AND reactivo.nivel = nivel
-        AND reactivo.publicado
-      ORDER BY RAND()
-      LIMIT cantidad_reactivos;
-
-    RETURN @id_examen;
-  END; //
-
-DELIMITER ;
